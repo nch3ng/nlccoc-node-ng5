@@ -1,15 +1,22 @@
+import { AuthenticationService } from './authentication.service';
 import { Injectable } from "@angular/core";
 import { Headers, Http, RequestOptions, Response } from "@angular/http";
 
 import { User } from "../_models/index";
+import 'rxjs';
 
 @Injectable()
 export class UserService {
-  constructor(private http: Http) {
+
+  private base_url: '/api';
+  private user: User;
+
+  constructor(private http: Http, private authService: AuthenticationService) {
+    this.user = new User();
   }
 
   verify() {
-    return this.http.get('/api/verify', this.jwt()).map((response: Response) => response.json());
+    return this.http.get('/api/check-state', this.jwt()).map((response: Response) => response.json());
   }
 
   forgotPassword(email: string) {
@@ -25,7 +32,14 @@ export class UserService {
   }
 
   create(user: User) {
-    return this.http.post('/api/users', user, this.jwt()).map((response: Response) => response.json());
+    // console.log("Register: ");
+    // console.log(user)
+    let body = JSON.stringify(user);
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post('/api/register', body, options);
+    //return this.http.post('/api/users', user, this.jwt()).map((response: Response) => response.json());
   }
 
   update(user: User) {
@@ -36,13 +50,22 @@ export class UserService {
     return this.http.delete('/api/users/' + id, this.jwt()).map((response: Response) => response.json());
   }
 
+  currentUser(): User {
+    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+    this.user.firstName = currentUser['firstName'];
+    this.user.lastName = currentUser['lastName'];
+    this.user.email = currentUser['email'];
+    return this.user;
+  }
+
   // private helper methods
 
   private jwt() {
     // create authorization header with jwt token
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
     if (currentUser && currentUser.token) {
-      let headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.token });
+      let headers = new Headers({ 'x-access-token': currentUser.token });
       return new RequestOptions({ headers: headers });
     }
   }

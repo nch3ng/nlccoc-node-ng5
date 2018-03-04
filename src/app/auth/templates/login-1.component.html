@@ -13,7 +13,7 @@
 							<h3 class="m-login__title">
 								Sign In To Admin
 							</h3>
-							<div class="m--margin-top-40 m-alert m-alert--outline m-alert--outline-2x alert alert-success fade show" role="alert">
+							<!-- <div class="m--margin-top-40 m-alert m-alert--outline m-alert--outline-2x alert alert-success fade show" role="alert">
 								Use username
 								<span style="font-weight: 500;">
 									demo@demo.com
@@ -23,7 +23,7 @@
 									demo
 								</span>
 								to continue or singup.
-							</div>
+							</div> -->
 						</div>
 						<form (ngSubmit)="f.form.valid && signin()" #f="ngForm" class="m-login__form m-form" action="">
 							<ng-template #alertSignin></ng-template>
@@ -66,7 +66,10 @@
 						<form (ngSubmit)="f.form.valid && signup()" #f="ngForm" class="m-login__form m-form" action="">
 							<ng-template #alertSignup></ng-template>
 							<div class="form-group m-form__group">
-								<input class="form-control m-input" type="text" placeholder="Fullname" name="fullname" [(ngModel)]="model.fullname" #fullname="ngModel">
+								<input class="form-control m-input" type="text" placeholder="First Name" name="firstName" [(ngModel)]="model.firstName" #fullname="ngModel">
+							</div>
+							<div class="form-group m-form__group">
+								<input class="form-control m-input" type="text" placeholder="Last Name" name="lastName" [(ngModel)]="model.lastName" #fullname="ngModel">
 							</div>
 							<div class="form-group m-form__group">
 								<input class="form-control m-input" type="text" placeholder="Email" name="email" [(ngModel)]="model.email" #email="ngModel" autocomplete="off">

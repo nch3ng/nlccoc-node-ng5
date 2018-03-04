@@ -61,11 +61,14 @@ export class AuthComponent implements OnInit {
     this.loading = true;
     this._authService.login(this.model.email, this.model.password).subscribe(
       data => {
+        console.log('login successful');
+        console.log(this.returnUrl);
         this._router.navigate([this.returnUrl]);
       },
       error => {
+        //console.log(error.json());
         this.showAlert('alertSignin');
-        this._alertService.error(error);
+        this._alertService.error('Email or password is not correct');
         this.loading = false;
       });
   }

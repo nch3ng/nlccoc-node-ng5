@@ -1,3 +1,5 @@
+import { User } from './../../../auth/_models/user';
+import { UserService } from './../../../auth/_services/user.service';
 import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import { Helpers } from '../../../helpers';
 
@@ -8,13 +10,13 @@ declare let mLayout: any;
   encapsulation: ViewEncapsulation.None,
 })
 export class HeaderNavComponent implements OnInit, AfterViewInit {
+  private user: User;
 
-
-  constructor() {
+  constructor(private userService: UserService) {
 
   }
   ngOnInit() {
-
+    this.user = this.userService.currentUser();
   }
   ngAfterViewInit() {
 

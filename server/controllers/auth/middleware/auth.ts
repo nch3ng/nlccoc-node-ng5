@@ -9,7 +9,7 @@ module.exports = {
           jwt.verify(token, Config.config.secret, (err, decoded) => {
   
               if (err) {
-                  return res.json({ success: false, message: 'Failed to authenticate token.' });    
+                  return res.status(401).json({ success: false, message: 'Failed to authenticate token.' });    
               } else {
                   // all good, continue
                   req.decoded = decoded; 
@@ -19,7 +19,7 @@ module.exports = {
 
       }  else {
 
-          res.send({ success: false, message: 'No token exists.' });
+          res.status(401).json({ success: false, message: 'No token exists.' });
           
       }
   })

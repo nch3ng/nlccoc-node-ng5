@@ -2,5 +2,12 @@ export class User {
   id: number;
   email: string;
   password: string;
-  fullName: string;
+  firstName: string;
+  lastName: string;
+
+  constructor(){
+    this.email = 'johndoe@gmail.com';
+    this.firstName = 'John';
+    this.lastName = 'Doe';
+  }
 }

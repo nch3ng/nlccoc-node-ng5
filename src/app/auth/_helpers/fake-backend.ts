@@ -146,6 +146,7 @@ export function mockBackEndFactory(backend: MockBackend, options: BaseRequestOpt
           connection.mockRespond(new Response(new ResponseOptions({ status: 200, body: { status: 'ok' } })));
         } else {
           // return 401 not authorised if token is null or invalid
+          console.log('401');
           connection.mockRespond(new Response(new ResponseOptions({ status: 401 })));
         }
 

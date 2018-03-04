@@ -18,7 +18,7 @@ module.exports = function(req, res) {
         success: false,
         message: 'User does not exists'
       };
-      res.send(content);
+      res.status(401).send(content);
       return;
     }
 
@@ -27,7 +27,7 @@ module.exports = function(req, res) {
         success: false,
         message: 'Incorrect password'
       };
-      res.send(content);
+      res.status(401).send(content);
       return;
     }
 

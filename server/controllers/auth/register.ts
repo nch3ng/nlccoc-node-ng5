@@ -1,6 +1,7 @@
 import User from "../../models/user";
 
 module.exports = function(req, res) {
+  console.log(req.body);
   console.log("Registering user: " + req.body.email);
   var user = new User();
     user.firstName = req.body.firstName;

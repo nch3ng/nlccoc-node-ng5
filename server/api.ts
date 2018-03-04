@@ -18,7 +18,6 @@ router.use(function timeLog (req, res, next) {
 router.post('/register', registerCtrl);
 router.post('/login', loginCtrl);
 router.get('/check-state', auth.verifyToken, (req, res) => {
-  logger.debug("check-state");
   let content = {
     success: true,
     message: 'Successfully logged in'

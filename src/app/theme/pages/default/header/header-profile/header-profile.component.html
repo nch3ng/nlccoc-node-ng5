@@ -87,10 +87,10 @@
 						</div>
 						<div class="m-card-profile__details">
 							<span class="m-card-profile__name">
-								Mark Andre
+								{{user.firstName}} {{user.lastName}}
 							</span>
 							<a href="" class="m-card-profile__email m-link">
-								mark.andre@gmail.com
+								{{user.email}}
 							</a>
 						</div>
 					</div>
@@ -339,7 +339,7 @@
 										Full Name
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" value="Mark Andre">
+										<input class="form-control m-input" type="text" value="{{user.firstName}} {{user.lastName}}">
 									</div>
 								</div>
 								<div class="form-group m-form__group row">

@@ -2,7 +2,7 @@ import jwt = require('jsonwebtoken');
 const env = process.env.NODE_ENV || 'development';
 import Config from "../../../config";
 
-module.exports = {
+export var auth = {
   verifyToken: ( (req, res, next) => {
       let token = req.body.token || req.query.token || req.headers['x-access-token'];
       if( token ) {

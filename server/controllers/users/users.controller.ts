@@ -13,7 +13,8 @@ users_router.get('/', function (req, res) {
 user_router.get('/:userId', function (req, res) {
   res.send('get user: '+ req.params.userId);
 })
-module.exports = {
+
+export var users = {
   users: users_router,
   user: user_router
 }

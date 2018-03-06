@@ -1,3 +1,4 @@
+import { Avatar } from './../../../../../server/interfaces/avatar';
 import { User } from './../../../auth/_models/user';
 import { UserService } from './../../../auth/_services/user.service';
 import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
@@ -11,12 +12,14 @@ declare let mLayout: any;
 })
 export class HeaderNavComponent implements OnInit, AfterViewInit {
   private user: User;
-
+  private avatar: string;
   constructor(private userService: UserService) {
 
   }
   ngOnInit() {
     this.user = this.userService.currentUser();
+
+    this.avatar = this.user.profile[0].fbAvatar[0].large[0].path;
   }
   ngAfterViewInit() {
 

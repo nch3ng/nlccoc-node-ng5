@@ -4,12 +4,12 @@ import Config from "../../config";
 
 import logger = require("../../helpers/logger");
 
-module.exports = function(req, res) {
+export function login(req, res) {
   var reqUser = req.body;
-
+  
   User.findOne({'email' : reqUser.email}, (err, user, done) => {
     let config = Config.config;
-
+    logger.debug(user);
     if( err )
       return done(err);
 
@@ -31,6 +31,10 @@ module.exports = function(req, res) {
       return;
     }
 
+    
+  
+    
+    
     let token = jwt.sign({
       userID: user._id,
       email: user.email,
@@ -38,7 +42,7 @@ module.exports = function(req, res) {
     }, config.secret, {
       expiresIn : 60*60*config.expiry
     });
-    logger.debug(token);
+    
     let content = {
       user: user,
       success: true,
@@ -47,5 +51,54 @@ module.exports = function(req, res) {
     };
     res.send(content);
   })
+}
 
+export function fbLogin(req, res){
+  //console.log(req.body);
+  
+  let user = new User();
+  let token; 
+  //console.log(req.body);
+  user.email = req.body.email;
+  user.firstName = req.body.firstName;
+  user.lastName = req.body.lastName;
+  user.profile = req.body.profile;
+
+  token = user.generateJwt();
+
+  User.findOne({'email' : req.body.email}, (err, result_user, done) => {
+
+    var config = Config.config;
+    if( err )
+      return done(err);
+
+    if( !result_user ) {
+      // The user does not exist
+         
+      user.save(function(err) {
+        
+        
+        //console.log(token);
+        res.status(200);
+        res.json({
+          "user": user,
+          "success": true,
+          "message": 'You successfully signed up.',
+          "token" : token
+        });
+      });
+      return;
+    } else {
+      // The user exists
+      res.status(200);
+      res.json({
+        "user": user,
+        "success": true,
+        "message": 'You successfully logged in.',
+        "token" : token
+      });
+      return;
+    }
+  });
+  
 }

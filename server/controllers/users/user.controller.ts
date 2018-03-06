@@ -6,4 +6,4 @@ router.get('/:userId', function (req, res) {
   res.send('get user: '+ req.params.userId);
 })
 
-module.exports = router 
+export = router 

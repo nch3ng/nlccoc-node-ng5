@@ -2,7 +2,36 @@ import * as mongoose from "mongoose";
 import * as crypto  from "crypto";
 import * as jwt from "jsonwebtoken";
 import Config from "../../config";
+import { Profile } from "../../interfaces/profile";
 let config = Config.config;
+
+const addressSchema = new mongoose.Schema({
+  address: String,
+  city: String,
+  postcode: String
+})
+const pictureProfileSchema = new mongoose.Schema({
+  height: Number,
+  width: Number,
+  path: String,
+})
+
+const avatarSchema = new mongoose.Schema({
+  large: [pictureProfileSchema],
+  normal: [pictureProfileSchema]
+})
+
+const profileSchema = new mongoose.Schema({
+  fbId: String,
+  fbCover: String,
+  fbAvatar: [avatarSchema],
+  fbToken: String,
+  fullName: String,
+  gender: String,
+  locale: String,
+  fbLink: String,
+  address: [addressSchema]
+})
 
 export const userSchema = new mongoose.Schema({
   email: {
@@ -19,7 +48,8 @@ export const userSchema = new mongoose.Schema({
     required: true
   },
   hash: String,
-  salt: String
+  salt: String,
+  profile: [profileSchema]
 });
 
 userSchema.methods.setPassword = function(password){

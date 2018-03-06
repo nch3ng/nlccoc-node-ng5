@@ -1,3 +1,4 @@
+import { Avatar } from './../../../../server/interfaces/avatar';
 import { AuthenticationService } from './authentication.service';
 import { Injectable } from "@angular/core";
 import { Headers, Http, RequestOptions, Response } from "@angular/http";
@@ -52,10 +53,8 @@ export class UserService {
 
   currentUser(): User {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.user = currentUser;
 
-    this.user.firstName = currentUser['firstName'];
-    this.user.lastName = currentUser['lastName'];
-    this.user.email = currentUser['email'];
     return this.user;
   }
 

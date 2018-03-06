@@ -97,7 +97,7 @@ order_router.post('/', function (req, res) {
   });
 })
 
-module.exports = {
-  orders: orders_router,
-  order: order_router
-}
+export var orders = orders_router;
+export var order = order_router;
+//   order: order_router
+// }

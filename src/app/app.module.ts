@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { ScriptLoaderService } from "./_services/script-loader.service";
 import { ThemeRoutingModule } from "./theme/theme-routing.module";
 import { AuthModule } from "./auth/auth.module";
+import { FacebookModule } from 'ngx-facebook';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { AuthModule } from "./auth/auth.module";
     AppRoutingModule,
     ThemeRoutingModule,
     AuthModule,
+    FacebookModule.forRoot()
   ],
   providers: [ScriptLoaderService],
   bootstrap: [AppComponent]

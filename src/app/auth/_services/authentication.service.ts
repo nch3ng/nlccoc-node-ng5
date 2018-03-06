@@ -5,6 +5,7 @@ import {
   Headers, 
   RequestOptions  } from "@angular/http";
 import "rxjs/add/operator/map";
+import { User } from "../_models";
 
 @Injectable()
 export class AuthenticationService {
@@ -19,6 +20,28 @@ export class AuthenticationService {
     let token = ( currUser && 'token' in currUser) ? currUser.token : this.token;
     let headers = new Headers({ 'x-access-token': token });
     return new RequestOptions({ headers: headers });
+  }
+
+  fbLogin(user: User) {
+    let body = JSON.stringify(user);
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.post(`/api/fbLogin`, body, options)
+      .map((response: Response) => {
+        let res_body = this.parseRes(response)
+        if( res_body['success'] === true ){
+
+          let user = res_body['user'];
+          user.token = res_body['token'];
+
+          if (user && user.token) {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem('currentUser', JSON.stringify(user));
+          }
+        }
+      });
   }
 
   login(email: string, password: string) {

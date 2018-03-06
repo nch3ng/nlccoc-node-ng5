@@ -82,7 +82,7 @@
 						</div>
 						<div class="m-card-profile__pic">
 							<div class="m-card-profile__pic-wrapper">
-								<img src="./assets/app/media/img/users/user4.jpg" alt=""/>
+								<img src="{{ user.profile[0].fbAvatar[0].large[0].path }}" alt=""/>
 							</div>
 						</div>
 						<div class="m-card-profile__details">
@@ -347,7 +347,7 @@
 										Occupation
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" value="CTO">
+										<input class="form-control m-input" type="text" value="{{user.profile[0].occupation}}">
 									</div>
 								</div>
 								<div class="form-group m-form__group row">
@@ -355,7 +355,7 @@
 										Company Name
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" value="Keenthemes">
+										<input class="form-control m-input" type="text" value="{{user.profile[0].organization}}">
 										<span class="m-form__help">
 											If you want your invoices addressed to a company. Leave blank to use your full name.
 										</span>
@@ -366,7 +366,7 @@
 										Phone No.
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" value="+456669067890">
+										<input class="form-control m-input" type="text" value="{{user.profile[0].cell}}">
 									</div>
 								</div>
 								<div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
@@ -382,7 +382,7 @@
 										Address
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" value="L-12-20 Vertex, Cybersquare">
+										<input class="form-control m-input" type="text" value="{{user.profile[0].address.address}}">
 									</div>
 								</div>
 								<div class="form-group m-form__group row">
@@ -390,7 +390,7 @@
 										City
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" value="San Francisco">
+										<input class="form-control m-input" type="text" value="{{user.profile[0].address.city}}">
 									</div>
 								</div>
 								<div class="form-group m-form__group row">
@@ -398,7 +398,7 @@
 										State
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" value="California">
+										<input class="form-control m-input" type="text" value="{{user.profile[0].address.state}}">
 									</div>
 								</div>
 								<div class="form-group m-form__group row">
@@ -406,7 +406,7 @@
 										Postcode
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" value="45000">
+										<input class="form-control m-input" type="text" value="{{user.profile[0].address.postcode}}">
 									</div>
 								</div>
 								<div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
@@ -422,15 +422,15 @@
 										Linkedin
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" value="www.linkedin.com/Mark.Andre">
+										<input class="form-control m-input" type="text" value="{{user.profile[0].linkedInLink}}">
 									</div>
 								</div>
-								<div class="form-group m-form__group row">
+								<div *ngIf="user.profile[0].fbLink !== null" class="form-group m-form__group row">
 									<label for="example-text-input" class="col-2 col-form-label">
 										Facebook
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" value="www.facebook.com/Mark.Andre">
+										<input class="form-control m-input" type="text" value="{{user.profile[0].fbLink}}">
 									</div>
 								</div>
 								<div class="form-group m-form__group row">
@@ -438,7 +438,7 @@
 										Twitter
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" value="www.twitter.com/Mark.Andre">
+										<input class="form-control m-input" type="text" value="{{user.profile[0].twitterLink}}">
 									</div>
 								</div>
 								<div class="form-group m-form__group row">
@@ -446,7 +446,7 @@
 										Instagram
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" value="www.instagram.com/Mark.Andre">
+										<input class="form-control m-input" type="text" value="{{user.profile[0].instalLink}}">
 									</div>
 								</div>
 							</div>

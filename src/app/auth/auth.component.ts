@@ -14,16 +14,21 @@ import { UserService } from './_services/user.service';
 import { AlertComponent } from './_directives/alert.component';
 import { LoginCustom } from './_helpers/login-custom';
 import { Helpers } from '../helpers';
+import { FacebookService, InitParams, LoginResponse, LoginOptions } from 'ngx-facebook';
+import secrets from '../../secrets';
+import { User } from './_models';
 
 @Component({
   selector: '.m-grid.m-grid--hor.m-grid--root.m-page',
   templateUrl: './templates/login-1.component.html',
+  providers: [FacebookService],
   encapsulation: ViewEncapsulation.None,
 })
 
 export class AuthComponent implements OnInit {
   model: any = {};
   loading = false;
+  facebookLoading = false;
   returnUrl: string;
 
   @ViewChild('alertSignin',
@@ -40,10 +45,20 @@ export class AuthComponent implements OnInit {
     private _route: ActivatedRoute,
     private _authService: AuthenticationService,
     private _alertService: AlertService,
-    private cfr: ComponentFactoryResolver) {
+    private cfr: ComponentFactoryResolver,
+    private fbService: FacebookService) {
+
+      let initParams: InitParams = {
+        appId: secrets.facebookAppId,
+        xfbml: true,
+        version: 'v2.12'
+      };
+  
+      fbService.init(initParams);
   }
 
   ngOnInit() {
+
     this.model.remember = true;
     // get return url from route parameters or default to '/'
     this.returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
@@ -116,5 +131,76 @@ export class AuthComponent implements OnInit {
     let factory = this.cfr.resolveComponentFactory(AlertComponent);
     let ref = this[target].createComponent(factory);
     ref.changeDetectorRef.detectChanges();
+  }
+
+  loginWithFacebook(): void {
+    console.log("login with facebook");
+    this.facebookLoading = true;
+    const options: LoginOptions = {
+      scope: 'email,public_profile',
+      return_scopes: true,
+      enable_profile_selector: true
+    };
+    this.fbService.login(options)
+      .then(
+        (response: LoginResponse) => { 
+          if (response.status === 'connected') {
+            // the user is logged in and has authenticated your
+            // app, and response.authResponse supplies
+            // the user's ID, a valid access token, a signed
+            // request, and the time the access token 
+            // and signed request each expire
+
+            let user = new User();
+
+            var uid = response.authResponse.userID;
+            var accessToken = response.authResponse.accessToken;
+
+            user.profile.fbId = uid;
+            user.profile.fbToken = accessToken;
+
+            console.log(response.status);
+            console.log(uid);
+            console.log(accessToken);
+            this.fbService.api('/me?fields=id,name,email,first_name,last_name,picture.width(500).height(500),gender,locale,link,age_range,timezone,cover,updated_time,verified')
+              .then(response => {
+                console.log('Got response', response);
+
+                user.email = response['email'];
+                user.profile.fbId = response['id'];
+                user.firstName = response['first_name'];
+                user.lastName = response['last_name'];
+                user.profile.fullName = response['name'];
+                user.profile.locale = response['locale'];
+                user.profile.fbLink = response['link'];
+                user.profile.gender = response['gender'];
+                user.profile.fbCover = response['cover']['source'];
+                user.profile.fbAvatar.large.height = response['picture']['data']['height'];
+                user.profile.fbAvatar.large.width =  response['picture']['data']['width'];
+                user.profile.fbAvatar.large.path = response['picture']['data']['url'];
+
+                this._authService.fbLogin(user).subscribe(
+                  (data) => {
+                    console.log('login successful');
+                    console.log(this.returnUrl);
+                    this._router.navigate([this.returnUrl]);
+                  },
+                  (error) => {
+                    this.showAlert('alertSignin');
+                    this._alertService.error('Facebook login failed');
+                    this.loading = false;
+                  }
+                );
+
+                this.facebookLoading = false;
+              });
+              this.fbService.api('/' + uid + '/picture?type=large')
+              .then(response => {
+                console.log('Got response', response);
+              });
+          }
+        })
+      .catch((error: any) => console.error(error));
+
   }
 }

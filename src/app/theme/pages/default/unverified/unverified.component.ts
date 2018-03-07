@@ -1,5 +1,7 @@
+import { AuthenticationService } from './../../../../auth/_services/authentication.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRouteSnapshot, ActivatedRoute } from '@angular/router';
+import { ActivatedRouteSnapshot, ActivatedRoute, Router } from '@angular/router';
+import { UserService } from '../../../../auth/_services';
 
 @Component({
   selector: 'app-unverified',
@@ -8,10 +10,28 @@ import { ActivatedRouteSnapshot, ActivatedRoute } from '@angular/router';
 })
 export class UnverifiedComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(
+    private route: ActivatedRoute, 
+    private authService: AuthenticationService, 
+    private router: Router,
+    private userService: UserService) { }
 
   ngOnInit() {
-    console.log("Get the unverified page of " + this.route.snapshot.paramMap.get('userId'));
+    //console.log("Get the unverified page of " + this.route.snapshot.paramMap.get('userId'));
+  }
+
+  goToLogin() {
+    this.authService.logout();
+    this.router.navigate(["/index"]);
+  }
+
+  sendVerificationEmail(){
+    this.userService.sendVerificationEmail().subscribe(
+      (data) => {
+        console.log(data);
+      },
+      (error) => {}
+    );
   }
 
 }

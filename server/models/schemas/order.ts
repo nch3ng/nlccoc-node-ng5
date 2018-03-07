@@ -1,5 +1,4 @@
 import * as mongoose from "mongoose";
-import * as crypto  from "crypto";
 import * as jwt from "jsonwebtoken";
 import Config from "../../config";
 let config = Config.config;

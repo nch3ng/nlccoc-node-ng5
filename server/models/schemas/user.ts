@@ -53,12 +53,6 @@ export const userSchema = new mongoose.Schema({
   isVerified: { type: Boolean, default: false }
 });
 
-const tokenSchema = new mongoose.Schema({
-    _userId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
-    token: { type: String, required: true },
-    createdAt: { type: Date, required: true, default: Date.now, expires: 43200 }
-});
-
 userSchema.methods.setPassword = function(password){
   this.salt = crypto.randomBytes(16).toString('hex');
   this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');

@@ -21,6 +21,10 @@ export class UserService {
   verify() {
     return this.httpClient.get<AuthResponse>('/api/check-state', this.jwtHttpClient());
   }
+  
+  sendVerificationEmail(){
+    return this.httpClient.post('/api/sendVerificationEmail', JSON.stringify(this.currentUser()),this.jwtHttpClient());
+  }
 
   forgotPassword(email: string) {
     return this.http.post('/api/forgot-password', JSON.stringify({ email }), this.jwt()).map((response: Response) => response.json());
@@ -35,8 +39,6 @@ export class UserService {
   }
 
   create(user: User) {
-    // console.log("Register: ");
-    // console.log(user)
     let body = JSON.stringify(user);
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -75,6 +77,7 @@ export class UserService {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
     if (currentUser && currentUser.token) {
       let headers = new HttpHeaders({ 'x-access-token': currentUser.token });
+      headers = headers.append('Content-Type', 'application/json');
       return { headers: headers };
     }
   }

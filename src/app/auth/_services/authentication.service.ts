@@ -35,7 +35,7 @@ export class AuthenticationService {
     }
     return this.http.post<AuthResponse>(`/api/fbLogin`, body, options)
       .map((response) => {
-        console.log(response);
+        // console.log(response);
         if( response.success === true ){
 
           let user = response.user;
@@ -71,7 +71,7 @@ export class AuthenticationService {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('currentUser', JSON.stringify(user));
           }
-          console.log(user);
+          // console.log(user);
           return user;
         }
         // let user = response.json();
@@ -87,7 +87,6 @@ export class AuthenticationService {
     this.token = null;
     this._loggedIn=false;
     localStorage.removeItem('currentUser');
-    // this.router.navigate(["/"]);
   }
 
   setToken(res){
@@ -111,4 +110,5 @@ export class AuthenticationService {
   get loggedIn() {
     return this._loggedIn;
   }
+
 }

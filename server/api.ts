@@ -9,6 +9,7 @@ import { register as registerCtrl } from './controllers/auth/register';
 import { auth } from "./controllers/auth/middleware/auth";
 import { users as usersCtrl } from "./controllers/users/users.controller";
 import { orders as ordersCtrl, order as orderCtrl } from "./controllers/orders/orders.controller";
+import { sendVerificationEmail } from './controllers/auth/auth';
 let router = express.Router();
 // let auth = require("./controllers/auth/middleware/auth");
 
@@ -34,6 +35,10 @@ router.get('/check-state', auth.verifyToken, (req, res) => {
   res.send(content);
 });
 
+router.post('/sendVerificationEmail', auth.verifyToken_unverified, sendVerificationEmail)
+router.get('/confirmation/:token', function (req, res) {
+  console.log(req.params);
+})
 router.use('/user', auth.verifyToken, usersCtrl.user);
 router.use('/users', auth.verifyToken, usersCtrl.users);
 router.use('/orders', auth.verifyToken, ordersCtrl);

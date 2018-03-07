@@ -9,4 +9,6 @@ export interface IUser extends mongoose.Document {
   hash?: String;
   salt?: String;
   profile: Profile;
+  status: String;
+  isVerified: Boolean;
 };

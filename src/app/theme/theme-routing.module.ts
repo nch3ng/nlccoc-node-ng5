@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { ThemeComponent } from './theme.component';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from "../auth/_guards/auth.guard";
+import { UnverifiedComponent } from './pages/default/unverified/unverified.component';
 
 const routes: Routes = [
   {

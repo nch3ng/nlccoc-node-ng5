@@ -4,68 +4,75 @@ import {
   Response, 
   Headers, 
   RequestOptions  } from "@angular/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import "rxjs/add/operator/map";
+
 import { User } from "../_models";
+import { AuthResponse } from "../_models/authresponse";
 
 @Injectable()
 export class AuthenticationService {
   private base_url = '/api';
   token: string;
   private _loggedIn: boolean = false;
-  constructor(private http: Http) {
+  constructor(private http: HttpClient) {
   }
 
   constructHeader(){
     let currUser = JSON.parse(localStorage.getItem('currentUser')); 
     let token = ( currUser && 'token' in currUser) ? currUser.token : this.token;
     let headers = new Headers({ 'x-access-token': token });
-    return new RequestOptions({ headers: headers });
+    return { headers: headers };
   }
 
   fbLogin(user: User) {
     let body = JSON.stringify(user);
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    let options = new RequestOptions({ headers: headers });
+    let headers = new HttpHeaders({'Content-Type': 'application/json'});
+    // headers.append('Content-Type', 'application/json');
+    // let options = new RequestOptions({ headers: headers });
+    let options = {
+      headers: headers
+    }
+    return this.http.post<AuthResponse>(`/api/fbLogin`, body, options)
+      .map((response) => {
+        console.log(response);
+        if( response.success === true ){
 
-    return this.http.post(`/api/fbLogin`, body, options)
-      .map((response: Response) => {
-        let res_body = this.parseRes(response)
-        if( res_body['success'] === true ){
-
-          let user = res_body['user'];
-          user.token = res_body['token'];
+          let user = response.user;
+          user.token = response.token;
 
           if (user && user.token) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('currentUser', JSON.stringify(user));
           }
+          return user;
         }
       });
   }
 
-  login(email: string, password: string) {
+  login(email: string, password: string): any {
     let body = JSON.stringify({ email: email, password: password });
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    let options = new RequestOptions({ headers: headers });
+    let headers = new HttpHeaders();
+    headers = headers.append('Content-Type', 'application/json');
+    let options = {
+      headers: headers
+    }
 
-    //return this.http.post(`${this.base_url}/login`, body, options).map( (res) => this.setToken(res) );
-    //return this.http.post('/api/authenticate', JSON.stringify({ email: email, password: password }))
-    
-    return this.http.post(`${this.base_url}/login`, body, options)
-      .map((response: Response) => {
+    return this.http.post<AuthResponse>(`${this.base_url}/login`, body, options)
+      .map((response: AuthResponse) => {
         // login successful if there's a jwt token in the response
-        let res_body = this.parseRes(response)
-        if( res_body['success'] === true ){
+        if( response.success === true ){
 
-          let user = res_body['user'];
-          user.token = res_body['token'];
+          let user = response.user;
 
+          user.token = response.token;
+      
           if (user && user.token) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('currentUser', JSON.stringify(user));
           }
+          console.log(user);
+          return user;
         }
         // let user = response.json();
         // if (user && user.token) {

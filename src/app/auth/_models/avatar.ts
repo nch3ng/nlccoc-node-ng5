@@ -4,7 +4,6 @@ export class Avatar {
   normal: PictureProfile;
 
   constructor(){
-    console.log("Construct Avatar");
     this.large = new PictureProfile();
     this.normal = new PictureProfile();
   }

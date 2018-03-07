@@ -75,10 +75,15 @@ export class AuthComponent implements OnInit {
   signin() {
     this.loading = true;
     this._authService.login(this.model.email, this.model.password).subscribe(
-      data => {
+      (user: User) => {
         console.log('login successful');
-        console.log(this.returnUrl);
-        this._router.navigate([this.returnUrl]);
+        console.log(user);
+        if(!user.isVerified) {
+          this._router.navigate(['/'+ user['_id'] + '/unverified']);
+        } else {
+          console.log(this.returnUrl);
+          this._router.navigate([this.returnUrl]);
+        }
       },
       error => {
         //console.log(error.json());
@@ -152,19 +157,18 @@ export class AuthComponent implements OnInit {
             // and signed request each expire
 
             let user = new User();
-
             var uid = response.authResponse.userID;
             var accessToken = response.authResponse.accessToken;
 
             user.profile.fbId = uid;
             user.profile.fbToken = accessToken;
 
-            console.log(response.status);
-            console.log(uid);
-            console.log(accessToken);
+            // console.log(response.status);
+            // console.log(uid);
+            // console.log(accessToken);
             this.fbService.api('/me?fields=id,name,email,first_name,last_name,picture.width(500).height(500),gender,locale,link,age_range,timezone,cover,updated_time,verified')
               .then(response => {
-                console.log('Got response', response);
+                // console.log('Got response', response);
 
                 user.email = response['email'];
                 user.profile.fbId = response['id'];
@@ -180,7 +184,7 @@ export class AuthComponent implements OnInit {
                 user.profile.fbAvatar.large.path = response['picture']['data']['url'];
 
                 this._authService.fbLogin(user).subscribe(
-                  (data) => {
+                  (user: User) => {
                     console.log('login successful');
                     console.log(this.returnUrl);
                     this._router.navigate([this.returnUrl]);
@@ -196,7 +200,7 @@ export class AuthComponent implements OnInit {
               });
               this.fbService.api('/' + uid + '/picture?type=large')
               .then(response => {
-                console.log('Got response', response);
+                // console.log('Got response', response);
               });
           }
         })

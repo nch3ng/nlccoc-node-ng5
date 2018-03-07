@@ -5,6 +5,8 @@ import { Headers, Http, RequestOptions, Response } from "@angular/http";
 
 import { User } from "../_models/index";
 import 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthResponse } from '../_models/authresponse';
 
 @Injectable()
 export class UserService {
@@ -12,12 +14,12 @@ export class UserService {
   private base_url: '/api';
   private user: User;
 
-  constructor(private http: Http, private authService: AuthenticationService) {
+  constructor(private http: Http, private authService: AuthenticationService, private httpClient: HttpClient) {
     this.user = new User();
   }
 
   verify() {
-    return this.http.get('/api/check-state', this.jwt()).map((response: Response) => response.json());
+    return this.httpClient.get<AuthResponse>('/api/check-state', this.jwtHttpClient());
   }
 
   forgotPassword(email: string) {
@@ -66,6 +68,14 @@ export class UserService {
     if (currentUser && currentUser.token) {
       let headers = new Headers({ 'x-access-token': currentUser.token });
       return new RequestOptions({ headers: headers });
+    }
+  }
+
+  private jwtHttpClient(){
+    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (currentUser && currentUser.token) {
+      let headers = new HttpHeaders({ 'x-access-token': currentUser.token });
+      return { headers: headers };
     }
   }
 }

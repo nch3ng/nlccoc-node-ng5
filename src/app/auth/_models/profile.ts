@@ -13,7 +13,6 @@ export class Profile {
   address: Address;
 
   constructor(){
-    console.log("Construct Profile");
     this.fbAvatar = new Avatar();
     this.address = new Address();
   }

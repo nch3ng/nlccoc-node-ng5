@@ -25,7 +25,7 @@ import { UnwrapTagDirective } from '../../_directives/unwrap-tag.directive';
     ScrollTopComponent,
     TooltipsComponent,
     HrefPreventDefaultDirective,
-    UnwrapTagDirective,
+    UnwrapTagDirective
   ],
   exports: [
     LayoutComponent,

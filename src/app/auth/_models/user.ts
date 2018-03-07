@@ -7,6 +7,8 @@ export class User {
   firstName: string;
   lastName: string;
   profile: Profile;
+  token: string;
+  isVerified: boolean;
 
   constructor(){
     this.email = 'johndoe@gmail.com';

@@ -10,7 +10,7 @@
 		"dev:run": "run-p client-ng2:live node dist/server/index.js",
 		"lint": "ng lint",
 		"e2e": "ng e2e",
-		"postinstall": "run-p webmodules servermodules; ./node_modules/.bin/tsc --module commonjs --sourceMap --target ES5 && node --max_old_space_size=12240 ./node_modules/@angular/cli/bin/ng build --aot -prod",
+		"postinstall": "ng build --aot -prod",
 		"build:server": "./node_modules/.bin/tsc --module commonjs --sourceMap --target ES5",
 		"build:web": "node --max_old_space_size=12240 ./node_modules/@angular/cli/bin/ng build --aot -prod",
 		"server:live": "nodemon --exec ./node_modules/.bin/ts-node -- ./server/index.ts",

@@ -34,7 +34,6 @@ export function login(req, res) {
       return;
     }
     
-    
     let token = jwt.sign({
       userID: user._id,
       email: user.email,

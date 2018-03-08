@@ -11,7 +11,7 @@ import { UserService } from '../../../../../auth/_services';
 })
 export class HeaderProfileComponent implements OnInit {
 
-  private user: User;
+  user: User;
 
   constructor(private userService: UserService) {
 

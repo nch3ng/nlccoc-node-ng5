@@ -9,7 +9,7 @@ let app = server.Server.bootstrap().app;
 app.set("port", port);
 
 let httpServer = http.createServer(app);
-httpServer.listen(port, (err) => {
+httpServer.listen(port, (err:any) => {
   if (err) {
     return console.log(err)
   }

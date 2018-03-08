@@ -27,8 +27,8 @@ import { User } from './_models';
 
 export class AuthComponent implements OnInit {
   model: any = {};
-  loading = false;
-  facebookLoading = false;
+  loading:boolean = false;
+  facebookLoading:boolean = false;
   returnUrl: string;
 
   @ViewChild('alertSignin',

@@ -11,8 +11,8 @@ declare let mLayout: any;
   encapsulation: ViewEncapsulation.None,
 })
 export class HeaderNavComponent implements OnInit, AfterViewInit {
-  private user: User;
-  private avatar: string;
+  user: User;
+  avatar: string;
   constructor(private userService: UserService) {
 
   }

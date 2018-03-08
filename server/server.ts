@@ -61,13 +61,13 @@ export class Server {
     
     // DO NOT use "/api", it is reserved for APIs
 
-    let static_ng2 = express.static(path.join(__dirname, '../dist'));
+    let static_ng2 = express.static(path.join(__dirname, '../web'));
     let static_ng2_assets = express.static(path.join(__dirname, 'public'));
     this.app.use('/static', static_ng2_assets);
     this.app.use(static_ng2);
     this.app.use(['/', '/login', '/register'], function(req, res, next) {
       // Just send the index.html for other files to support HTML5Mode
-      res.sendFile('/index.html', { root: path.join(__dirname, '../dist') });
+      res.sendFile('/index.html', { root: path.join(__dirname, '../web') });
     });
   }
   private api(){

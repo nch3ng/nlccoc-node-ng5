@@ -1,0 +1,1 @@
+web: ./node_modules/.bin/tsc --module commonjs --sourceMap --target ES5

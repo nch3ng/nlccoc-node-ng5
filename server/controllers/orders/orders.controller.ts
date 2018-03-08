@@ -99,5 +99,3 @@ order_router.post('/', function (req, res) {
 
 export var orders = orders_router;
 export var order = order_router;
-//   order: order_router
-// }

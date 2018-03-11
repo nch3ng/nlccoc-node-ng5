@@ -10,6 +10,7 @@ import { auth } from "./controllers/auth/middleware/auth";
 import { users as usersCtrl } from "./controllers/users/users.controller";
 import { orders as ordersCtrl, order as orderCtrl } from "./controllers/orders/orders.controller";
 import { sendVerificationEmail } from './controllers/auth/auth';
+import Token from './models/token';
 let router = express.Router();
 // let auth = require("./controllers/auth/middleware/auth");
 
@@ -38,6 +39,41 @@ router.get('/check-state', auth.verifyToken, (req, res) => {
 router.post('/sendVerificationEmail', auth.verifyToken_unverified, sendVerificationEmail)
 router.get('/confirmation/:token', function (req, res) {
   console.log(req.params);
+
+  Token.findOne({'token' : req.params.token}, (err, token, done) => {
+    if( err )
+      return done(err);
+    
+    let content;
+    if( !token ) {
+      console.log("token does not exist");
+      res.redirect('/foo/bar');
+    } else {
+      console.log("token exists");
+      console.log(typeof req.query.uid);
+      let obj = JSON.stringify(token);
+
+      if(req.query.uid === token._userId.toString()) {
+        console.log("Successfully validated");
+        User.findOne({'_id' : token._userId.toString()}, (err, user, done) => {
+          user.isVerified = true;
+          user.save(
+            (err) => {
+              if (err) { return res.status(500).send({ msg: err.message }); }
+
+              res.redirect('/foo/bar');
+              token.remove();
+            }
+          )
+        });
+
+        //token.remove();
+        
+      } else {
+        console.log("Validation fail");
+      }
+    }
+  });
 })
 router.use('/user', auth.verifyToken, usersCtrl.user);
 router.use('/users', auth.verifyToken, usersCtrl.users);

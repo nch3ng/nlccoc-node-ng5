@@ -7,9 +7,11 @@ export var auth = {
 		let token = req.body.token || req.query.token || req.headers['x-access-token'];
 		if( token ) {
 			jwt.verify(token, Config.config.secret, (err, decoded) => {
+
 				if(!decoded['isVerified']){
 					return res.status(200).json({ success: false, verified: false, message: 'The user is not verified.' });   
 				}
+
 				if (err) {
 						return res.status(401).json({ success: false, message: 'Failed to authenticate token.' });    
 				} else {

@@ -7,12 +7,12 @@ import logger = require("../../helpers/logger");
 export function login(req, res) {
   var reqUser = req.body;
 
-  console.log('login');
+  // console.log('login');
   // console.log(req.body);
   
   User.findOne({'email' : reqUser.email}, (err, user, done) => {
     let config = Config.config;
-    logger.debug(user);
+    // logger.debug(user);
     if( err )
       return done(err);
 
@@ -37,7 +37,8 @@ export function login(req, res) {
     let token = jwt.sign({
       userID: user._id,
       email: user.email,
-      name: user.name
+      name: user.name,
+      isVerified: user.isVerified,
     }, config.secret, {
       expiresIn : 60*60*config.expiry
     });
@@ -88,8 +89,8 @@ export function fbLogin(req, res){
       return;
     } else {
       // The user exists
-      console.log('user exists');
-      console.log(result_user);
+      // console.log('user exists');
+      // console.log(result_user);
       token = result_user.generateJwt();
       res.status(200).json({
         "user": result_user,

@@ -5,6 +5,7 @@
 	"scripts": {
 		"ng": "ng",
 		"start": "node dist/server/index.js",
+		"start:dev": "run-p client-ng2:live server:live",
 		"build": "ng build",
 		"test": "mocha",
 		"dev:run": "run-p client-ng2:live node dist/server/index.js",

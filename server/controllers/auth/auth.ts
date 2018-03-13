@@ -5,7 +5,7 @@ import Token from '../../models/token';
 import * as crypto from "crypto";
 
 export function sendVerificationEmail(req, res) {
-  console.log('Re-Send Verification Email........');
+  //console.log('Re-Send Verification Email........');
   //console.log(req.body);
   let user = req.body;
   const email_token = new Token({_userId: user._id, token: crypto.randomBytes(16).toString('hex')});
@@ -13,7 +13,7 @@ export function sendVerificationEmail(req, res) {
 
   email_token.save(
     (err) => {
-      console.log("token saved");
+      //console.log("token saved");
       if (err) { return res.status(500).send({ msg: err.message }); }
   
       var options = {
@@ -29,8 +29,8 @@ export function sendVerificationEmail(req, res) {
         to: user.email,
         from: 'no-reply@expensetracker.com',
         subject: 'Thank you for signin up Expense Tracker',
-        text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/api\/confirmation\/' + email_token.token + '?uid=' + user._id + '.\n',
-        html: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/api\/confirmation\/' + email_token.token + '?uid=' + user._id + '.\n'
+        text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + email_token.token + '?uid=' + user._id + '.\n',
+        html: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + email_token.token + '?uid=' + user._id + '.\n'
       };
       sgMail.send(msg).then(
         () => {

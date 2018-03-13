@@ -9,11 +9,13 @@ export class User {
   profile: Profile;
   token: string;
   isVerified: boolean;
+  role: string;
 
   constructor(){
     this.email = 'johndoe@gmail.com';
     this.firstName = 'John';
     this.lastName = 'Doe';
     this.profile = new Profile();
+    this.role = 'normal';
   }
 }

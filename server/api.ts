@@ -36,8 +36,9 @@ router.get('/check-state', auth.verifyToken, (req, res) => {
   res.send(content);
 });
 
-router.post('/sendVerificationEmail', auth.verifyToken_unverified, sendVerificationEmail)
-router.get('/confirmation/:token', function (req, res) {
+router.post('/sendVerificationEmail', auth.verifyToken_unverified, sendVerificationEmail);
+
+router.post('/confirmation/:token', function (req, res) {
   console.log(req.params);
 
   Token.findOne({'token' : req.params.token}, (err, token, done) => {
@@ -46,22 +47,36 @@ router.get('/confirmation/:token', function (req, res) {
     
     let content;
     if( !token ) {
-      console.log("token does not exist");
-      res.redirect('/foo/bar');
+      // console.log("token does not exist");
+      res.status(200);
+      res.json({
+        "success": false,
+        "message": 'The link is wrong'
+      });
     } else {
       console.log("token exists");
       console.log(typeof req.query.uid);
       let obj = JSON.stringify(token);
 
       if(req.query.uid === token._userId.toString()) {
-        console.log("Successfully validated");
+        //console.log("Successfully validated");
         User.findOne({'_id' : token._userId.toString()}, (err, user, done) => {
+          if(user.isVerified){
+            res.status(200).json({
+              "success": false,
+              "message": 'Email is already verified'
+            });
+            token.remove();
+          }
           user.isVerified = true;
           user.save(
             (err) => {
               if (err) { return res.status(500).send({ msg: err.message }); }
 
-              res.redirect('/foo/bar');
+              res.status(200).json({
+                "success": true,
+                "message": 'Email verification succeed'
+              });
               token.remove();
             }
           )

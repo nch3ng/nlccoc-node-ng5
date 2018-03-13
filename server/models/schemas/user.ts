@@ -50,7 +50,8 @@ export const userSchema = new mongoose.Schema({
   hash: String,
   salt: String,
   profile: [profileSchema],
-  isVerified: { type: Boolean, default: false }
+  isVerified: { type: Boolean, default: false },
+  role: {type: String, default: 'normal'}
 });
 
 userSchema.methods.setPassword = function(password){

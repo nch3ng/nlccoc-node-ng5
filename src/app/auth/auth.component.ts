@@ -20,7 +20,7 @@ import { User } from './_models';
 
 @Component({
   selector: '.m-grid.m-grid--hor.m-grid--root.m-page',
-  templateUrl: './templates/login-1.component.html',
+  templateUrl: './pages/login.component.html',
   providers: [FacebookService],
   encapsulation: ViewEncapsulation.None,
 })

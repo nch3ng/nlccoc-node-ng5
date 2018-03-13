@@ -73,10 +73,9 @@ export function fbLogin(req, res){
 
     if( !result_user ) {
       // The user does not exist
+      user.isVerified = true;
       token = user.generateJwt();
       user.save(function(err) {
-        
-        
         //console.log(token);
         res.status(200);
         res.json({

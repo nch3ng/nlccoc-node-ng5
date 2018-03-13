@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { Injectable } from "@angular/core";
 import { 
   Http, 
@@ -109,6 +110,11 @@ export class AuthenticationService {
 
   get loggedIn() {
     return this._loggedIn;
+  }
+
+  verifyEmail(cid: string, uid: string): Observable<{success: boolean, message: string}>{
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<{success: boolean, message: string}>('/api/confirmation/'+cid+'?uid='+uid, {}, { headers: headers })
   }
 
 }

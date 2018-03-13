@@ -1,7 +1,7 @@
-import { AuthenticationService } from './../../../../auth/_services/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRouteSnapshot, ActivatedRoute, Router } from '@angular/router';
-import { UserService } from '../../../../auth/_services';
+import { AuthenticationService } from '../../_services/authentication.service';
+import { UserService } from '../../_services/user.service';
 
 @Component({
   selector: 'app-unverified',

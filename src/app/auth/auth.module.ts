@@ -14,12 +14,18 @@ import { AuthenticationService } from './_services/authentication.service';
 import { UserService } from './_services/user.service';
 import { fakeBackendProvider } from './_helpers/index';
 import { HttpClientModule } from '@angular/common/http';
+import { ConfirmationSuccessComponent } from './pages/confirmation/confirmation-success/confirmation-success.component';
+import { ConfirmationFailedComponent } from './pages/confirmation/confirmation-failed/confirmation-failed.component';
+import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
 
 @NgModule({
   declarations: [
     AuthComponent,
     AlertComponent,
-    LogoutComponent
+    LogoutComponent,
+    ConfirmationSuccessComponent,
+    ConfirmationFailedComponent,
+    ConfirmationComponent
   ],
   imports: [
     CommonModule,

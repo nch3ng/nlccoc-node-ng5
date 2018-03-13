@@ -22,31 +22,26 @@ export class AuthGuard implements CanActivate {
     return this._userService.verify().map(
       data => {
         if (data !== null) {
-          console.log(data)
           let checked = this.getUrlParameter(state.url, "checked")
           if(data['verified'] !==null && data['verified'] == false && !checked){
             // Unverified
-            console.log('redirect')
             this._router.navigate(['/' + currentUser['_id'] + '/unverified'], { queryParams: { checked: 1 } });
             return false;
           }
           // logged in so return true
-          console.log('return true');
           return true;
         }
         // error when verify so redirect to login page with the return url
-        console.log("no data");
         this._router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
         return false;
       },
       error => {
-        console.log("error");
         // error when verify so redirect to login page with the return url
         this._router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
         return false;
       }).catch(error => { 
         this._router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
-        return Observable.throw(error) }
+        return Observable.throw(0) }
       );
   }
 }

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { ThemeComponent } from './theme.component';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from "../auth/_guards/auth.guard";
-import { UnverifiedComponent } from './pages/default/unverified/unverified.component';
 
 const routes: Routes = [
   {
@@ -541,6 +540,10 @@ const routes: Routes = [
       {
         "path": "header\/profile",
         "loadChildren": ".\/pages\/default\/header\/header-profile\/header-profile.module#HeaderProfileModule"
+      },
+      {
+        "path": "admin\/users",
+        "loadChildren": ".\/pages\/default\/users\/users.module#UsersModule"
       },
       {
         "path": "404",

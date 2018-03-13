@@ -48,11 +48,11 @@ export function register(req, res) {
         sgMail.setApiKey(secrets.sendgridKey);
 
         const msg = {
-          to: 'boo0330@gmail.com',
+          to: user.email,
           from: 'no-reply@expensetracker.com',
           subject: 'Thank you for signin up Expense Tracker',
-          text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/api\/confirmation\/' + email_token.token + '.\n',
-          html: 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/api\/confirmation\/' + email_token.token + '.\n'
+          text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + email_token.token + '?uid=' + user._id + '.\n',
+          html: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + email_token.token + '?uid=' + user._id + '.\n'
         };
         sgMail.send(msg).then(
           () => {

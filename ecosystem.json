@@ -30,7 +30,7 @@
       "post-setup": "sudo npm install --unsafe-perm;sudo npm run build:server;",
       "pre-deploy-local" : "echo 'This is a local executed command'",
       "pre-deploy" : "",
-      "post-deploy" : "pm2 startOrRestart ecosystem.json --env production",
+      "post-deploy" : "sudo pm2 startOrRestart ecosystem.json --env production",
       "env"  : {
         "NODE_ENV": "production"
       }

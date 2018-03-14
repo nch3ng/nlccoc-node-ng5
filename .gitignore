@@ -11,6 +11,10 @@
 /node_modules
 /server/node_modules
 
+#credentials
+/encryption
+.env
+
 # IDEs and editors
 /.idea
 .project

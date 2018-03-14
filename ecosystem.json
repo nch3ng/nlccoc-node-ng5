@@ -1,7 +1,7 @@
 {
   "apps" : [{
     "name"      : "management",
-    "script"    : "/var/www/nlccoc/dist/server/index.js",
+    "script"    : "/var/www/nlccoc/source/dist/server/index.js",
     "env": {
       "COMMON_VARIABLE": "true"
     },

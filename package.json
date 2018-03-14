@@ -14,7 +14,7 @@
 		"preinstall": "cd server/ && npm install",
 		"postinstall": "",
 		"build:server": "./node_modules/.bin/tsc --module commonjs --sourceMap --target ES5",
-		"build:web": "node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng build --aot -prod",
+		"build:web": "node --max_old_space_size=102400 ./node_modules/@angular/cli/bin/ng build --aot -prod",
 		"server:live": "nodemon --exec ./node_modules/.bin/ts-node -- ./server/index.ts",
 		"client-ng2:live": "ng build --watch",
 		"client-pug:live": "npm run pug-it:w",

@@ -4,7 +4,6 @@ export class Address {
   postcode: string;
 
   constructor() {
-    console.log("construct address");
     this.address="";
     this.city="";
     this.postcode="";

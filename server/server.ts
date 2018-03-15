@@ -65,7 +65,7 @@ export class Server {
 
     let static_ng2;
     if(env == "dev"){
-      static_ng2 = express.static(path.join(__dirname, '../../dist/web'));
+      static_ng2 = express.static(path.join(__dirname, '../dist/web'));
     }
     else{
       static_ng2 = express.static(path.join(__dirname, '../web'));
@@ -77,7 +77,7 @@ export class Server {
     this.app.use(['/', '/login', '/register'], function(req, res, next) {
       // Just send the index.html for other files to support HTML5Mode
       if(env == "dev")
-        res.sendFile('/index.html', { root: path.join(__dirname, '../../dist/web') });
+        res.sendFile('/index.html', { root: path.join(__dirname, '../dist/web') });
       else
         res.sendFile('/index.html', { root: path.join(__dirname, '../web') });
     });

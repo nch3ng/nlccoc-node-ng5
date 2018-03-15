@@ -1,13 +1,16 @@
-import { Message } from 'primeng/primeng';
-
 import * as express from 'express';
 import User from '../../models/user';
+import { UserService } from "../../services/user.service"
 
 let users_router = express.Router();
 let user_router = express.Router();
 // define the home page route
 users_router.get('/', function (req, res) {
   console.log("Get all users");
+  // let q = UserService.findAll();
+  // q.then((users) => {
+  //   console.log(users);
+  // })
   User.find({}, "_id email firstName lastName role profile", 
     (err, users) => {
 
@@ -17,14 +20,11 @@ users_router.get('/', function (req, res) {
     });
 });
 
-
-
-
 user_router.get('/:userId', function (req, res) {
   res.send('get user: '+ req.params.userId);
 })
 
-export var users = {
+export let users = {
   users: users_router,
   user: user_router
 }

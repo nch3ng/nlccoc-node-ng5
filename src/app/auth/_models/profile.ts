@@ -10,7 +10,12 @@ export class Profile {
   gender: string;
   locale: string;
   fbLink: string;
+  linkedInLink: string;
+  twitterLink:string;
+  instalLink: string;
   address: Address;
+  organization: string;
+  occupation: string;
 
   constructor(){
     this.fbAvatar = new Avatar();

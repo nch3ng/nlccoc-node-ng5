@@ -41,7 +41,8 @@ export class AuthenticationService {
 
           let user = response.user;
           user.token = response.token;
-
+          delete user['salt'];
+          delete user['hash'];
           if (user && user.token) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('currentUser', JSON.stringify(user));
@@ -70,6 +71,8 @@ export class AuthenticationService {
       
           if (user && user.token) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
+            delete user['salt'];
+            delete user['hash'];
             localStorage.setItem('currentUser', JSON.stringify(user));
           }
           // console.log(user);

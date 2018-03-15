@@ -27,9 +27,22 @@ const profileSchema = new mongoose.Schema({
   fbAvatar: [avatarSchema],
   fbToken: String,
   fullName: String,
-  gender: String,
-  locale: String,
-  fbLink: String,
+  gender: {
+    type: String,
+    default: ""
+  },
+  locale: {
+    type: String,
+    default: ""
+  },
+  fbLink: {
+    type: String,
+    default: ""
+  },
+  occupation: {
+    type: String,
+    default: ""
+  },
   address: [addressSchema]
 })
 
@@ -50,8 +63,14 @@ export const userSchema = new mongoose.Schema({
   hash: String,
   salt: String,
   profile: [profileSchema],
-  isVerified: { type: Boolean, default: false },
-  role: {type: String, default: 'normal'}
+  isVerified: { 
+    type: Boolean, 
+    default: false 
+  },
+  role: {
+    type: String, 
+    default: 'normal'
+  }
 });
 
 userSchema.methods.setPassword = function(password){
@@ -76,3 +95,7 @@ userSchema.methods.generateJwt = function() {
     exp: Math.floor(expiry.getTime() / 1000),
   }, config.secret); // DO NOT KEEP YOUR SECRET IN THE CODE!
 };
+
+userSchema.methods.findAll = () => {
+  return this.find({}, "_id email firstName lastName role profile");
+}

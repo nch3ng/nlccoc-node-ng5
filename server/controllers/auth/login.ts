@@ -34,6 +34,9 @@ export function login(req, res) {
       return;
     }
     
+    user.salt = "";
+    user.hash = "";
+
     let token = jwt.sign({
       userID: user._id,
       email: user.email,
@@ -89,7 +92,6 @@ export function fbLogin(req, res){
     } else {
       // The user exists
       // console.log('user exists');
-      // console.log(result_user);
       token = result_user.generateJwt();
       res.status(200).json({
         "user": result_user,

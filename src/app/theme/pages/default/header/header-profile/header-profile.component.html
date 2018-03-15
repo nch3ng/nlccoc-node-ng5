@@ -118,14 +118,14 @@
 								</span>
 							</a>
 						</li>
-						<li class="m-nav__item">
+						<!-- <li class="m-nav__item">
 							<a routerLink="/header/profile" class="m-nav__link">
 								<i class="m-nav__link-icon flaticon-share"></i>
 								<span class="m-nav__link-text">
 									Activity
 								</span>
 							</a>
-						</li>
+						</li> -->
 						<li class="m-nav__item">
 							<a routerLink="/header/profile" class="m-nav__link">
 								<i class="m-nav__link-icon flaticon-chat-1"></i>
@@ -134,7 +134,7 @@
 								</span>
 							</a>
 						</li>
-						<li class="m-nav__item">
+						<!-- <li class="m-nav__item">
 							<a routerLink="/header/profile" class="m-nav__link">
 								<i class="m-nav__link-icon flaticon-graphic-2"></i>
 								<span class="m-nav__link-text">
@@ -157,9 +157,9 @@
 									Support
 								</span>
 							</a>
-						</li>
+						</li> -->
 					</ul>
-					<div class="m-portlet__body-separator"></div>
+					<!-- <div class="m-portlet__body-separator"></div>
 					<div class="m-widget1 m-widget1--paddingless">
 						<div class="m-widget1__item">
 							<div class="row m-row--no-padding align-items-center">
@@ -212,7 +212,7 @@
 								</div>
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
@@ -227,11 +227,11 @@
 									Update Profile
 								</a>
 							</li>
-							<li class="nav-item m-tabs__item">
+							<!-- <li class="nav-item m-tabs__item">
 								<a class="nav-link m-tabs__link" data-toggle="tab" href="#m_user_profile_tab_2" role="tab">
 									Messages
 								</a>
-							</li>
+							</li> -->
 							<li class="nav-item m-tabs__item">
 								<a class="nav-link m-tabs__link" data-toggle="tab" href="#m_user_profile_tab_3" role="tab">
 									Settings
@@ -320,7 +320,7 @@
 				</div>
 				<div class="tab-content">
 					<div class="tab-pane active" id="m_user_profile_tab_1">
-						<form class="m-form m-form--fit m-form--label-align-right">
+						<form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="onUpdate(f)" #f="ngForm">
 							<div class="m-portlet__body">
 								<div class="form-group m-form__group m--margin-top-10 m--hide">
 									<div class="alert m-alert m-alert--default" role="alert">
@@ -336,10 +336,18 @@
 								</div>
 								<div class="form-group m-form__group row">
 									<label for="example-text-input" class="col-2 col-form-label">
-										Full Name
+										First Name
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" value="{{user.firstName}} {{user.lastName}}">
+										<input class="form-control m-input" [(ngModel)]="user.firstName" name="firstName" type="text" #firstName="ngModel">
+									</div>
+								</div>
+								<div class="form-group m-form__group row">
+									<label for="example-text-input" class="col-2 col-form-label">
+										Last Name
+									</label>
+									<div class="col-7">
+										<input class="form-control m-input" [(ngModel)]="user.lastName" name="lastName" type="text" #lastName="ngModel">
 									</div>
 								</div>
 								<div class="form-group m-form__group row">
@@ -347,7 +355,7 @@
 										Occupation
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" value="{{user.profile[0].occupation}}">
+										<input class="form-control m-input" [(ngModel)]="user.profile[0].occupation" name="occupation" type="text">
 									</div>
 								</div>
 								<div class="form-group m-form__group row">
@@ -355,9 +363,8 @@
 										Company Name
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" value="{{user.profile[0].organization}}">
+										<input class="form-control m-input" type="text" [(ngModel)]="user.profile[0].organization" name="organzation">
 										<span class="m-form__help">
-											If you want your invoices addressed to a company. Leave blank to use your full name.
 										</span>
 									</div>
 								</div>
@@ -366,7 +373,7 @@
 										Phone No.
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" value="{{user.profile[0].cell}}">
+										<input class="form-control m-input" type="text" [(ngModel)]="user.profile[0].cell" name="cell">
 									</div>
 								</div>
 								<div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
@@ -382,7 +389,7 @@
 										Address
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" value="{{user.profile[0].address.address}}">
+										<input class="form-control m-input" type="text" [(ngModel)]="user.profile[0].address[0].address" name="address">
 									</div>
 								</div>
 								<div class="form-group m-form__group row">
@@ -390,7 +397,7 @@
 										City
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" value="{{user.profile[0].address.city}}">
+										<input class="form-control m-input" type="text" [(ngModel)]="user.profile[0].address[0].city" name="city">
 									</div>
 								</div>
 								<div class="form-group m-form__group row">
@@ -398,7 +405,7 @@
 										State
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" value="{{user.profile[0].address.state}}">
+										<input class="form-control m-input" type="text" [(ngModel)]="user.profile[0].address[0].state" name="state">
 									</div>
 								</div>
 								<div class="form-group m-form__group row">
@@ -406,7 +413,7 @@
 										Postcode
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" value="{{user.profile[0].address.postcode}}">
+										<input class="form-control m-input" type="text" [(ngModel)]="user.profile[0].address[0].postcode" name="postcode">
 									</div>
 								</div>
 								<div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
@@ -422,7 +429,7 @@
 										Linkedin
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" value="{{user.profile[0].linkedInLink}}">
+										<input class="form-control m-input" type="text" [(ngModel)]="user.profile[0].linkedInLink" name="linkedInLink" >
 									</div>
 								</div>
 								<div *ngIf="user.profile[0].fbLink !== null" class="form-group m-form__group row">
@@ -430,7 +437,7 @@
 										Facebook
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" value="{{user.profile[0].fbLink}}">
+										<input class="form-control m-input" [(ngModel)]="user.profile[0].fbLink" name="fbLink" type="text">
 									</div>
 								</div>
 								<div class="form-group m-form__group row">
@@ -438,7 +445,7 @@
 										Twitter
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" value="{{user.profile[0].twitterLink}}">
+										<input class="form-control m-input" type="text" [(ngModel)]="user.profile[0].twitterLink" name="twitterLink">
 									</div>
 								</div>
 								<div class="form-group m-form__group row">
@@ -446,7 +453,7 @@
 										Instagram
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" value="{{user.profile[0].instalLink}}">
+										<input class="form-control m-input" type="text" [(ngModel)]="user.profile[0].instalLink" name="instalLink">
 									</div>
 								</div>
 							</div>
@@ -455,7 +462,7 @@
 									<div class="row">
 										<div class="col-2"></div>
 										<div class="col-7">
-											<button type="reset" class="btn btn-accent m-btn m-btn--air m-btn--custom">
+											<button type="submit" class="btn btn-accent m-btn m-btn--air m-btn--custom">
 												Save changes
 											</button>
 											&nbsp;&nbsp;

@@ -11,8 +11,13 @@ export class Profile {
   locale: string;
   fbLink: string;
   address: Address;
+  cell: string;
+  linkedInLink: string;
+  twitterLink:string;
+  instalLink: string;
 
   constructor(){
+    this.fbAvatar = new Avatar();
     this.address = new Address();
     this.fbId="";
     this.fbCover="";
@@ -21,7 +26,9 @@ export class Profile {
     this.gender="N/A";
     this.locale="N/A";
     this.fbLink="";
-    this.fbAvatar = new Avatar();
-    
+    this.linkedInLink = "";
+    this.twitterLink = "";
+    this.instalLink = "";
+    this.cell="";
   }
 }

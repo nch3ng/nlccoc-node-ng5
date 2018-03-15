@@ -12,7 +12,7 @@ export function login(req, res) {
   
   User.findOne({'email' : reqUser.email}, (err, user, done) => {
     let config = Config.config;
-    // logger.debug(user);
+    console.log(user);
     if( err )
       return done(err);
 

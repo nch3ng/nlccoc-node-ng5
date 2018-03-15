@@ -1,3 +1,4 @@
+import { Avatar } from './../../interfaces/avatar';
 import * as mongoose from "mongoose";
 import * as crypto  from "crypto";
 import * as jwt from "jsonwebtoken";
@@ -11,20 +12,29 @@ const addressSchema = new mongoose.Schema({
   postcode: String
 })
 const pictureProfileSchema = new mongoose.Schema({
-  height: Number,
-  width: Number,
-  path: String,
+  height: {
+    type: Number,
+    default: 500
+  },
+  width: {
+    type: Number,
+    default: 500
+  }, 
+  path: {
+    type: String,
+    default: './assets/app/media/img/users/male-avatar.png'
+  }
 })
 
 const avatarSchema = new mongoose.Schema({
-  large: [pictureProfileSchema],
-  normal: [pictureProfileSchema]
+  large: pictureProfileSchema,
+  normal: pictureProfileSchema
 })
 
 const profileSchema = new mongoose.Schema({
   fbId: String,
   fbCover: String,
-  fbAvatar: [avatarSchema],
+  fbAvatar: avatarSchema,
   fbToken: String,
   fullName: String,
   gender: {
@@ -39,11 +49,19 @@ const profileSchema = new mongoose.Schema({
     type: String,
     default: ""
   },
+  cell: {
+    type: String,
+    default: ""
+  },
   occupation: {
     type: String,
     default: ""
   },
-  address: [addressSchema]
+  organization: {
+    type: String,
+    default: ""
+  },
+  address: addressSchema
 })
 
 export const userSchema = new mongoose.Schema({
@@ -62,7 +80,7 @@ export const userSchema = new mongoose.Schema({
   },
   hash: String,
   salt: String,
-  profile: [profileSchema],
+  profile: profileSchema,
   isVerified: { 
     type: Boolean, 
     default: false 

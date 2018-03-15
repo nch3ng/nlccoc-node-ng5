@@ -16,9 +16,11 @@ export class Profile {
   address: Address;
   organization: string;
   occupation: string;
+  cell: string;
 
   constructor(){
     this.fbAvatar = new Avatar();
     this.address = new Address();
+    this.occupation = "";
   }
 }

@@ -11,19 +11,30 @@ import { NgForm } from '@angular/forms';
 })
 export class HeaderProfileComponent implements OnInit {
 
-  user: User;
+  user: User = new User();
 
   constructor(private userService: UserService) {
+    console.log(this.user)
+    let id = this.userService.currentUser()['_id'];
+    this.userService.getById(id).subscribe(
+      (user:User) => {
+        this.user = user
+      },
+      (error) => {}
+    );
   }
   ngOnInit() {
-    this.user = this.userService.currentUser();
-    delete this.user['salt'];
-    delete this.user['hash'];
-    console.log(this.user);
   }
 
   onUpdate(form: NgForm) {
     console.log(this.user);
+    this.userService.update(this.user).subscribe(
+      (data) => {
+        console.log(data);
+        localStorage.setItem('currentUser', JSON.stringify(data['user']));
+      },
+      (error) => {}
+    )
   }
 
 }

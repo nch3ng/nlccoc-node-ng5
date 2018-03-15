@@ -35,7 +35,7 @@ export class UserService {
   }
 
   getById(id: number) {
-    return this.http.get('/api/users/' + id, this.jwt()).map((response: Response) => response.json());
+    return this.httpClient.get('/api/user/' + id, this.jwtHttpClient());
   }
 
   create(user: User) {
@@ -48,7 +48,8 @@ export class UserService {
   }
 
   update(user: User) {
-    return this.http.put('/api/users/' + user.id, user, this.jwt()).map((response: Response) => response.json());
+    console.log("update");
+    return this.httpClient.put('/api/user/' + user['_id'], user, this.jwtHttpClient());
   }
 
   delete(id: number) {

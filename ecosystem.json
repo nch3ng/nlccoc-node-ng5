@@ -20,9 +20,9 @@
   }],
   "deploy" : {
     "production" : {
-      "key": "~/.ssh/google_compute_engine",
-      "user" : "natec",
-      "host" : ["35.226.119.254"],
+      "key": "~/.ssh/id_rsa",
+      "user" : "deploy",
+      "host" : ["159.89.55.157"],
       "ref"  : "origin/master",
       "repo" : "git@github.com:qqnc/nlccoc-node-ng5.git",
       "path" : "/var/www/nlccoc",

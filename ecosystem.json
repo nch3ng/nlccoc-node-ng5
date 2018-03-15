@@ -27,9 +27,9 @@
       "repo" : "git@github.com:qqnc/nlccoc-node-ng5.git",
       "path" : "/var/www/nlccoc",
       "pre-setup": "sudo rm -rf /var/www/nlccoc",
-      "post-setup": "sudo npm install --unsafe-perm;sudo npm run build:server;",
+      "post-setup": "sudo npm install --unsafe-perm",
       "pre-deploy-local" : "echo 'This is a local executed command'",
-      "pre-deploy" : "",
+      "pre-deploy" : "sudo npm run build:server;sudo npm run build:web;",
       "post-deploy" : "sudo pm2 startOrRestart ecosystem.json --env production",
       "env"  : {
         "NODE_ENV": "production"

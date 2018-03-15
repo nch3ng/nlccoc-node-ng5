@@ -24,7 +24,7 @@
       "user" : "natec",
       "host" : ["35.226.119.254"],
       "ref"  : "origin/master",
-      "repo" : "git@github.com:qqnc/expense-tracker.git",
+      "repo" : "git@github.com:qqnc/nlccoc-node-ng5.git",
       "path" : "/var/www/nlccoc",
       "pre-setup": "sudo rm -rf /var/www/nlccoc",
       "post-setup": "sudo npm install --unsafe-perm;sudo npm run build:server;",

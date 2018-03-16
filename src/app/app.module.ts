@@ -1,3 +1,4 @@
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ThemeComponent } from './theme/theme.component';
@@ -25,9 +26,11 @@ import { UnverifiedComponent } from './auth/pages/unverified/unverified.componen
     AppRoutingModule,
     ThemeRoutingModule,
     AuthModule,
-    FacebookModule.forRoot()
+    FacebookModule.forRoot(),
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
-  providers: [ScriptLoaderService],
+  providers: [ScriptLoaderService, ToastrService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

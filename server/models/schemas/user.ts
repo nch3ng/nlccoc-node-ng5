@@ -37,6 +37,18 @@ const profileSchema = new mongoose.Schema({
   fbAvatar: avatarSchema,
   fbToken: String,
   fullName: String,
+  linkedInLink: {
+    type: String,
+    default: ""
+  },
+  twitterLink: {
+    type: String,
+    default: ""
+  },
+  instalLink: {
+    type: String,
+    default: ""
+  },
   gender: {
     type: String,
     default: ""

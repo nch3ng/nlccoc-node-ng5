@@ -82,7 +82,7 @@
 						</div>
 						<div class="m-card-profile__pic">
 							<div class="m-card-profile__pic-wrapper">
-								<img src="{{ user.profile[0].fbAvatar[0].large[0].path }}" alt=""/>
+								<img src="{{ user.profile.fbAvatar.large.path }}" alt=""/>
 							</div>
 						</div>
 						<div class="m-card-profile__details">
@@ -339,8 +339,14 @@
 										First Name
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" [(ngModel)]="user.firstName" name="firstName" type="text" #firstName="ngModel">
+										<input class="form-control m-input" 
+										[(ngModel)]="user.firstName" 
+										name="firstName" 
+										type="text" 
+										#firstName="ngModel"
+										required>
 									</div>
+									
 								</div>
 								<div class="form-group m-form__group row">
 									<label for="example-text-input" class="col-2 col-form-label">
@@ -363,7 +369,7 @@
 										Company Name
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" [(ngModel)]="user.profile[0].organization" name="organzation">
+										<input class="form-control m-input" type="text" [(ngModel)]="user.profile.organization" name="organzation">
 										<span class="m-form__help">
 										</span>
 									</div>
@@ -373,7 +379,7 @@
 										Phone No.
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" [(ngModel)]="user.profile[0].cell" name="cell">
+										<input class="form-control m-input" type="text" [(ngModel)]="user.profile.cell" name="cell">
 									</div>
 								</div>
 								<div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
@@ -389,7 +395,7 @@
 										Address
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" [(ngModel)]="user.profile[0].address[0].address" name="address">
+										<input class="form-control m-input" type="text" [(ngModel)]="user.profile.address.address" name="address">
 									</div>
 								</div>
 								<div class="form-group m-form__group row">
@@ -397,7 +403,7 @@
 										City
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" [(ngModel)]="user.profile[0].address[0].city" name="city">
+										<input class="form-control m-input" type="text" [(ngModel)]="user.profile.address.city" name="city">
 									</div>
 								</div>
 								<div class="form-group m-form__group row">
@@ -405,7 +411,7 @@
 										State
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" [(ngModel)]="user.profile[0].address[0].state" name="state">
+										<input class="form-control m-input" type="text" [(ngModel)]="user.profile.address.state" name="state">
 									</div>
 								</div>
 								<div class="form-group m-form__group row">
@@ -413,7 +419,7 @@
 										Postcode
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" [(ngModel)]="user.profile[0].address[0].postcode" name="postcode">
+										<input class="form-control m-input" type="text" [(ngModel)]="user.profile.address.postcode" name="postcode">
 									</div>
 								</div>
 								<div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
@@ -429,15 +435,15 @@
 										Linkedin
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" [(ngModel)]="user.profile[0].linkedInLink" name="linkedInLink" >
+										<input class="form-control m-input" type="text" [(ngModel)]="user.profile.linkedInLink" name="linkedInLink" >
 									</div>
 								</div>
-								<div *ngIf="user.profile[0].fbLink !== null" class="form-group m-form__group row">
+								<div *ngIf="user.profile.fbLink !== null" class="form-group m-form__group row">
 									<label for="example-text-input" class="col-2 col-form-label">
 										Facebook
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" [(ngModel)]="user.profile[0].fbLink" name="fbLink" type="text">
+										<input class="form-control m-input" [(ngModel)]="user.profile.fbLink" name="fbLink" type="text">
 									</div>
 								</div>
 								<div class="form-group m-form__group row">
@@ -445,7 +451,7 @@
 										Twitter
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" [(ngModel)]="user.profile[0].twitterLink" name="twitterLink">
+										<input class="form-control m-input" type="text" [(ngModel)]="user.profile.twitterLink" name="twitterLink">
 									</div>
 								</div>
 								<div class="form-group m-form__group row">
@@ -453,7 +459,7 @@
 										Instagram
 									</label>
 									<div class="col-7">
-										<input class="form-control m-input" type="text" [(ngModel)]="user.profile[0].instalLink" name="instalLink">
+										<input class="form-control m-input" type="text" [(ngModel)]="user.profile.instalLink" name="instalLink">
 									</div>
 								</div>
 							</div>
@@ -462,7 +468,7 @@
 									<div class="row">
 										<div class="col-2"></div>
 										<div class="col-7">
-											<button type="submit" class="btn btn-accent m-btn m-btn--air m-btn--custom">
+											<button type="submit" class="btn btn-accent m-btn m-btn--air m-btn--custom" [disabled]="!f.valid || saving">
 												Save changes
 											</button>
 											&nbsp;&nbsp;

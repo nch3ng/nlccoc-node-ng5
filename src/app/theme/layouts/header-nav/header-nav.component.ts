@@ -19,7 +19,7 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.user = this.userService.currentUser();
 
-    this.avatar = this.user.profile[0].fbAvatar[0].large[0].path;
+    this.avatar = this.user.profile.fbAvatar.large.path;
   }
   ngAfterViewInit() {
 

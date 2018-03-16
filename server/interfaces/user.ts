@@ -12,5 +12,4 @@ export interface IUser extends mongoose.Document {
   status: String;
   isVerified: Boolean;
   role: String;
-  occupation: String;
 };

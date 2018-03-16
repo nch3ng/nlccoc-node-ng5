@@ -15,6 +15,7 @@ export class Profile {
   linkedInLink: string;
   twitterLink:string;
   instalLink: string;
+  organization: string;
 
   constructor(){
     this.fbAvatar = new Avatar();

@@ -22,5 +22,6 @@ export class Profile {
     this.fbAvatar = new Avatar();
     this.address = new Address();
     this.occupation = "";
+    this.organization = "";
   }
 }

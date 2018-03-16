@@ -1,6 +1,5 @@
 import * as express from 'express';
 import User  from '../../models/user';
-import { UserService } from "../../services/user.service"
 
 let users_router = express.Router();
 let user_router = express.Router();
@@ -12,7 +11,7 @@ users_router.get('/', function (req, res) {
   // q.then((users) => {
   //   console.log(users);
   // })
-  User.find({}, "_id email firstName lastName role profile", 
+  User.find({}, "_id email firstName lastName role profile isVerified", 
     (err, users) => {
 
       if(err) res.status(500).json({msg: "Error"})
@@ -23,7 +22,7 @@ users_router.get('/', function (req, res) {
 
 user_router.get('/:userId', function (req, res) {
   console.log('get user: '+ req.params.userId);
-  User.findOne({_id: req.params.userId}, "_id email firstName lastName role profile", (err, user) => {
+  User.findOne({_id: req.params.userId}, "_id email firstName lastName role profile isVerified", (err, user) => {
 
     if(err) res.status(500).json({
       success: false
@@ -35,42 +34,39 @@ user_router.get('/:userId', function (req, res) {
 
 user_router.put('/:userId', function(req, res){
   const user = req.body;
-  User.findOne({_id: user._id}, (err, q_user)=>{
-    console.log(user);
-    q_user.firstName = user.firstName; 
-    q_user.lastName = user.lastName; 
-    q_user.profile.fbLink = user.profile[0].fbLink;
-    q_user.profile.linkedInLink = user.profile[0].linkedInLink;
-    q_user.profile.twitterLink =user.profile[0].twitterLink;
-    q_user.profile.instalLink =user.profile[0].instalLink;
-    q_user.profile.cell =user.profile[0].cell;
-    q_user.profile.address.address = user.profile[0].address[0].address;
-    q_user.profile.address.city = user.profile[0].address[0].city;
-    q_user.profile.address.state = user.profile[0].address[0].state;
-    q_user.profile.address.postcode = user.profile[0].address[0].postcode;
+  // User.findOne({_id: user._id}, (err, q_user)=>
+  console.log(user);
+    
 
-    q_user.save(
-      (err, user) => {
-        console.log("done");
-        res.status(200).json({user: user});
-      }
-    )
+    // q_user.save(
+    //   (err, user) => {
+    //     res.status(200).json({user: user});
+    //   }
+    // )
+  User.findOneAndUpdate({_id: user._id}, user, {new: true}, (err, q_user) => {
+    if (err) {
+      res.status(500);
+    } else {
+      console.log(q_user);
+      delete q_user.salt;
+      delete q_user.hash;
+      res.status(200).json(q_user);
+    }
   })
 });
-//   User.findOneAndUpdate({_id: user._id}, {
 //     firstName: user.firstName, 
 //     lastName: user.lastName, 
 //     profile: {
-//       fbLink: user.profile[0].fbLink,
-//       linkedInLink: user.profile[0].linkedInLink,
-//       twitterLink: user.profile[0].twitterLink,
-//       instalLink: user.profile[0].instalLink,
-//       cell: user.profile[0].cell,
+//       fbLink: user.profile.fbLink,
+//       linkedInLink: user.profile.linkedInLink,
+//       twitterLink: user.profile.twitterLink,
+//       instalLink: user.profile.instalLink,
+//       cell: user.profile.cell,
 //       address: {
-//         address: user.profile[0].address[0].address, 
-//         city: user.profile[0].address[0].city,
-//         state: user.profile[0].address[0].state,
-//         postcode: user.profile[0].address[0].postcode
+//         address: user.profile.address.address, 
+//         city: user.profile.address.city,
+//         state: user.profile.address.state,
+//         postcode: user.profile.address.postcode
 //       }
 //     }
 // }, {new: true}, (err, user) => {

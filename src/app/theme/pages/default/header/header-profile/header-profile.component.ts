@@ -12,9 +12,9 @@ import { NgForm } from '@angular/forms';
 export class HeaderProfileComponent implements OnInit {
 
   user: User = new User();
+  saving: boolean = false;
 
   constructor(private userService: UserService) {
-    console.log(this.user)
     let id = this.userService.currentUser()['_id'];
     this.userService.getById(id).subscribe(
       (user:User) => {
@@ -27,11 +27,9 @@ export class HeaderProfileComponent implements OnInit {
   }
 
   onUpdate(form: NgForm) {
-    console.log(this.user);
     this.userService.update(this.user).subscribe(
-      (data) => {
-        console.log(data);
-        localStorage.setItem('currentUser', JSON.stringify(data['user']));
+      (user:User) => {
+        this.user = user;
       },
       (error) => {}
     )

@@ -3,8 +3,6 @@ import User from "../../models/user";
 import * as crypto  from "crypto";
 import Token from '../../models/token';
 
-import secrets from '../../../src/secrets';
-
 const sgMail = require('@sendgrid/mail');
 
 export function register(req, res) {
@@ -45,7 +43,7 @@ export function register(req, res) {
 
         console.log(email_token);
 
-        sgMail.setApiKey(secrets.sendgridKey);
+        sgMail.setApiKey(process.env.sendgridKey);
 
         const msg = {
           to: user.email,

@@ -1,6 +1,5 @@
 
 const sgMail = require('@sendgrid/mail');
-import secrets from '../../../src/secrets';
 import Token from '../../models/token';
 import * as crypto from "crypto";
 
@@ -18,12 +17,12 @@ export function sendVerificationEmail(req, res) {
   
       var options = {
         auth: {
-          api_user: secrets.sendgridUsername,
-          api_key: secrets.sendgridKey
+          api_user: process.env.sendgridUsername,
+          api_key: process.env.sendgridKey
         }
       }
 
-      sgMail.setApiKey(secrets.sendgridKey);
+      sgMail.setApiKey(process.env.sendgridKey);
       console.log("Sent to " + user.email);
       const msg = {
         to: user.email,

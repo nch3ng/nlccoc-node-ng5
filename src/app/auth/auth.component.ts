@@ -17,6 +17,7 @@ import { Helpers } from '../helpers';
 import { FacebookService, InitParams, LoginResponse, LoginOptions } from 'ngx-facebook';
 import secrets from '../../secrets';
 import { User } from './_models';
+import { isDevMode } from '@angular/core';
 
 @Component({
   selector: '.m-grid.m-grid--hor.m-grid--root.m-page',
@@ -48,8 +49,13 @@ export class AuthComponent implements OnInit {
     private cfr: ComponentFactoryResolver,
     private fbService: FacebookService) {
 
+      let appId;
+      if(isDevMode())
+        appId = secrets.facebookAppDevId;
+      else
+        appId = secrets.facebookAppId;
       let initParams: InitParams = {
-        appId: secrets.facebookAppId,
+        appId: appId,
         xfbml: true,
         version: 'v2.12'
       };

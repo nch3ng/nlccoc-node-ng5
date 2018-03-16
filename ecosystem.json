@@ -26,7 +26,7 @@
       "ref"  : "origin/master",
       "repo" : "git@github.com:qqnc/nlccoc-node-ng5.git",
       "path" : "/var/www/nlccoc",
-      "pre-setup": "mv /var/www/nlccoc/source mv /var/www/nlccoc/old; rm /var/www/nlccoc/current; ln -sf /var/nlccoc/old /var/www/nlccoc/current",
+      "pre-setup": "mv /var/www/nlccoc/source /var/www/nlccoc/old; rm /var/www/nlccoc/current; ln -sf /var/nlccoc/old /var/www/nlccoc/current",
       "post-setup": "sudo npm install --unsafe-perm",
       "pre-deploy-local" : "echo 'This is a local executed command'",
       "pre-deploy" : "sudo npm run build:server;sudo npm run build:web;",

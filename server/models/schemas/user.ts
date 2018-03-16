@@ -7,9 +7,22 @@ import { Profile } from "../../interfaces/profile";
 let config = Config.config;
 
 const addressSchema = new mongoose.Schema({
-  address: String,
-  city: String,
-  postcode: String
+  address: {
+    type: String,
+    default: ""
+  },
+  city: {
+    type: String,
+    default: ""
+  },
+  postcode: {
+    type: String,
+    default: ""
+  },
+  state: {
+    type: String,
+    default: ""
+  },
 })
 const pictureProfileSchema = new mongoose.Schema({
   height: {

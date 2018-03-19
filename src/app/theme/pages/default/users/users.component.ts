@@ -1,12 +1,13 @@
 import { Observable } from 'rxjs';
 import { UserService } from './../../../../auth/_services/user.service';
 import { User } from './../../../../auth/_models/user';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  styleUrls: ['./users.component.scss'],
+  encapsulation: ViewEncapsulation.Emulated
 })
 export class UsersComponent implements OnInit, AfterViewInit {
 
@@ -16,11 +17,6 @@ export class UsersComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.userService.getAll().subscribe(
       data => {
-        data.forEach((user)=>{
-          console.log(user);
-          console.log("######");
-        })
-        console.log(data);
         this.users = data;   
       },
       error => console.log(error)

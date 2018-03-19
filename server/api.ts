@@ -3,6 +3,7 @@ import logger = require("./helpers/logger");
 import * as bodyParser from 'body-parser';
 import User from "./models/user";
 import Config from "./config";
+import * as busboy from "connect-busboy";
 
 import { login as loginCtrl, fbLogin } from "./controllers/auth/login";
 import { register as registerCtrl } from './controllers/auth/register';
@@ -11,6 +12,8 @@ import { users as usersCtrl } from "./controllers/users/users.controller";
 import { orders as ordersCtrl, order as orderCtrl } from "./controllers/orders/orders.controller";
 import { sendVerificationEmail } from './controllers/auth/auth';
 import Token from './models/token';
+import filesCtrl from "./controllers/files/files.controller";
+
 let router = express.Router();
 // let auth = require("./controllers/auth/middleware/auth");
 
@@ -23,6 +26,7 @@ router.use(function timeLog (req, res, next) {
   console.log('Time: ', Date.now())
   next()
 });
+router.use(busboy());
 
 router.post('/register', registerCtrl);
 router.post('/login', loginCtrl);
@@ -90,6 +94,7 @@ router.post('/confirmation/:token', function (req, res) {
     }
   });
 })
+router.use('/files', filesCtrl)
 router.use('/user', auth.verifyToken, usersCtrl.user);
 router.use('/users', auth.verifyToken, usersCtrl.users);
 router.use('/orders', auth.verifyToken, ordersCtrl);

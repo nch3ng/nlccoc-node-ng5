@@ -4,20 +4,23 @@ import { NgModule } from '@angular/core';
 import { ThemeComponent } from './theme/theme.component';
 import { LayoutModule } from './theme/layouts/layout.module';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { ModalModule, Overlay, OverlayRenderer, DOMOverlayRenderer } from 'ngx-modialog';
+import { BootstrapModalModule } from 'ngx-modialog/plugins/bootstrap';
+import { NlccocServicesModule } from './services/nlccoc.services.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ScriptLoaderService } from "./_services/script-loader.service";
 import { ThemeRoutingModule } from "./theme/theme-routing.module";
 import { AuthModule } from "./auth/auth.module";
-import { FacebookModule } from 'ngx-facebook';
 import { UnverifiedComponent } from './auth/pages/unverified/unverified.component';
+import { ConfirmService } from './services/confirm.service';
 
 @NgModule({
   declarations: [
     ThemeComponent,
     AppComponent,
-    UnverifiedComponent,
+    UnverifiedComponent
   ],
   imports: [
     LayoutModule,
@@ -26,11 +29,13 @@ import { UnverifiedComponent } from './auth/pages/unverified/unverified.componen
     AppRoutingModule,
     ThemeRoutingModule,
     AuthModule,
-    FacebookModule.forRoot(),
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    NlccocServicesModule
   ],
-  providers: [ScriptLoaderService, ToastrService],
+  providers: [
+    ScriptLoaderService, 
+    ToastrService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

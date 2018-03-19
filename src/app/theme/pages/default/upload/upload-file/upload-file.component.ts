@@ -1,29 +1,42 @@
+import { PagesService } from './../../../../../services/pages.service';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { ConfirmService } from './../../../../../services/confirm.service';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, EventEmitter, OnDestroy, Output, AfterViewInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-upload-file',
   templateUrl: './upload-file.component.html',
   styleUrls: ['./upload-file.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
-export class UploadFileComponent implements OnInit {
+export class UploadFileComponent implements OnInit, OnDestroy, AfterViewInit{
 
   isActive: boolean = false;
   selectedFilename: string = 'or drag and drop files here';
   selectedFile = null;
   uploadedProgress: number = 0;
   uploadSub: Subscription;
+
+  @Output('uploadPage')
+  uploadPage: EventEmitter<boolean> = new EventEmitter<boolean>()
   
   constructor(
     private confirmService: ConfirmService,
     private http: HttpClient,
-    private toastrService: ToastrService){ }
+    private toastrService: ToastrService,
+    private pageService: PagesService){ }
 
   ngOnInit() {
+    console.log("should emit");
+  }
+
+  ngAfterViewInit() {
+    console.log("after view init"
+    );
+    setTimeout(()=>this.pageService.setCurrentPage("upload"))
+    
   }
 
   onSelectFile(event){
@@ -89,5 +102,10 @@ export class UploadFileComponent implements OnInit {
   onStop(){
     this.uploadSub.unsubscribe();
     this.toastrService.success("Uploading stopped", "Upload File");
+  }
+
+  ngOnDestroy(){
+    this.uploadPage.emit(false);
+    this.pageService.setCurrentPage("");
   }
 }

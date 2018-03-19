@@ -15,6 +15,7 @@ import { ThemeRoutingModule } from "./theme/theme-routing.module";
 import { AuthModule } from "./auth/auth.module";
 import { UnverifiedComponent } from './auth/pages/unverified/unverified.component';
 import { ConfirmService } from './services/confirm.service';
+import { PagesService } from './services/pages.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ConfirmService } from './services/confirm.service';
   ],
   providers: [
     ScriptLoaderService, 
-    ToastrService],
+    ToastrService,
+    PagesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,5 +1,5 @@
 
-.m-body .m-wrapper {
+.m-body .m-wrapper.upload {
   background: linear-gradient(to right, #4568dc, #b06ab3) !important;
   color: #D7D7EF;
   font-family: 'Lato', sans-serif;
@@ -54,7 +54,7 @@
   }
 }
 
-.btn {
+.btn-upload {
   float: right;
   margin: 0 5px;
 }

@@ -120,4 +120,13 @@ export class AuthenticationService {
     return this.http.post<{success: boolean, message: string}>('/api/confirmation/'+cid+'?uid='+uid, {}, { headers: headers })
   }
 
+  jwtHttpClient(){
+    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (currentUser && currentUser.token) {
+      let headers = new HttpHeaders({ 'x-access-token': currentUser.token });
+      headers = headers.append('Content-Type', 'application/json');
+      return { headers: headers };
+    }
+  }
+
 }

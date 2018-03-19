@@ -11,9 +11,9 @@ export default class Config {
   private static _env;
   
   static initialize() {
-    this._env = process.env.NODE_ENV || "development";
+    this._env = process.env.NODE_ENV || "dev";
     this._config = {
-      "development": {
+      "dev": {
         port: 3000,
         DBConnectionUrl: "mongodb://" + process.env.DB_DEV_USERNAME + ":" + process.env.DB_DEV_PASSSWORD+ "@" + process.env.DB_DEV_ADDRESS + "/" + process.env.DB_DEV,
         secret: "/mfA3uWl+1wKxpWn+TKRQyA67tgxQ60NAhv3WbqJK3M=",

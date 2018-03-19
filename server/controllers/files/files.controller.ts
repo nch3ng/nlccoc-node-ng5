@@ -11,38 +11,50 @@ filesCtrl.post('/upload', function (req, res) {
   req.pipe(req.busboy);
   let s3 = new AWS.S3();
 
-  req.busboy.on('file', function (fieldname, file, filename) {
+  req.busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
     
-    // const filePath = path.join(__dirname, '../../../public/upload/', filename);
-    // fstream = fs.createWriteStream(filePath);
+    if(process.env.NODE_ENV == 'dev') {
+      const filePath = path.join(__dirname, '../../../public/upload/', filename);
+      fstream = fs.createWriteStream(filePath);
 
-    const params = {
-      Key: filename,
-      Bucket: 'asset.nlccoc.org', //set somewhere
-      Body: file, //req is a stream
-    };
+      file.pipe(fstream);
 
-    s3.upload(params, (err, data) => {
-      if (err) {
-        res.status(500).json({
-          success: false,
-          msg: err
-        });
-      } else {
+      file.on('data', function(data) {
+        //console.log('File [' + fieldname + '] got ' + data.length + ' bytes');
+      });
+      file.on('end', function() {
+        //console.log('File [' + fieldname + '] Finished');
+      });
+      
+      fstream.on('close', function () {
+        console.log('Files saved');
         res.status(200).json({
           success: true,
           message: 'Upload successfully'
         })
-      }
-    });
-    // file.pipe(fstream);
-    // fstream.on('close', function () {
-    //   console.log('Files saved');
-    //   res.status(200).json({
-    //     success: true,
-    //     message: 'Upload successfully'
-    //   })
-    // });
+      });
+
+    } else {
+      const params = {
+        Key: filename,
+        Bucket: 'asset.nlccoc.org', //set somewhere
+        Body: file, //req is a stream
+      };
+
+      s3.upload(params, (err, data) => {
+        if (err) {
+          res.status(500).json({
+            success: false,
+            msg: err
+          });
+        } else {
+          res.status(200).json({
+            success: true,
+            message: 'Upload successfully'
+          })
+        }
+      });
+    }
   });
 })
 

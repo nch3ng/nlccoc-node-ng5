@@ -18,7 +18,7 @@ filesCtrl.post('/upload', function (req, res) {
 
     const params = {
       Key: filename,
-      Bucket: 'files.natecheng.me', //set somewhere
+      Bucket: 'asset.nlccoc.org', //set somewhere
       Body: file, //req is a stream
     };
 

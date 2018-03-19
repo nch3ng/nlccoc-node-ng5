@@ -6,12 +6,6 @@ import { Stream } from 'stream';
 
 const filesCtrl = express.Router();
 
-async function uploadReadableStream(stream) {
-  let s3 = new AWS.S3();
-  const params = {Bucket: 'asset.nlccoc.org', Key: "Avo37PttnB7fZn0tPCOee6qlylVT9yeUMYUYYkG1", Body: stream};
-  return s3.upload(params).promise();
-}
-
 filesCtrl.post('/upload', function (req, res) {
   let fstream;
   req.pipe(req.busboy);
@@ -23,7 +17,7 @@ filesCtrl.post('/upload', function (req, res) {
     // fstream = fs.createWriteStream(filePath);
 
     const params = {
-      Key: "test.jpg",
+      Key: filename,
       Bucket: 'files.natecheng.me', //set somewhere
       Body: file, //req is a stream
     };

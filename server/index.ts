@@ -12,7 +12,7 @@ let app = server.Server.bootstrap().app;
 app.set("port", port);
 let env = process.env.NODE_ENV || 'dev';
 
-
+console.log(env);
 let key;
 let cert;
 if(env == "dev"){
@@ -34,7 +34,6 @@ if(env == "dev"){
     if (err) {
       return console.log(err)
     }
-  
     return console.log(`server is listening on ${port}`)
   })
 } else {

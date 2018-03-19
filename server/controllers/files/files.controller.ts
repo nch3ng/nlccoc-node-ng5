@@ -30,7 +30,10 @@ filesCtrl.post('/upload', function (req, res) {
 
     s3.upload(params, (err, data) => {
       if (err) {
-        res.send('Error Uploading Data: ' + JSON.stringify(err) + '\n' + JSON.stringify(err.stack));
+        res.status(500).json({
+          success: false,
+          msg: err
+        });
       } else {
         res.status(200).json({
           success: true,

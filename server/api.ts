@@ -13,6 +13,7 @@ import { orders as ordersCtrl, order as orderCtrl } from "./controllers/orders/o
 import { sendVerificationEmail } from './controllers/auth/auth';
 import Token from './models/token';
 import filesCtrl from "./controllers/files/files.controller";
+import { reports as reportsCtrl, reports } from './controllers/files/reports.controller';
 
 let router = express.Router();
 // let auth = require("./controllers/auth/middleware/auth");
@@ -99,5 +100,6 @@ router.use('/user', auth.verifyToken, usersCtrl.user);
 router.use('/users', auth.verifyToken, usersCtrl.users);
 router.use('/orders', auth.verifyToken, ordersCtrl);
 router.use('/order', auth.verifyToken, orderCtrl);
+router.use('/reports', reportsCtrl);
 
 export = router;

@@ -65,13 +65,25 @@
 								</span>
 							</span>
 						</li>
-						<li class="m-menu__item  " routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true" >
-							<a  routerLink="/admin/upload-file" class="m-menu__link">
+						<li class="m-menu__item  " routerLinkActive="m-menu__item--active" [routerLinkActiveOptions]="{ exact: true }"  aria-haspopup="true" >
+							<a  routerLink="/admin/upload" class="m-menu__link">
 								<i class="m-menu__link-icon flaticon-line-graph"></i>
 								<span class="m-menu__link-title">
 									<span class="m-menu__link-wrap">
 										<span class="m-menu__link-text">
-											Upload
+											Upload Library
+										</span>
+									</span>
+								</span>
+							</a>
+						</li>
+						<li class="m-menu__item  " routerLinkActive="m-menu__item--active" [routerLinkActiveOptions]="{ exact: true }"  aria-haspopup="true" >
+							<a  routerLink="/admin/reports/financial-report/create" class="m-menu__link">
+								<i class="m-menu__link-icon flaticon-line-graph"></i>
+								<span class="m-menu__link-title">
+									<span class="m-menu__link-wrap">
+										<span class="m-menu__link-text">
+											Upload Financial Report
 										</span>
 									</span>
 								</span>

@@ -1,7 +1,7 @@
-import { PagesService } from './../../../../../services/pages.service';
+import { PagesService } from './../../../../../_services/pages.service';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient, HttpEventType } from '@angular/common/http';
-import { ConfirmService } from './../../../../../services/confirm.service';
+import { ConfirmService } from './../../../../../_services/confirm.service';
 import { Component, OnInit, ViewEncapsulation, EventEmitter, OnDestroy, Output, AfterViewInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 

@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 
 import { Overlay as NgxOverlay, DialogRef } from 'ngx-modialog';
 import { Modal as NgxModal, bootstrap4Mode, TwoButtonPreset, TwoButtonPresetBuilder } from 'ngx-modialog/plugins/bootstrap';
-import { ConfirmService } from '../../../../../services/confirm.service';
+import { ConfirmService } from '../../../../../_services/confirm.service';
 
 @Component({
   selector: "app-header-profile",

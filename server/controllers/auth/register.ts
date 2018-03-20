@@ -6,10 +6,10 @@ import Token from '../../models/token';
 const sgMail = require('@sendgrid/mail');
 
 export function register(req, res) {
-  console.log(req.body);
-  console.log("Registering user: " + req.body.email);
-  var user = new User();
-  console.log(user);
+  // console.log(req.body);
+  // console.log("Registering user: " + req.body.email);
+  let user = new User();
+  // console.log(user);
   user.firstName = req.body.firstName;
   user.lastName = req.body.lastName;
   user.email = req.body.email;

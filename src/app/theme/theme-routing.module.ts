@@ -24,8 +24,13 @@ const routes: Routes = [
         data: { roles: ['admin'] }
       },
       {
-        "path": "admin\/upload-file",
+        "path": "admin\/upload",
         "loadChildren": ".\/pages\/default\/upload\/upload.module#UploadModule",
+        data: { roles: ['admin'] }
+      },
+      {
+        "path": "admin\/reports",
+        "loadChildren": ".\/pages\/default\/reports\/reports.module#ReportsModule",
         data: { roles: ['admin'] }
       },
       {

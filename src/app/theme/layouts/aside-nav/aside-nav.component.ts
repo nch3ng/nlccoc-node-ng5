@@ -1,4 +1,4 @@
-import { PagesService } from './../../../services/pages.service';
+import { PagesService } from './../../../_services/pages.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import { Helpers } from '../../../helpers';

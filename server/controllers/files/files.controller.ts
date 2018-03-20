@@ -14,7 +14,7 @@ filesCtrl.post('/upload', function (req, res) {
   req.busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
     
     if(process.env.NODE_ENV == 'dev') {
-      const filePath = path.join(__dirname, '../../../public/upload/', filename);
+      const filePath = path.join(__dirname, '../../../server/public/upload/', filename);
       fstream = fs.createWriteStream(filePath);
 
       file.pipe(fstream);
@@ -30,6 +30,7 @@ filesCtrl.post('/upload', function (req, res) {
         console.log('Files saved');
         res.status(200).json({
           success: true,
+          url:process.env.asset_host + '/upload/'+filename,
           message: 'Upload successfully'
         })
       });
@@ -50,6 +51,7 @@ filesCtrl.post('/upload', function (req, res) {
         } else {
           res.status(200).json({
             success: true,
+            url:process.env.asset_host + '/' + filename,
             message: 'Upload successfully'
           })
         }

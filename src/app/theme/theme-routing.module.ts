@@ -1,3 +1,4 @@
+import { UploadFileComponent } from './pages/default/upload/upload-file/upload-file.component';
 import { NgModule } from '@angular/core';
 import { ThemeComponent } from './theme.component';
 import { Routes, RouterModule } from '@angular/router';
@@ -20,6 +21,16 @@ const routes: Routes = [
       {
         "path": "admin\/users",
         "loadChildren": ".\/pages\/default\/users\/users.module#UsersModule",
+        data: { roles: ['admin'] }
+      },
+      {
+        "path": "admin\/upload",
+        "loadChildren": ".\/pages\/default\/upload\/upload.module#UploadModule",
+        data: { roles: ['admin'] }
+      },
+      {
+        "path": "admin\/reports",
+        "loadChildren": ".\/pages\/default\/reports\/reports.module#ReportsModule",
         data: { roles: ['admin'] }
       },
       {

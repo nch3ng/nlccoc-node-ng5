@@ -6,16 +6,7 @@
       "COMMON_VARIABLE": "true"
     },
     "env_production" : {
-      "NODE_ENV": "production",
-      "DB_USERNAME": "dbadmin",
-      "DB_PASSSWORD": "dbadmin",
-      "DB": "nlccoc",
-      "DB_ADDRESS": "ds125896.mlab.com:25896",
-      "PORT": "443",
-      "facebookAppId": "592488341101676",
-      "sendgridUsername": "boo0330@gmail.com",
-      "sendgridKeyId": "N3cRQ4vPSUGAXnkfPPENNg",
-      "sendgridKey": "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"
+      "NODE_ENV": "production"
     }
   }],
   "deploy" : {
@@ -30,7 +21,7 @@
       "post-setup": "npm install --unsafe-perm",
       "pre-deploy-local" : "echo 'This is a local executed command'",
       "pre-deploy" : "npm run build:server;npm run build:web;",
-      "post-deploy" : "sudo pm2 startOrRestart ecosystem.json --env production; rm -rf /var/www/nlccoc/old",
+      "post-deploy" : "sudo cp /root/.env ./;sudo pm2 startOrRestart ecosystem.json --env production; rm -rf /var/www/nlccoc/old;",
       "env"  : {
         "NODE_ENV": "production"
       }

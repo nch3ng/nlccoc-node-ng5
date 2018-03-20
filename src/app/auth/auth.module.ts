@@ -17,6 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ConfirmationSuccessComponent } from './pages/confirmation/confirmation-success/confirmation-success.component';
 import { ConfirmationFailedComponent } from './pages/confirmation/confirmation-failed/confirmation-failed.component';
 import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
+import { FacebookModule } from 'ngx-facebook';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { ConfirmationComponent } from './pages/confirmation/confirmation.compone
     HttpModule,
     HttpClientModule,
     AuthRoutingModule,
+    FacebookModule.forRoot()
   ],
   providers: [
     AuthGuard,

@@ -1,3 +1,4 @@
+import { PagesService } from './../../../_services/pages.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Helpers } from '../../../helpers';
 import { ScriptLoaderService } from '../../../_services/script-loader.service';
@@ -10,9 +11,19 @@ import { ScriptLoaderService } from '../../../_services/script-loader.service';
 })
 export class DefaultComponent implements OnInit {
 
+  currentPage:string = "";
+  isUpload: boolean = false;
 
-  constructor() {
-
+  constructor(
+    private pageService: PagesService) {
+    this.pageService.currentPage.subscribe(
+      (value) => {
+        this.currentPage=value;
+        if (this.currentPage === 'upload')
+          this.isUpload=true
+        else
+          this.isUpload=false;
+      })
   }
   ngOnInit() {
 

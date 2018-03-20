@@ -5,6 +5,8 @@
 /tmp
 /out-tsc
 /buildtools/node_modules
+/public
+/server/public/upload
 
 # dependencies
 /node_modules

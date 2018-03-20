@@ -1,0 +1,76 @@
+<form (ngSubmit)="onAddReport(f)" #f="ngForm">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="form-group m-form__group">
+        <label>
+          Name
+        </label>
+        <div class="m-input-icon m-input-icon--left">
+          <input class="form-control form-control-lg m-input" 
+            [(ngModel)]="fReport.name"
+            name="name"
+            placeholder="Name" type="text">
+          <span class="m-input-icon__icon m-input-icon__icon--left">
+            <span>
+              <i class="la la-map-marker"></i>
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 offset-md-3">
+      <div class="form-group m-form__group">
+        <label>Month</label>
+        <ng-select [items]="months"
+                    bindLabel="name"
+                    bindValue="id"
+                    placeholder="Select month"
+                    [(ngModel)]="fReport.month"
+                    name="month">
+        </ng-select>
+      </div>
+    </div>
+    <div class="col-md-6 offset-md-3">
+      <div class="form-group m-form__group">
+        <label for="remarTextarea">
+          Remark
+        </label>
+        <textarea class="form-control m-input" 
+          [(ngModel)]="fReport.remark"
+          name="remark" id="remarkTextarea" rows="5"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-bottom: 20px; margin-top: 40px;">
+    <div class="col-md-6 offset-md-3">
+      <div class="form-group m-form__group">
+        <div class="file-drop-area" [ngClass]="{'is-active': isActive}"
+          (dragenter)="onDragenter($event)" 
+          (dragleave)="onDragout($event)"
+          (drop)='onDrop($event)'
+          (mouseenter)='onMouseenter($event)'
+          (mouseleave)="onMouseleave($event)">
+          <span class="fake-btn">Choose files</span>
+          <span class="file-msg js-set-number">{{selectedFilename}}</span>
+          <input class="file-input" type="file" (change)="onSelectFile($event)">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row"  style="margin-bottom: 20px;">
+    <div class="col-md-6 offset-md-3">
+        <div class="progress m-progress--sm">
+          <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="25" class="progress-bar m--bg-danger" role="progressbar" [ngStyle]="{'width': uploadedProgress +'%'}"></div>
+        </div>
+      </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <button class="btn btn-secondary btn-upload" type="button" (click)="onReset()">Reset</button>
+      <button class="btn btn-danger btn-upload" type="button" (click)="onStop()">Stop</button>
+      <button class="btn btn-success btn-upload" multipart type="submit">Add</button> 
+      
+    </div>
+  </div>
+</form>

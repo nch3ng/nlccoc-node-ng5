@@ -1,0 +1,30 @@
+<div class="row" style="margin-bottom: 20px;">
+  <div class="col-md-6 offset-md-3">
+    <div class="file-drop-area" [ngClass]="{'is-active': isActive}"
+      (dragenter)="onDragenter($event)" 
+      (dragleave)="onDragout($event)"
+      (drop)='onDrop($event)'
+      (mouseenter)='onMouseenter($event)'
+      (mouseleave)="onMouseleave($event)">
+      <span class="fake-btn">Choose files</span>
+      <span class="file-msg js-set-number">{{selectedFilename}}</span>
+      <input class="file-input" type="file" (change)="onSelectFile($event)">
+    </div>
+  </div>
+</div>
+<div class="row"  style="margin-bottom: 20px;">
+  <div class="col-md-6 offset-md-3">
+      <div class="progress m-progress--sm">
+        <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="25" class="progress-bar m--bg-danger" role="progressbar" [ngStyle]="{'width': uploadedProgress +'%'}"></div>
+      </div>
+    </div>
+</div>
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+    <button class="btn btn-secondary btn-upload" (click)="onReset()">Reset</button>
+    <button class="btn btn-danger btn-upload" (click)="onStop()">Stop</button>
+    <button class="btn btn-success btn-upload" (click)="onUpload()" multipart>Upload</button> 
+     
+    
+  </div>
+</div>

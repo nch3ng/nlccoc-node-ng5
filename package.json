@@ -24,7 +24,7 @@
 	"private": true,
 	"dependencies": {
 		"@angular/animations": "^5.2.9",
-		"@angular/cli": "^1.7.3",
+		"@angular/cli": "^5.2.9",
 		"@angular/common": "^5.2.9",
 		"@angular/compiler": "^5.2.9",
 		"@angular/core": "^5.2.9",
@@ -40,7 +40,7 @@
 		"@types/facebook-js-sdk": "^2.8.3",
 		"@types/jquery": "^3.3.1",
 		"angular2-toaster": "^5.0.1",
-		"aws-sdk": "^2.211.1",
+		"aws-sdk": "^2.212.1",
 		"body-parser": "^1.18.2",
 		"bootstrap": "^4.0.0",
 		"classlist.js": "^1.1.20150312",

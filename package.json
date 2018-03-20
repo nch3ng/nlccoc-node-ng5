@@ -68,7 +68,7 @@
 		"sendgrid": "^5.2.3",
 		"serve-favicon": "^2.4.5",
 		"sweetalert2": "^7.17.0",
-		"typescript-formatter": "^5.2.0",
+		"typescript-formatter": "^7.1.0",
 		"vex-js": "^4.1.0",
 		"winston": "^2.4.1",
 		"zone.js": "^0.8.19"

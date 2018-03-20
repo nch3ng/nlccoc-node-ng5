@@ -1,6 +1,6 @@
 
 sudo: required
-dist: xenial
+dist: disty
 language: node_js
 node_js:
   - 'node'
@@ -24,4 +24,4 @@ before_script:
 - npm install
 - ng build
 
-script: karma start config/karma.conf.js --single-run
+script: karma start karma.conf.js --single-run

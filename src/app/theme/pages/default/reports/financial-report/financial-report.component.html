@@ -218,6 +218,9 @@
                 <th data-field="path" class="m-datatable__cell">
                   <span style="width: 300px;">Path</span>
                 </th>
+                <th data-field="path" class="m-datatable__cell">
+                  <span style="width: 80px;">Actions</span>
+                </th>
               </tr>
             </thead>
             <tbody class="m-datatable__body" style="">
@@ -245,11 +248,12 @@
                 <td data-field="path" class="m-datatable__cell">
                   <span style="width: 300px;">{{report.path}}</span>
                 </td>
-                <!-- <td data-field="Role" class="m-datatable__cell">
+                <td data-field="Role" class="m-datatable__cell">
                   <span style="width: 110px;">
-                    <span class="m-badge m-badge--brand m-badge--wide" [ngClass]="['m-badge--'+user.role]">{{user.role}}</span>
+                    <i style="font-size: 1.5rem;cursor: pointer" class="la la-minus-square" (click)="onDelete(report)"></i>
+                    <a [routerLink]="['/admin/reports/financial-report/edit', report['_id']]" href="#"><i style="font-size: 1.5rem;" class="la la-edit"></i></a>
                   </span>
-                </td> -->
+                </td>
                 <!-- <td data-field="Role" class="m-datatable__cell">
                   <span style="width: 110px;">
                     <span class="m-badge m-badge--brand m-badge--wide">Pending</span>

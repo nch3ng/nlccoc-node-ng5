@@ -10,20 +10,21 @@ filesCtrl.post('/upload', function (req, res) {
   let fstream;
   req.pipe(req.busboy);
   let s3 = new AWS.S3();
-
+  console.log("file upload");
   req.busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
     
     if(process.env.NODE_ENV == 'dev') {
+      // console.log('upload on dev');
       const filePath = path.join(__dirname, '../../../server/public/upload/', filename);
       fstream = fs.createWriteStream(filePath);
 
       file.pipe(fstream);
 
       file.on('data', function(data) {
-        //console.log('File [' + fieldname + '] got ' + data.length + ' bytes');
+        // console.log('File [' + fieldname + '] got ' + data.length + ' bytes');
       });
       file.on('end', function() {
-        //console.log('File [' + fieldname + '] Finished');
+        // console.log('File [' + fieldname + '] Finished');
       });
       
       fstream.on('close', function () {

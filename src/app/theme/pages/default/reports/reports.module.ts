@@ -23,6 +23,10 @@ const routes: Routes = [
       {
         "path": "financial-report/create",
         "component": UploadFinancialReportComponent
+      },
+      {
+        "path": "financial-report/edit/:id",
+        "component": UploadFinancialReportComponent
       }
     ]
   }

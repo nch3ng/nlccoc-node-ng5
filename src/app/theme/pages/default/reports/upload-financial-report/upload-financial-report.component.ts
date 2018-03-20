@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { UserService } from './../../../../../auth/_services/user.service';
 import { ReportService } from './../../../../../_services/report.service';
 import { PagesService } from './../../../../../_services/pages.service';
@@ -23,6 +24,7 @@ export class UploadFinancialReportComponent implements OnInit, OnDestroy, AfterV
   uploadedProgress: number = 0;
   uploadSub: Subscription;
   fReport: Report; 
+  mode: string = 'new';
 
   months = [
     {id: 1, name: 'January'},
@@ -49,11 +51,28 @@ export class UploadFinancialReportComponent implements OnInit, OnDestroy, AfterV
     private toastrService: ToastrService,
     private pageService: PagesService,
     private reportService: ReportService, 
-    private userService: UserService){ }
+    private userService: UserService,
+    private route: ActivatedRoute){ }
 
   ngOnInit() {
     this.fReport = new Report();
     this.fReport.uploadedBy = this.userService.currentUser();
+    this.route.params.subscribe(
+      (params) => {
+        console.log(params);
+        if(params['id']){
+          this.mode="edit"
+          this.reportService.getById(params['id']).subscribe(
+            (report: Report) => {
+              this.fReport = report;
+            },
+            (error) => {
+              this.toastrService.error("Something went wrong", "Error" );
+            }
+          );
+        }
+      }
+    );
   }
 
   ngAfterViewInit() {
@@ -86,6 +105,7 @@ export class UploadFinancialReportComponent implements OnInit, OnDestroy, AfterV
 
   onReset() {
     this.fReport.reset();
+    this.fReport.uploadedBy = this.userService.currentUser();
     this.selectedFile = null;
     this.selectedFilename = 'or drag and drop files here';
     setTimeout(()=>{

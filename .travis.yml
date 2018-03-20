@@ -19,9 +19,9 @@ before_install:
   - sh -e /etc/init.d/xvfb start
 
 before_script:
+- npm install -g yarn --cache-min 999999999
 - npm install -g angular-cli
 - npm install -g karma
-- npm install
-- ng build
+- npm install --no-optional
 
 script: karma start karma.conf.js --single-run

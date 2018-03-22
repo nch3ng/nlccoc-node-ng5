@@ -17,4 +17,4 @@ before_script:
 - npm install -g karma
 - npm install
 
-script: karma start karma.conf.js
+script: karma start karma.conf.js --browsers ChromeHeadless

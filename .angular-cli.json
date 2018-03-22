@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "expense-tracker"
+    "name": "nlccoc-node-ng5"
   },
   "apps": [
     {

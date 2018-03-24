@@ -1,7 +1,7 @@
 import { Avatar } from './../../../../server/interfaces/avatar';
 import { AuthenticationService } from './authentication.service';
 import { Injectable } from "@angular/core";
-import { Headers, Http, RequestOptions, Response } from "@angular/http";
+import { Headers, RequestOptions, Response } from "@angular/http";
 
 import { User } from "../_models/index";
 import 'rxjs';
@@ -14,7 +14,7 @@ export class UserService {
   private base_url: '/api';
   private user: User;
 
-  constructor(private http: Http, private authService: AuthenticationService, private httpClient: HttpClient) {
+  constructor(private authService: AuthenticationService, private httpClient: HttpClient) {
     this.user = new User();
   }
 
@@ -27,7 +27,7 @@ export class UserService {
   }
 
   forgotPassword(email: string) {
-    return this.http.post('/api/forgot-password', JSON.stringify({ email }), this.jwt()).map((response: Response) => response.json());
+    return this.httpClient.post('/api/forgot-password', JSON.stringify({ email }), this.jwtHttpClient());
   }
 
   getAll() {
@@ -40,10 +40,7 @@ export class UserService {
 
   create(user: User) {
     let body = JSON.stringify(user);
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    let options = new RequestOptions({ headers: headers });
-    return this.http.post('/api/register', body, options);
+    return this.httpClient.post('/api/register', body, this.jwtHttpClient());
     //return this.http.post('/api/users', user, this.jwt()).map((response: Response) => response.json());
   }
 
@@ -53,7 +50,7 @@ export class UserService {
   }
 
   delete(id: number) {
-    return this.http.delete('/api/users/' + id, this.jwt()).map((response: Response) => response.json());
+    return this.httpClient.delete('/api/users/' + id, this.jwtHttpClient());
   }
 
   currentUser(): User {

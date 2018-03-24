@@ -24,12 +24,16 @@ export function sendVerificationEmail(req, res) {
 
       sgMail.setApiKey(process.env.sendgridKey);
       console.log("Sent to " + user.email);
+
+      const env = process.env.NODE_ENV || 'dev';
+      const protocol = (env === 'dev'?'http': 'https'); 
+      
       const msg = {
         to: user.email,
         from: 'no-reply@expensetracker.com',
         subject: 'Thank you for signin up Expense Tracker',
-        text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttps:\/\/' + req.headers.host + '\/confirmation\/' + email_token.token + '?uid=' + user._id + '.\n',
-        html: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttps:\/\/' + req.headers.host + '\/confirmation\/' + email_token.token + '?uid=' + user._id + '.\n'
+        text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \n' + protocol + ':\/\/' + req.headers.host + '\/confirmation\/' + email_token.token + '?uid=' + user._id + '.\n',
+        html: 'Hello,\n\n' + 'Please verify your account by clicking the link: \n' + protocol + ':\/\/' + req.headers.host + '\/confirmation\/' + email_token.token + '?uid=' + user._id + '.\n'
       };
       sgMail.send(msg).then(
         () => {

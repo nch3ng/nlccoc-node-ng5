@@ -114,6 +114,9 @@ export const userSchema = new mongoose.Schema({
     type: String, 
     default: 'normal'
   }
+  // role: {
+  //   type: mongoose.Schema.Types.ObjectId, ref: 'Role'
+  // },
 });
 
 userSchema.methods.setPassword = function(password){

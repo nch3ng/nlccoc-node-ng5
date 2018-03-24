@@ -6,8 +6,8 @@ import Token from '../../models/token';
 const sgMail = require('@sendgrid/mail');
 
 export function register(req, res) {
-  // console.log(req.body);
-  // console.log("Registering user: " + req.body.email);
+  console.log(req.body);
+  console.log("Registering user: " + req.body.email);
   let user = new User();
   // console.log(user);
   user.firstName = req.body.firstName;
@@ -45,12 +45,14 @@ export function register(req, res) {
 
         sgMail.setApiKey(process.env.sendgridKey);
 
+        const env = process.env.NODE_ENV || 'dev';
+        const protocol = (env === 'dev'?'http': 'https'); 
         const msg = {
           to: user.email,
           from: 'no-reply@expensetracker.com',
           subject: 'Thank you for signin up Expense Tracker',
-          text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttps:\/\/' + req.headers.host + '\/confirmation\/' + email_token.token + '?uid=' + user._id + '.\n',
-          html: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttps:\/\/' + req.headers.host + '\/confirmation\/' + email_token.token + '?uid=' + user._id + '.\n'
+          text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \n' + protocol + ':\/\/' + req.headers.host + '\/confirmation\/' + email_token.token + '?uid=' + user._id + '.\n',
+          html: 'Hello,\n\n' + 'Please verify your account by clicking the link: \n' + protocol + ':\/\/' + req.headers.host + '\/confirmation\/' + email_token.token + '?uid=' + user._id + '.\n'
         };
         sgMail.send(msg).then(
           () => {

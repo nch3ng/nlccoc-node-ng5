@@ -60,7 +60,7 @@ router.post('/confirmation/:token', function (req, res) {
       });
     } else {
       console.log("token exists");
-      console.log(typeof req.query.uid);
+      console.log(req.query.uid);
       let obj = JSON.stringify(token);
 
       if(req.query.uid === token._userId.toString()) {

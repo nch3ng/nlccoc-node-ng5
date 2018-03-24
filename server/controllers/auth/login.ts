@@ -3,12 +3,15 @@ import * as jwt from "jsonwebtoken";
 import Config from "../../config";
 
 import logger = require("../../helpers/logger");
+import Role from "../../models/role";
 
 export function login(req, res) {
   var reqUser = req.body;
 
   // console.log('login');
   // console.log(req.body);
+
+  Role.create();
   
   User.findOne({'email' : reqUser.email}, (err, user, done) => {
     let config = Config.config;

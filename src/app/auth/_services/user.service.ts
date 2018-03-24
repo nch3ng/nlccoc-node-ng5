@@ -39,8 +39,7 @@ export class UserService {
   }
 
   create(user: User) {
-    let body = JSON.stringify(user);
-    return this.httpClient.post<User>('/api/register', body, this.jwtHttpClient());
+    return this.httpClient.post<User>('/api/register', user, this.jwtHttpClient());
   }
 
   update(user: User) {

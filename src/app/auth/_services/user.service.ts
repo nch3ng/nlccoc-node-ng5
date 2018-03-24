@@ -18,11 +18,11 @@ export class UserService {
     this.user = new User();
   }
 
-  verify() {
+  verify(): any {
     return this.httpClient.get<AuthResponse>('/api/check-state', this.jwtHttpClient());
   }
   
-  sendVerificationEmail(){
+  sendVerificationEmail(): any {
     return this.httpClient.post('/api/sendVerificationEmail', JSON.stringify(this.currentUser()),this.jwtHttpClient());
   }
 
@@ -35,22 +35,21 @@ export class UserService {
   }
 
   getById(id: number) {
-    return this.httpClient.get('/api/user/' + id, this.jwtHttpClient());
+    return this.httpClient.get<User>('/api/user/' + id, this.jwtHttpClient());
   }
 
   create(user: User) {
     let body = JSON.stringify(user);
-    return this.httpClient.post('/api/register', body, this.jwtHttpClient());
-    //return this.http.post('/api/users', user, this.jwt()).map((response: Response) => response.json());
+    return this.httpClient.post<User>('/api/register', body, this.jwtHttpClient());
   }
 
   update(user: User) {
     console.log("update");
-    return this.httpClient.put('/api/user/' + user['_id'], user, this.jwtHttpClient());
+    return this.httpClient.put<User>('/api/user/' + user['_id'], user, this.jwtHttpClient());
   }
 
   delete(id: number) {
-    return this.httpClient.delete('/api/users/' + id, this.jwtHttpClient());
+    return this.httpClient.delete<User>('/api/users/' + id, this.jwtHttpClient());
   }
 
   currentUser(): User {

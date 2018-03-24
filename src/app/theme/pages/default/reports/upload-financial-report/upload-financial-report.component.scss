@@ -1,4 +1,3 @@
-
 .m-body .m-wrapper.upload {
   background: linear-gradient(to right, #4568dc, #b06ab3) !important;
   color: #D7D7EF;
@@ -65,4 +64,17 @@
 
 .ng-input input {
   line-height: 40px;
+}
+
+.ng-select.upload-report {
+  font-size: 1.25rem;
+
+  .ng-value-container {
+    padding-left: 21px;
+  }
+}
+
+.remarkTextarea {
+  font-size: 1.25rem;
+  padding: 21px 14px;
 }

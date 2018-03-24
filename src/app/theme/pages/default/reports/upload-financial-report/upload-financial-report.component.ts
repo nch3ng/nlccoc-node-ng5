@@ -1,4 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from './../../../../../auth/_services/user.service';
 import { ReportService } from './../../../../../_services/report.service';
 import { PagesService } from './../../../../../_services/pages.service';
@@ -25,6 +25,7 @@ export class UploadFinancialReportComponent implements OnInit, OnDestroy, AfterV
   uploadSub: Subscription;
   fReport: Report; 
   mode: string = 'new';
+  uploading: boolean = false;
 
   months = [
     {id: 1, name: 'January'},
@@ -52,11 +53,14 @@ export class UploadFinancialReportComponent implements OnInit, OnDestroy, AfterV
     private pageService: PagesService,
     private reportService: ReportService, 
     private userService: UserService,
-    private route: ActivatedRoute){ }
+    private route: ActivatedRoute,
+    private router: Router){ }
 
   ngOnInit() {
+    
     this.fReport = new Report();
     this.fReport.uploadedBy = this.userService.currentUser();
+    this.fReport.month = new Date().getMonth(); // Last month
     this.route.params.subscribe(
       (params) => {
         console.log(params);
@@ -121,6 +125,7 @@ export class UploadFinancialReportComponent implements OnInit, OnDestroy, AfterV
       return false;
     }
 
+    this.uploading = true;
     const fd = new FormData();
 
     fd.append('image', this.selectedFile, this.selectedFilename);
@@ -140,9 +145,12 @@ export class UploadFinancialReportComponent implements OnInit, OnDestroy, AfterV
             this.reportService.create(this.fReport).subscribe(
               (report: Report) => {
                 this.toastrService.success("You successfuly uploaded financial report: [" + this.selectedFilename +"]", "Upload File");
+                this.uploading = false;
                 this.onReset();
+                this.router.navigate(['/admin/reports']);
               },
               (error) => {
+                this.uploading = false
                 this.toastrService.error("Uploaded financial report [" + this.selectedFilename + "] fail", "Upload File" );
               }            
             )

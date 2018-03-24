@@ -5,23 +5,24 @@
         <label>
           Name
         </label>
-        <div class="m-input-icon m-input-icon--left">
+        <div class="m-input-icon">
           <input class="form-control form-control-lg m-input" 
             [(ngModel)]="fReport.name"
             name="name"
             placeholder="Name" type="text">
-          <span class="m-input-icon__icon m-input-icon__icon--left">
+          <!-- <span class="m-input-icon__icon m-input-icon__icon--left">
             <span>
               <i class="la la-map-marker"></i>
             </span>
-          </span>
+          </span> -->
         </div>
       </div>
     </div>
     <div class="col-md-6 offset-md-3">
       <div class="form-group m-form__group">
         <label>Month</label>
-        <ng-select [items]="months"
+        <ng-select  class="upload-report"
+                    [items]="months"
                     bindLabel="name"
                     bindValue="id"
                     placeholder="Select month"
@@ -35,7 +36,7 @@
         <label for="remarTextarea">
           Remark
         </label>
-        <textarea class="form-control m-input" 
+        <textarea class="form-control m-input remarkTextarea" 
           [(ngModel)]="fReport.remark"
           name="remark" id="remarkTextarea" rows="5"></textarea>
       </div>
@@ -67,8 +68,9 @@
   </div>
   <div class="row">
     <div class="col-md-6 offset-md-3">
+      <button class="btn btn-primary btn-upload" type="button" [routerLink]="['/admin/reports']">Cancel</button>
       <button class="btn btn-secondary btn-upload" type="button" (click)="onReset()">Reset</button>
-      <button class="btn btn-danger btn-upload" type="button" (click)="onStop()">Stop</button>
+      <button class="btn btn-danger btn-upload" type="button" *ngIf="uploading" [disabled]="!uploading" (click)="onStop()">Stop</button>
       <button class="btn btn-success btn-upload" multipart type="submit">Add</button> 
       
     </div>

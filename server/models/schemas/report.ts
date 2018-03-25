@@ -1,13 +1,13 @@
-import * as mongoose from "mongoose";
+import * as mongoose from 'mongoose';
 
 export const reportSchema = new mongoose.Schema({
   name: {
     type: String,
-    default: "financial"
+    default: 'financial'
   },
   path: {
     type: String,
-    default: ""
+    default: ''
   },
   month: {
   },
@@ -20,11 +20,12 @@ export const reportSchema = new mongoose.Schema({
   },
   remark: {
     type: String,
-    default: ""
+    default: ''
   },
   category: {
     type: String,
-    default: "financial"
+    default: 'financial'
   }
-})
+});
+
 

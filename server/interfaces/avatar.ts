@@ -3,7 +3,7 @@ export class Avatar {
   large: PictureProfile;
   normal: PictureProfile;
 
-  constructor(){
+  constructor() {
     this.large = new PictureProfile();
     this.normal = new PictureProfile();
   }

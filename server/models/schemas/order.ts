@@ -1,7 +1,7 @@
-import * as mongoose from "mongoose";
-import * as jwt from "jsonwebtoken";
-import Config from "../../config";
-let config = Config.config;
+import * as mongoose from 'mongoose';
+import * as jwt from 'jsonwebtoken';
+import Config from '../../config';
+const config = Config.config;
 
 export const orderSchema = new mongoose.Schema({
   createAt: {
@@ -23,7 +23,7 @@ export const orderSchema = new mongoose.Schema({
   amount: {
     type: Number,
     require: true
-  }, 
+  },
   validThrough: {
     type: Date
   },

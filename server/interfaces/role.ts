@@ -1,6 +1,6 @@
-import * as mongoose from "mongoose";
+import * as mongoose from 'mongoose';
 
 export interface IRole extends mongoose.Document {
-  name?: String,
-  remark?: string
-};
+  name?: String;
+  remark?: string;
+}

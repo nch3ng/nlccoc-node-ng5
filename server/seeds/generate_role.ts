@@ -1,17 +1,15 @@
 import { roleSchema } from './../models/schemas/role';
 import { IRole } from './../interfaces/role';
-import Role from "../models/role";
-import * as mongoose from "mongoose";
-import DataAccess from "../models/dataAccess";
-import Config from "../config";
-console.log("Seeding....");
+import Role from '../models/role';
+import * as mongoose from 'mongoose';
+import DataAccess from '../models/dataAccess';
+import Config from '../config';
+console.log('Seeding....');
 
 class Seed {
   _config;
   conn;
   roles;
-  
-  
   constructor() {
     Config.initialize();
 
@@ -28,7 +26,6 @@ class Seed {
     mongoose.connection.on('disconnected', function() {
       console.log('Mongoose disconnected');
     });
-    
     // For app termination
     process.on('SIGINT', () => {
       this.gracefulShutdown('app termination', () => {
@@ -37,13 +34,12 @@ class Seed {
     });
 
     this.roles = [
-      { name: "admin", remark: "adminiatration." },
-      { name: "normal", remark: "Just an normal account." },
-      { name: "nlccoc", remark: "Usually NLCCOC member." },
-      { name: "media", remark: "Member of multimedia team." },
-      { name: "pastor", remark: "Member of pastoral team." }
+      { name: 'admin', remark: 'adminiatration.' },
+      { name: 'normal', remark: 'Just an normal account.' },
+      { name: 'nlccoc', remark: 'Usually NLCCOC member.' },
+      { name: 'media', remark: 'Member of multimedia team.' },
+      { name: 'pastor', remark: 'Member of pastoral team.' }
     ];
-    
     mongoose.connect(this._config.DBConnectionUrl, { useMongoClient: true }, (err) => {
       this.conn = mongoose.connection;
       console.log(this._config.DBConnectionUrl);
@@ -63,16 +59,16 @@ class Seed {
       console.log('Mongoose disconnected through ' + msg);
       callback();
     });
-  };
+  }
 
   generateRole() {
     mongoose.connection.db.listCollections( { name: 'roles' } )
       .next( (err, collinfo) => {
-        if(collinfo) {
+        if (collinfo) {
           console.log('Collection: roles already exists');
           mongoose.connection.close();
         } else {
-          for( let role of this.roles) {
+          for (const role of this.roles) {
             console.log(role);
             Role.create(role);
           }

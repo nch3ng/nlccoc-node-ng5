@@ -3,18 +3,16 @@ import * as bodyParser from 'body-parser';
 import * as path from 'path';
 import * as morgan from 'morgan';
 import * as cookieParser from 'cookie-parser';
-import DataAccess from "./models/dataAccess"
-import Config from "./config"
+import DataAccess from './models/dataAccess';
+import Config from './config';
 
 export class Server {
   public app;
-  private env;
-  static env;
+
   private _config;
-  protected static _config;
 
   /**
-   * Bootstrap the application.
+   * Bootstrap theapplication.
    *
    * @class Server
    * @method bootstrap
@@ -25,13 +23,12 @@ export class Server {
     return new Server();
   }
 
-  constructor(){
+  constructor() {
     Config.initialize();
     this._config = Config.config;
 
     this.app = express();
     this.configure();
-    
     // API has to be initialized first becasue the app is built in ng2 and the routes are overlap with /
     this.api();
 
@@ -39,14 +36,13 @@ export class Server {
     this.routes();
   }
 
-  private configure(){
+  private configure() {
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({extended: false}));
 
-    //configure ejs
-    this.app.set("views", path.join(__dirname, "views"));
-    this.app.set("view engine", "ejs");
-  
+    // configure ejs
+    this.app.set('views', path.join(__dirname, 'views'));
+    this.app.set('view engine', 'ejs');
     this.app.use(morgan('dev'));
     DataAccess.connect();
 
@@ -57,33 +53,31 @@ export class Server {
     });
   }
 
-  private routes(): void{
-    
+  private routes(): void {
     // DO NOT use "/api", it is reserved for APIs
 
-    let env = process.env.NODE_ENV || 'dev';
+    const env = process.env.NODE_ENV || 'dev';
 
     let static_ng2;
-    if(env == "dev"){
+    if (env === 'dev') {
       static_ng2 = express.static(path.join(__dirname, '../dist/web'));
-    }
-    else{
+    } else {
       static_ng2 = express.static(path.join(__dirname, '../web'));
     }
-    
-    let static_ng2_assets = express.static(path.join(__dirname, 'public'));
+    const static_ng2_assets = express.static(path.join(__dirname, 'public'));
     this.app.use('/static', static_ng2_assets);
     this.app.use(static_ng2);
     this.app.use(['/', '/login', '/register'], function(req, res, next) {
       // Just send the index.html for other files to support HTML5Mode
-      if(env == "dev")
+      if (env === 'dev') {
         res.sendFile('/index.html', { root: path.join(__dirname, '../dist/web') });
-      else
+      } else {
         res.sendFile('/index.html', { root: path.join(__dirname, '../web') });
+      }
     });
   }
-  private api(){
-    let api = require('./api');
+  private api() {
+    const api = require('./api');
 
     // register api routes
     // all of api routes will be prefixed with /api

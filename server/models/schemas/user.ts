@@ -1,30 +1,30 @@
 import { Avatar } from './../../interfaces/avatar';
-import * as mongoose from "mongoose";
-import * as crypto  from "crypto";
-import * as jwt from "jsonwebtoken";
-import Config from "../../config";
-import { Profile } from "../../interfaces/profile";
+import * as mongoose from 'mongoose';
+import * as crypto from 'crypto';
+import * as jwt from 'jsonwebtoken';
+import Config from '../../config';
+import { Profile } from '../../interfaces/profile';
 import Role from '../role';
-let config = Config.config;
+const config = Config.config;
 
 const addressSchema = new mongoose.Schema({
   address: {
     type: String,
-    default: ""
+    default: ''
   },
   city: {
     type: String,
-    default: ""
+    default: ''
   },
   postcode: {
     type: String,
-    default: ""
+    default: ''
   },
   state: {
     type: String,
-    default: ""
+    default: ''
   },
-})
+});
 const pictureProfileSchema = new mongoose.Schema({
   height: {
     type: Number,
@@ -33,17 +33,17 @@ const pictureProfileSchema = new mongoose.Schema({
   width: {
     type: Number,
     default: 500
-  }, 
+  },
   path: {
     type: String,
     default: './assets/app/media/img/users/male-avatar.png'
   }
-})
+});
 
 const avatarSchema = new mongoose.Schema({
   large: pictureProfileSchema,
   normal: pictureProfileSchema
-})
+});
 
 const profileSchema = new mongoose.Schema({
   fbId: String,
@@ -53,42 +53,42 @@ const profileSchema = new mongoose.Schema({
   fullName: String,
   linkedInLink: {
     type: String,
-    default: ""
+    default: ''
   },
   twitterLink: {
     type: String,
-    default: ""
+    default: ''
   },
   instalLink: {
     type: String,
-    default: ""
+    default: ''
   },
   gender: {
     type: String,
-    default: ""
+    default: ''
   },
   locale: {
     type: String,
-    default: ""
+    default: ''
   },
   fbLink: {
     type: String,
-    default: ""
+    default: ''
   },
   cell: {
     type: String,
-    default: ""
+    default: ''
   },
   occupation: {
     type: String,
-    default: ""
+    default: ''
   },
   organization: {
     type: String,
-    default: ""
+    default: ''
   },
   address: addressSchema
-})
+});
 
 export const userSchema = new mongoose.Schema({
   email: {
@@ -107,9 +107,9 @@ export const userSchema = new mongoose.Schema({
   hash: String,
   salt: String,
   profile: profileSchema,
-  isVerified: { 
-    type: Boolean, 
-    default: false 
+  isVerified: {
+    type: Boolean,
+    default: false
   },
   role: {
     type: mongoose.Schema.Types.ObjectId, ref: 'Role'
@@ -120,21 +120,21 @@ export const userSchema = new mongoose.Schema({
 });
 
 userSchema.methods.isPasswordSet = function () {
-  return this.salt?true:false;
-}
+  return this.salt ? true : false;
+};
 
-userSchema.methods.setPassword = function(password){
+userSchema.methods.setPassword = function(password) {
   this.salt = crypto.randomBytes(16).toString('hex');
   this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
 };
 
 userSchema.methods.validPassword = function(password) {
-  var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
+  const hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
   return this.hash === hash;
 };
 
 userSchema.methods.generateJwt = function() {
-  var expiry = new Date();
+  const expiry = new Date();
   expiry.setDate(expiry.getDate() + 1); // Expired in 1 day
 
   return jwt.sign({
@@ -147,25 +147,23 @@ userSchema.methods.generateJwt = function() {
 };
 
 userSchema.methods.findAll = () => {
-  return this.find({}, "_id email firstName lastName role profile");
-}
+  return this.find({}, '_id email firstName lastName role profile');
+};
 
 userSchema.pre('save', function(next) {
   const user = this;
   Role.findOne({ name: 'normal'}, (err, role, done) => {
-    if( err )
+    if (err) {
       return done(err);
-
+    }
     console.log('presave');
     // console.log(role);
     const roleId = role['_id'];
     user.role = new mongoose.Types.ObjectId(roleId);
     // console.log(user.role);
-    
     next();
   });
-  // this.role = new mongoose.Types.ObjectId("5962a5f37bde228394da6f72")//this _id ref your model
-  
+  // this.role = new mongoose.Types.ObjectId('5962a5f37bde228394da6f72')//this _id ref your model
 });
 
 userSchema.post('save', function (doc) {

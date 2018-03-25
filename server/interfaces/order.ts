@@ -1,4 +1,4 @@
-import * as mongoose from "mongoose";
+import * as mongoose from 'mongoose';
 
 export interface IOrder extends mongoose.Document {
   createAt?: Date;
@@ -7,4 +7,4 @@ export interface IOrder extends mongoose.Document {
   partNumber?: String;
   customerId?: Number;
   validThrough?: Date;
-};
+}

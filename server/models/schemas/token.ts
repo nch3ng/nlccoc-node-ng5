@@ -1,4 +1,4 @@
-import * as mongoose from "mongoose";
+import * as mongoose from 'mongoose';
 
 export const tokenSchema = new mongoose.Schema({
   _userId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },

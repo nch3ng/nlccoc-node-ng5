@@ -1,15 +1,15 @@
-import * as mongoose from "mongoose";
-import { Profile } from "./profile";
+import * as mongoose from 'mongoose';
+import { Profile } from './profile';
 
 export interface IUser extends mongoose.Document {
-  email?: string;
-  firstName?: string;
-  lastName?: string;
-  passwordCreated?: boolean;
+  email?: String;
+  firstName?: String;
+  lastName?: String;
+  passwordCreated?: Boolean;
   hash?: String;
   salt?: String;
   profile: Profile;
   status: String;
   isVerified: Boolean;
   role: String;
-};
+}

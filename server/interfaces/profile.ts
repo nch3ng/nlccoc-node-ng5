@@ -13,23 +13,23 @@ export class Profile {
   address: Address;
   cell: string;
   linkedInLink: string;
-  twitterLink:string;
+  twitterLink: string;
   instalLink: string;
   organization: string;
 
-  constructor(){
+  constructor() {
     this.fbAvatar = new Avatar();
     this.address = new Address();
-    this.fbId="";
-    this.fbCover="";
-    this.fbToken="";
-    this.fullName="";
-    this.gender="N/A";
-    this.locale="N/A";
-    this.fbLink="";
-    this.linkedInLink = "";
-    this.twitterLink = "";
-    this.instalLink = "";
-    this.cell="";
+    this.fbId = '';
+    this.fbCover = '';
+    this.fbToken = '';
+    this.fullName = '';
+    this.gender = 'N/A';
+    this.locale = 'N/A';
+    this.fbLink = '';
+    this.linkedInLink = '';
+    this.twitterLink = '';
+    this.instalLink = '';
+    this.cell = '';
   }
 }

@@ -1,37 +1,34 @@
 import { Profile } from './../../interfaces/profile';
-import User from "../../models/user";
-import * as crypto  from "crypto";
+import User from '../../models/user';
+import * as crypto from 'crypto';
 import Token from '../../models/token';
 
 const sgMail = require('@sendgrid/mail');
 
 export function register(req, res) {
   console.log(req.body);
-  console.log("Registering user: " + req.body.email);
-  let user = new User();
+  console.log('Registering user: ' + req.body.email);
+  const user = new User();
   // console.log(user);
   user.firstName = req.body.firstName;
   user.lastName = req.body.lastName;
   user.email = req.body.email;
 
   const promise = User.findOne({'email' : user.email}).populate('role').exec();
-  
   promise.then(
     (result_user) => {
-    
-    if( result_user ) {
-      let content = {
+    if (result_user) {
+      const content = {
         success: false,
         message: 'User alread exists'
       };
       res.send(content);
       return;
     } else {
-      //console.log("user is not exist!");
+      // console.log('user is not exist!');
       user.setPassword(req.body.password);
 
       user.profile = new Profile();
-      
       user.save(function(err) {
         // console.log('save user')
         // console.log(user);
@@ -39,38 +36,43 @@ export function register(req, res) {
         const email_token = new Token({_userId: user._id, token: crypto.randomBytes(16).toString('hex')});
 
         email_token.save(
-          (err) => {
-            
-            if (err) { return res.status(500).send({ msg: err.message }); }
+          (emailerr) => {
+            if (emailerr) { return res.status(500).send({ msg: emailerr.message }); }
 
             console.log(email_token);
 
             sgMail.setApiKey(process.env.sendgridKey);
 
             const env = process.env.NODE_ENV || 'dev';
-            const protocol = (env === 'dev'?'http': 'https'); 
+            const protocol = (env === 'dev' ? 'http' : 'https');
             const msg = {
               to: user.email,
               from: 'no-reply@expensetracker.com',
               subject: 'Thank you for signin up Expense Tracker',
-              text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \n' + protocol + ':\/\/' + req.headers.host + '\/confirmation\/' + email_token.token + '?uid=' + user._id + '.\n',
-              html: 'Hello,\n\n' + 'Please verify your account by clicking the link: \n' + protocol + ':\/\/' + req.headers.host + '\/confirmation\/' + email_token.token + '?uid=' + user._id + '.\n'
+              text: 'Hello,\n\n' +
+                    'Please verify your account by clicking the link: \n' +
+                    protocol + ':\/\/' + req.headers.host + '\/confirmation\/' +
+                    email_token.token + '?uid=' + user._id + '.\n',
+              html: 'Hello,\n\n' +
+                    'Please verify your account by clicking the link: \n' +
+                    protocol + ':\/\/' + req.headers.host + '\/confirmation\/' +
+                    email_token.token + '?uid=' + user._id + '.\n'
             };
             sgMail.send(msg).then(
               () => {
-                console.log("sent");
+                console.log('sent');
               }
             );
 
             res.status(200);
             res.json({
-              "user": user,
-              "success": true,
-              "message": 'You created a new user',
-              "token" : token
+              'user': user,
+              'success': true,
+              'message': 'You created a new user',
+              'token' : token
             });
           }
-        )
+        );
       });
     }
   });

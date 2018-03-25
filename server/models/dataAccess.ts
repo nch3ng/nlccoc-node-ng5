@@ -1,10 +1,9 @@
-import * as mongoose from "mongoose";
+import * as mongoose from 'mongoose';
 import dotenv = require('dotenv');
-import Config from "../config";
+import Config from '../config';
 
 
 class DataAccess {
-  
   static mongooseInstance: any;
   static mongooseConnection: mongoose.Connection;
 
@@ -13,17 +12,16 @@ class DataAccess {
       console.log('Mongoose disconnected through ' + msg);
       callback();
     });
-  };
+  }
 
   static connect(): mongoose.Connection {
-    //use q promises
-    global.Promise = require("q").Promise;
+    // use q promises
+    global.Promise = require('q').Promise;
     mongoose.Promise = global.Promise;
-    
-    //console.log(Config.config);
+    // console.log(Config.config);
     const MONGODB_CONNECTION: string = Config.config.DBConnectionUrl;
 
-    if (this.mongooseInstance) return this.mongooseInstance;
+    if (this.mongooseInstance) { return this.mongooseInstance; }
 
     this.mongooseConnection = mongoose.connection;
 
@@ -40,7 +38,6 @@ class DataAccess {
     // this.mongooseConnection.once('open', () => {
     //   console.log('Connected to mongodb');
     // })
- 
     // For nodemon restarts
     process.once('SIGUSR2', () => {
       this.gracefulShutdown('nodemon restart', () => {
@@ -59,16 +56,12 @@ class DataAccess {
         process.exit(0);
       });
     });
-    
     this.mongooseInstance = mongoose.connect(MONGODB_CONNECTION, {
       useMongoClient: true
     });
     return this.mongooseInstance;
   }
-
-  
-  
 }
 
-//DataAccess.connect();
+// DataAccess.connect();
 export default DataAccess;

@@ -8,55 +8,68 @@ import Role from "../../models/role";
 export function login(req, res) {
   var reqUser = req.body;
 
-  // console.log('login');
-  // console.log(req.body);
+  console.log(reqUser);
+  const promise = User.findOne({'email' : reqUser.email}).populate('role').exec();
+  promise.then(
+    (user) => {
+      
+      if( !user ) {
+        let content = {
+          success: false,
+          message: 'User does not exists'
+        };
+        res.status(401).send(content);
+        return;
+      }
 
-  Role.create();
-  
-  User.findOne({'email' : reqUser.email}, (err, user, done) => {
-    let config = Config.config;
-    console.log(user);
-    if( err )
-      return done(err);
+      if( !user.isPasswordSet() ){
+        let content = {
+          success: false,
+          message: 'Haven\'t set password yet'
+        };
+        res.status(401).send(content);
+        return;
+      }
 
-    if( !user ) {
+      if( !user.validPassword(reqUser.password) ){
+        let content = {
+          success: false,
+          message: 'Incorrect password'
+        };
+        res.status(401).send(content);
+        return;
+      }
+      
+      user.salt = "";
+      user.hash = "";
+      const config = Config.config;
+
+      const token = jwt.sign({
+        userID: user._id,
+        email: user.email,
+        name: user.name,
+        isVerified: user.isVerified,
+      }, config.secret, {
+        expiresIn : 60*60*config.expiry
+      });
+      
       let content = {
-        success: false,
-        message: 'User does not exists'
+        user: user,
+        success: true,
+        message: 'You logged in',
+        token: token
       };
-      res.status(401).send(content);
-      return;
-    }
+      res.send(content);
+    }).catch(
+      (err) => {
+        let content = {
+          success: false,
+          message: 'Opps something went wrong.....'
+        }
 
-    if( !user.validPassword(reqUser.password) ){
-      let content = {
-        success: false,
-        message: 'Incorrect password'
-      };
-      res.status(401).send(content);
-      return;
-    }
-    
-    user.salt = "";
-    user.hash = "";
-
-    let token = jwt.sign({
-      userID: user._id,
-      email: user.email,
-      name: user.name,
-      isVerified: user.isVerified,
-    }, config.secret, {
-      expiresIn : 60*60*config.expiry
-    });
-    
-    let content = {
-      user: user,
-      success: true,
-      message: 'You logged in',
-      token: token
-    };
-    res.send(content);
-  })
+        res.status(500).send(content);
+      }
+    );
 }
 
 export function fbLogin(req, res){
@@ -71,11 +84,11 @@ export function fbLogin(req, res){
 
   
 
-  User.findOne({'email' : req.body.email}, (err, result_user, done) => {
+  const promise = User.findOne({'email' : req.body.email}).populate('role').exec();
+  
+  promise.then((result_user) => {
 
     var config = Config.config;
-    if( err )
-      return done(err);
 
     if( !result_user ) {
       // The user does not exist
@@ -96,6 +109,7 @@ export function fbLogin(req, res){
       // The user exists
       // console.log('user exists');
       token = result_user.generateJwt();
+      // console.log(result_user);
       res.status(200).json({
         "user": result_user,
         "success": true,
@@ -104,6 +118,14 @@ export function fbLogin(req, res){
       });
       return;
     }
+  }).catch( (err) => {
+    console.log('error:', err);
+    res.status(200).send(
+      {
+        success: false,
+        message: "Something went wrong..."
+      }
+    );
   });
   
 }

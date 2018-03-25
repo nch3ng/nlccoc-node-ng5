@@ -4,6 +4,7 @@ import * as crypto  from "crypto";
 import * as jwt from "jsonwebtoken";
 import Config from "../../config";
 import { Profile } from "../../interfaces/profile";
+import Role from '../role';
 let config = Config.config;
 
 const addressSchema = new mongoose.Schema({
@@ -111,13 +112,16 @@ export const userSchema = new mongoose.Schema({
     default: false 
   },
   role: {
-    type: String, 
-    default: 'normal'
+    type: mongoose.Schema.Types.ObjectId, ref: 'Role'
   }
   // role: {
   //   type: mongoose.Schema.Types.ObjectId, ref: 'Role'
   // },
 });
+
+userSchema.methods.isPasswordSet = function () {
+  return this.salt?true:false;
+}
 
 userSchema.methods.setPassword = function(password){
   this.salt = crypto.randomBytes(16).toString('hex');
@@ -145,3 +149,26 @@ userSchema.methods.generateJwt = function() {
 userSchema.methods.findAll = () => {
   return this.find({}, "_id email firstName lastName role profile");
 }
+
+userSchema.pre('save', function(next) {
+  const user = this;
+  Role.findOne({ name: 'normal'}, (err, role, done) => {
+    if( err )
+      return done(err);
+
+    console.log('presave');
+    // console.log(role);
+    const roleId = role['_id'];
+    user.role = new mongoose.Types.ObjectId(roleId);
+    // console.log(user.role);
+    
+    next();
+  });
+  // this.role = new mongoose.Types.ObjectId("5962a5f37bde228394da6f72")//this _id ref your model
+  
+});
+
+userSchema.post('save', function (doc) {
+  console.log('this fired after a document was saved');
+});
+

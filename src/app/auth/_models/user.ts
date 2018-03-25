@@ -1,3 +1,4 @@
+import { Role } from './role';
 import { Profile } from "./profile";
 
 export class User {
@@ -9,13 +10,12 @@ export class User {
   profile: Profile;
   token: string;
   isVerified: boolean;
-  role: string;
+  role: Role;
 
   constructor(){
     this.email = 'johndoe@gmail.com';
     this.firstName = 'John';
     this.lastName = 'Doe';
     this.profile = new Profile();
-    this.role = 'normal';
   }
 }

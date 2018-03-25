@@ -21,7 +21,7 @@ export class AsideNavComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute) {
     this.user = this.userService.currentUser();
 
-    if(this.user.role === "admin")
+    if(this.user.role.name === "admin")
       this.isAdmin=true;
   }
   ngOnInit() {

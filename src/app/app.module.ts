@@ -2,7 +2,7 @@ import { MessageService } from './_services/message.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { ThemeComponent } from './theme/theme.component';
 import { LayoutModule } from './theme/layouts/layout.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -44,7 +44,8 @@ import { PagesService } from './_services/pages.service';
     ScriptLoaderService,
     ToastrService,
     PagesService,
-    MessageService],
+    MessageService,
+    { provide: LOCALE_ID, useValue: 'zh-TW' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

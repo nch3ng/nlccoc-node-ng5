@@ -1,3 +1,4 @@
+import { ErrorHandler } from '@angular/core';
 import { MessageService } from '../../services/message/message';
 import * as express from 'express';
 import * as logger from '../../helpers/logger';
@@ -10,18 +11,14 @@ const message_router = express.Router();
 message_router.post('/', (req, res) => {
   logger.debug(req.body);
   const messageService = new MessageService(req.body);
-  messageService.send();
-  res.status(200).json({});
+  messageService.send().then(
+    () => { res.status(200).json({}); }
+  ).catch((reason) => { res.status(200).json({}); });
 });
 
 message_router.post('/all', (req, res) => {
 
   logger.debug('send message to all');
-
-  // logger.debug(req.body);
-  // if (!req.body.from) {
-  //   return errorHandler('No sender', res);
-  // }
 
   const promise = User.find({}).exec();
   promise.then(
@@ -53,6 +50,33 @@ message_router.post('/all', (req, res) => {
     (err) => {}
   );
   res.status(200).json({});
+});
+
+message_router.delete('/:msgId', (req, res) => {
+  const messageService = new MessageService();
+  messageService.deleteMessagebyId(req.params.msgId)
+    .then(
+      (msg) => {
+        res.status(200).json(msg);
+      }
+  ).catch(
+    (reason) => {
+      errorHandler(reason, res);
+    }
+  );
+});
+
+message_router.post('/:msgId/read', (req, res) => {
+  const messageService = new MessageService();
+  messageService.read(req.params.msgId).then(
+    (msg) => {
+      res.status(200).json(msg);
+    }
+  ).catch(
+    (reason) => {
+      errorHandler(reason, res);
+    }
+  );
 });
 
 export const message = message_router;

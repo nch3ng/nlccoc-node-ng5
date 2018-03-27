@@ -80,6 +80,14 @@ export class IndexComponent implements OnInit, AfterViewInit {
       }
     );
 
+    // this._messageService.sendAlert('SendAlert API test').subscribe(
+    //   () => {
+    //     this._toastrService.success('Test', 'Test');
+    //   },
+    //   (err) => {
+    //     this._toastrService.error('Test', 'Test');
+    //   }
+    // );
     // const msg: Message = {
     //   message: 'AAAAAAAAAAAA',
     //   from: null,

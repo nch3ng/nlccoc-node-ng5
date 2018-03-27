@@ -9,6 +9,7 @@ import { Component, OnInit, ViewEncapsulation, EventEmitter, OnDestroy, Output, 
 import { Subscription } from 'rxjs/Subscription';
 import { Report } from '../../../../../_models/report';
 import swal from 'sweetalert2';
+import { MessageService } from '../../../../../_services/message.service';
 
 @Component({
   selector: 'app-upload-file',
@@ -53,7 +54,8 @@ export class UploadFinancialReportComponent implements OnInit, OnDestroy, AfterV
     private reportService: ReportService,
     private userService: UserService,
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router,
+    private _messageService: MessageService) {
       this.isActive = false;
       this.selectedFilename = 'or drag and drop files here';
       this.selectedFile = null;
@@ -147,6 +149,10 @@ export class UploadFinancialReportComponent implements OnInit, OnDestroy, AfterV
                 this.toastrService.success('You successfuly uploaded financial report: [' + this.selectedFilename + ']', 'Upload File');
                 this.uploading = false;
                 this.onReset();
+                this._messageService.sendAlert('Report [' + report.name + '] has been posted.').subscribe(
+                    () => {},
+                    (err) => {}
+                  );
                 this.router.navigate(['/admin/reports']);
               },
               (error) => {

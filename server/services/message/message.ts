@@ -41,6 +41,14 @@ export class MessageService {
   getMessagesByUserId(userId: number): Promise<MessageModel []> {
     return Inbox.find({to: userId}).sort({sentAt: 'desc'}).exec();
   }
+
+  deleteMessagebyId(msgId: number) {
+    return Inbox.remove({ _id: msgId}).exec();
+  }
+
+  read(msgId: number) {
+    return Inbox.findOneAndUpdate({ _id: msgId }, { $set: { read: true } }, { new: true }).exec();
+  }
   set msg(msg: MessageModel) {
     this._msg = msg;
   }

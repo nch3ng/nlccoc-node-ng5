@@ -17,4 +17,23 @@ export class MessageService {
   createForAll(msg: Message) {
     return this.httpClient.post('/api/messages/all', msg, this._authService.jwtHttpClient());
   }
+
+  sendAlert(message: string) {
+    const msg: Message = {
+      message: message,
+      from: null,
+      to: null,
+      sentAt: Date.now(),
+      read: false
+    };
+    return this.createForAll(msg);
+  }
+
+  delete(id: number) {
+    return this.httpClient.delete('/api/messages/' + id, this._authService.jwtHttpClient());
+  }
+
+  read(id: number) {
+    return this.httpClient.post('/api/messages/' + id + '/read', this._authService.jwtHttpClient());
+  }
 }

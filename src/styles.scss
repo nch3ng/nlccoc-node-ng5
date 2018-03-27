@@ -40,3 +40,19 @@
   width: 80%;
 }
 
+.m-list-timeline__items .m-list-timeline__item .m-list-timeline__action {
+  display: table-cell;
+  text-align: right;
+  vertical-align: middle;
+  width: 40px;
+  padding: 0 7px 0 0;
+  font-size: 0.65rem;
+  color: red;
+  cursor: pointer;
+}
+
+.m-list-timeline__items .m-list-timeline__item .m-list-timeline__action [class^="la-"], 
+.m-list-timeline__items .m-list-timeline__item .m-list-timeline__action [class*=" la-"] {
+  font-size: 1.0rem;
+}
+

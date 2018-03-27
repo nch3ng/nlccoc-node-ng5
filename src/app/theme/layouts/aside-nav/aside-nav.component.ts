@@ -7,25 +7,26 @@ import { UserService } from '../../../auth/_services';
 
 declare let mLayout: any;
 @Component({
-  selector: "app-aside-nav",
-  templateUrl: "./aside-nav.component.html",
+  selector: 'app-aside-nav',
+  templateUrl: './aside-nav.component.html',
   encapsulation: ViewEncapsulation.None,
 })
 export class AsideNavComponent implements OnInit, AfterViewInit {
 
-  isAdmin: boolean = false;
+  isAdmin: boolean;
   user: User;
 
   constructor(
     private userService: UserService,
     private route: ActivatedRoute) {
-    this.user = this.userService.currentUser();
+      this.isAdmin = false;
+      this.user = this.userService.currentUser();
 
-    if(this.user.role.name === "admin")
-      this.isAdmin=true;
+      if (this.user.role.name === 'admin') {
+        this.isAdmin = true;
+      }
   }
   ngOnInit() {
-    
   }
   ngAfterViewInit() {
 
@@ -33,9 +34,9 @@ export class AsideNavComponent implements OnInit, AfterViewInit {
 
   }
 
-  onUploadPage(event){
-    console.log("on upload page");
-    console.log(event)
+  onUploadPage(event) {
+    console.log('on upload page');
+    console.log(event);
   }
 
 }

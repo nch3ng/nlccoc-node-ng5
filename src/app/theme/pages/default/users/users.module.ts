@@ -7,12 +7,16 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-    "path": "",
-    "component": DefaultComponent,
-    "children": [
+    path: '',
+    component: DefaultComponent,
+    children: [
       {
-        "path": "",
-        "component": UsersComponent
+        path: '',
+        component: UsersComponent
+      },
+      {
+        path: 'wait-for-approval',
+        component: UsersComponent
       }
     ]
   }
@@ -27,7 +31,4 @@ const routes: Routes = [
   ]
 })
 export class UsersModule {
-
-
-
 }

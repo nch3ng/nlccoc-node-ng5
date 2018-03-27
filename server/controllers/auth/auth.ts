@@ -1,18 +1,18 @@
 
 const sgMail = require('@sendgrid/mail');
 import Token from '../../models/token';
+import * as logger from '../../helpers/logger';
 import * as crypto from 'crypto';
 
 export function sendVerificationEmail(req, res) {
-  // console.log('Re-Send Verification Email........');
-  // console.log(req.body);
+  // logger.debug('Re-Send Verification Email........');
   const user = req.body;
   const email_token = new Token({_userId: user._id, token: crypto.randomBytes(16).toString('hex')});
-  console.log(email_token);
+  logger.debug(email_token);
 
   email_token.save(
     (err) => {
-      // console.log('token saved');
+      // logger.debug('token saved');
       if (err) { return res.status(500).send({ msg: err.message }); }
       const options = {
         auth: {
@@ -22,7 +22,7 @@ export function sendVerificationEmail(req, res) {
       };
 
       sgMail.setApiKey(process.env.sendgridKey);
-      console.log('Sent to ' + user.email);
+      logger.debug('Sent to ' + user.email);
 
       const env = process.env.NODE_ENV || 'dev';
       const protocol = (env === 'dev' ? 'http' : 'https');

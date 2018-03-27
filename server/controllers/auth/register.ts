@@ -2,14 +2,15 @@ import { Profile } from './../../interfaces/profile';
 import User from '../../models/user';
 import * as crypto from 'crypto';
 import Token from '../../models/token';
+import * as logger from '../../helpers/logger';
 
 const sgMail = require('@sendgrid/mail');
 
 export function register(req, res) {
-  console.log(req.body);
-  console.log('Registering user: ' + req.body.email);
+  // logger.debug(req.body);
+  logger.debug('Registering user: ' + req.body.email);
   const user = new User();
-  // console.log(user);
+  // logger.debug(user);
   user.firstName = req.body.firstName;
   user.lastName = req.body.lastName;
   user.email = req.body.email;
@@ -25,13 +26,13 @@ export function register(req, res) {
       res.send(content);
       return;
     } else {
-      // console.log('user is not exist!');
+      // logger.debug('user is not exist!');
       user.setPassword(req.body.password);
 
       user.profile = new Profile();
       user.save(function(err) {
-        // console.log('save user')
-        // console.log(user);
+        // logger.debug('save user')
+        // logger.debug(user);
         const token = user.generateJwt();
         const email_token = new Token({_userId: user._id, token: crypto.randomBytes(16).toString('hex')});
 
@@ -39,7 +40,7 @@ export function register(req, res) {
           (emailerr) => {
             if (emailerr) { return res.status(500).send({ msg: emailerr.message }); }
 
-            console.log(email_token);
+            // logger.debug(email_token);
 
             sgMail.setApiKey(process.env.sendgridKey);
 
@@ -60,7 +61,7 @@ export function register(req, res) {
             };
             sgMail.send(msg).then(
               () => {
-                console.log('sent');
+                logger.debug('sent');
               }
             );
 

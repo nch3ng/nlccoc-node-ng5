@@ -3,7 +3,7 @@ import { ResponseMessage } from './../../../../../../../server/models/reponse-me
 import { Component, OnInit } from '@angular/core';
 import { ReportService } from '../../../../../_services/report.service';
 import { Report } from '../../../../../_models/report';
-import swal from 'sweetalert2'
+import swal from 'sweetalert2';
 import { ConfirmService } from '../../../../../_services/confirm.service';
 
 @Component({
@@ -27,8 +27,8 @@ export class FinancialReportComponent implements OnInit {
     );
   }
 
-  onClick(){
-    swal('Good job!','You clicked the button!', 'success');
+  onClick() {
+    swal('Good job!', 'You clicked the button!', 'success');
   }
 
   onDelete(report) {
@@ -36,11 +36,11 @@ export class FinancialReportComponent implements OnInit {
       (value) => {
         this.reportService.delete(report['_id']).subscribe(
           (responseMessage: ResponseMessage) => {
-            let index = this.reports.indexOf(report, 0);
+            const index = this.reports.indexOf(report, 0);
             if (index > -1) {
               this.reports.splice(index, 1);
            }
-            swal('Good job!','You deleted the report!', 'success');
+            swal('Good job!', 'You deleted the report!', 'success');
           },
           (error) => {
             swal('Oops...', 'Something went wrong!', 'error');
@@ -48,7 +48,6 @@ export class FinancialReportComponent implements OnInit {
         );
       }
     ).catch( () => {
-      
-    })
+    });
   }
 }

@@ -16,16 +16,16 @@ import swal from 'sweetalert2';
   styleUrls: ['./upload-financial-report.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class UploadFinancialReportComponent implements OnInit, OnDestroy, AfterViewInit{
+export class UploadFinancialReportComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  isActive: boolean = false;
-  selectedFilename: string = 'or drag and drop files here';
-  selectedFile = null;
-  uploadedProgress: number = 0;
+  isActive: boolean;
+  selectedFilename: string;
+  selectedFile;
+  uploadedProgress: number;
   uploadSub: Subscription;
-  fReport: Report; 
-  mode: string = 'new';
-  uploading: boolean = false;
+  fReport: Report;
+  mode: string;
+  uploading: boolean;
 
   months = [
     {id: 1, name: 'January'},
@@ -41,37 +41,42 @@ export class UploadFinancialReportComponent implements OnInit, OnDestroy, AfterV
     {id: 11, name: 'November'},
     {id: 12, name: 'December'}
   ];
-  selectedMonth: any;  
+  selectedMonth: any;
 
   @Output('uploadPage')
-  uploadPage: EventEmitter<boolean> = new EventEmitter<boolean>()
-  
+  uploadPage: EventEmitter<boolean> = new EventEmitter<boolean>();
   constructor(
     private confirmService: ConfirmService,
     private http: HttpClient,
     private toastrService: ToastrService,
     private pageService: PagesService,
-    private reportService: ReportService, 
+    private reportService: ReportService,
     private userService: UserService,
     private route: ActivatedRoute,
-    private router: Router){ }
+    private router: Router) {
+      this.isActive = false;
+      this.selectedFilename = 'or drag and drop files here';
+      this.selectedFile = null;
+      this.uploadedProgress = 0;
+      this.mode = 'new';
+      this.uploading = false;
+      this.fReport = new Report();
+    }
 
   ngOnInit() {
-    
-    this.fReport = new Report();
     this.fReport.uploadedBy = this.userService.currentUser();
     this.fReport.month = new Date().getMonth(); // Last month
     this.route.params.subscribe(
       (params) => {
         console.log(params);
-        if(params['id']){
-          this.mode="edit"
+        if (params['id']) {
+          this.mode = 'edit';
           this.reportService.getById(params['id']).subscribe(
             (report: Report) => {
               this.fReport = report;
             },
             (error) => {
-              this.toastrService.error("Something went wrong", "Error" );
+              this.toastrService.error('Something went wrong', 'Error' );
             }
           );
         }
@@ -80,11 +85,10 @@ export class UploadFinancialReportComponent implements OnInit, OnDestroy, AfterV
   }
 
   ngAfterViewInit() {
-    setTimeout(()=>this.pageService.setCurrentPage("upload"))
-    
+    setTimeout(() => this.pageService.setCurrentPage('upload'));
   }
 
-  onSelectFile(event){
+  onSelectFile(event) {
     this.selectedFile = event.target.files[0];
     this.selectedFilename = this.selectedFile.name;
   }
@@ -104,7 +108,6 @@ export class UploadFinancialReportComponent implements OnInit, OnDestroy, AfterV
   }
 
   onDrop(event) {
-   
   }
 
   onReset() {
@@ -112,16 +115,15 @@ export class UploadFinancialReportComponent implements OnInit, OnDestroy, AfterV
     this.fReport.uploadedBy = this.userService.currentUser();
     this.selectedFile = null;
     this.selectedFilename = 'or drag and drop files here';
-    setTimeout(()=>{
+    setTimeout(() => {
       this.uploadedProgress = 0;
-    }, 1000)
+    }, 1000);
   }
 
-  onAddReport(form){
+  onAddReport(form) {
     console.log(this.selectedFile);
-    
-    if(!this.selectedFile){
-      this.confirmService.alert("Please select a file");
+    if (!this.selectedFile) {
+      this.confirmService.alert('Please select a file');
       return false;
     }
 
@@ -129,47 +131,45 @@ export class UploadFinancialReportComponent implements OnInit, OnDestroy, AfterV
     const fd = new FormData();
 
     fd.append('image', this.selectedFile, this.selectedFilename);
-    
     this.uploadSub = this.http.post('/api/files/upload', fd, {
       reportProgress: true, observe: 'events'
-    }).subscribe( 
+    }).subscribe(
       (event) => {
         switch (event.type) {
           case HttpEventType.UploadProgress:
-            this.uploadedProgress = Math.round(event.loaded/event.total * 100.00);
+            this.uploadedProgress = Math.round(event.loaded / event.total * 100.00);
             break;
           case HttpEventType.Response:
-            
             this.fReport.path = event.body['url'];
             this.fReport.uploadedAt = Date.now();
             this.reportService.create(this.fReport).subscribe(
               (report: Report) => {
-                this.toastrService.success("You successfuly uploaded financial report: [" + this.selectedFilename +"]", "Upload File");
+                this.toastrService.success('You successfuly uploaded financial report: [' + this.selectedFilename + ']', 'Upload File');
                 this.uploading = false;
                 this.onReset();
                 this.router.navigate(['/admin/reports']);
               },
               (error) => {
-                this.uploading = false
-                this.toastrService.error("Uploaded financial report [" + this.selectedFilename + "] fail", "Upload File" );
-              }            
-            )
+                this.uploading = false;
+                this.toastrService.error('Uploaded financial report [' + this.selectedFilename + '] fail', 'Upload File' );
+              }
+            );
             break;
         }
       },
       (error) => {
-        this.toastrService.error("Uploaded file [" + this.selectedFilename + "] fail", "Upload File" );
+        this.toastrService.error('Uploaded file [' + this.selectedFilename + '] fail', 'Upload File' );
       }
-    )
+    );
   }
 
-  onStop(){
+  onStop() {
     this.uploadSub.unsubscribe();
-    this.toastrService.success("Uploading stopped", "Upload File");
+    this.toastrService.success('Uploading stopped', 'Upload File');
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.uploadPage.emit(false);
-    this.pageService.setCurrentPage("");
+    this.pageService.setCurrentPage('');
   }
 }

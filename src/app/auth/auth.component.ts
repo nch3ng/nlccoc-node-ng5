@@ -28,8 +28,8 @@ import { isDevMode } from '@angular/core';
 
 export class AuthComponent implements OnInit {
   model: any = {};
-  loading:boolean = false;
-  facebookLoading:boolean = false;
+  loading: boolean;
+  facebookLoading: boolean;
   returnUrl: string;
 
   @ViewChild('alertSignin',
@@ -48,18 +48,19 @@ export class AuthComponent implements OnInit {
     private _alertService: AlertService,
     private cfr: ComponentFactoryResolver,
     private fbService: FacebookService) {
-
+      this.loading = false;
+      this.facebookLoading = false;
       let appId;
-      if(isDevMode())
+      if (isDevMode()) {
         appId = secrets.facebookAppDevId;
-      else
+      } else {
         appId = secrets.facebookAppId;
-      let initParams: InitParams = {
+      }
+      const initParams: InitParams = {
         appId: appId,
         xfbml: true,
         version: 'v2.12'
       };
-  
       fbService.init(initParams);
   }
 
@@ -84,15 +85,15 @@ export class AuthComponent implements OnInit {
       (user: User) => {
         console.log('login successful');
         console.log(user);
-        if(!user.isVerified) {
-          this._router.navigate(['/'+ user['_id'] + '/unverified']);
+        if (!user.isVerified) {
+          this._router.navigate(['/' + user['_id'] + '/unverified']);
         } else {
           console.log(this.returnUrl);
           this._router.navigate([this.returnUrl]);
         }
       },
       error => {
-        //console.log(error.json());
+        // console.log(error.json());
         this.showAlert('alertSignin');
         this._alertService.error('Email or password is not correct');
         this.loading = false;
@@ -139,13 +140,13 @@ export class AuthComponent implements OnInit {
 
   showAlert(target) {
     this[target].clear();
-    let factory = this.cfr.resolveComponentFactory(AlertComponent);
-    let ref = this[target].createComponent(factory);
+    const factory = this.cfr.resolveComponentFactory(AlertComponent);
+    const ref = this[target].createComponent(factory);
     ref.changeDetectorRef.detectChanges();
   }
 
   loginWithFacebook(): void {
-    console.log("login with facebook");
+    console.log('login with facebook');
     this.facebookLoading = true;
     const options: LoginOptions = {
       scope: 'email,public_profile',
@@ -154,17 +155,17 @@ export class AuthComponent implements OnInit {
     };
     this.fbService.login(options)
       .then(
-        (response: LoginResponse) => { 
+        (response: LoginResponse) => {
           if (response.status === 'connected') {
             // the user is logged in and has authenticated your
             // app, and response.authResponse supplies
             // the user's ID, a valid access token, a signed
-            // request, and the time the access token 
+            // request, and the time the access token
             // and signed request each expire
 
-            let user = new User();
-            var uid = response.authResponse.userID;
-            var accessToken = response.authResponse.accessToken;
+            const user = new User();
+            const uid = response.authResponse.userID;
+            const accessToken = response.authResponse.accessToken;
 
             user.profile.fbId = uid;
             user.profile.fbToken = accessToken;
@@ -173,24 +174,24 @@ export class AuthComponent implements OnInit {
             // console.log(uid);
             // console.log(accessToken);
             this.fbService.api('/me?fields=id,name,email,first_name,last_name,picture.width(500).height(500),gender,locale,link,age_range,timezone,cover,updated_time,verified')
-              .then(response => {
+              .then(rresponse => {
                 // console.log('Got response', response);
 
-                user.email = response['email'];
-                user.profile.fbId = response['id'];
-                user.firstName = response['first_name'];
-                user.lastName = response['last_name'];
-                user.profile.fullName = response['name'];
-                user.profile.locale = response['locale'];
-                user.profile.fbLink = response['link'];
-                user.profile.gender = response['gender'];
-                user.profile.fbCover = response['cover']['source'];
-                user.profile.fbAvatar.large.height = response['picture']['data']['height'];
-                user.profile.fbAvatar.large.width =  response['picture']['data']['width'];
-                user.profile.fbAvatar.large.path = response['picture']['data']['url'];
+                user.email = rresponse['email'];
+                user.profile.fbId = rresponse['id'];
+                user.firstName = rresponse['first_name'];
+                user.lastName = rresponse['last_name'];
+                user.profile.fullName = rresponse['name'];
+                user.profile.locale = rresponse['locale'];
+                user.profile.fbLink = rresponse['link'];
+                user.profile.gender = rresponse['gender'];
+                user.profile.fbCover = rresponse['cover']['source'];
+                user.profile.fbAvatar.large.height = rresponse['picture']['data']['height'];
+                user.profile.fbAvatar.large.width =  rresponse['picture']['data']['width'];
+                user.profile.fbAvatar.large.path = rresponse['picture']['data']['url'];
 
                 this._authService.fbLogin(user).subscribe(
-                  (user: User) => {
+                  (ruser: User) => {
                     console.log('login successful');
                     console.log(this.returnUrl);
                     this._router.navigate([this.returnUrl]);
@@ -205,7 +206,7 @@ export class AuthComponent implements OnInit {
                 this.facebookLoading = false;
               });
               this.fbService.api('/' + uid + '/picture?type=large')
-              .then(response => {
+              .then(rresponse => {
                 // console.log('Got response', response);
               });
           }

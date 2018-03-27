@@ -11,7 +11,6 @@ import { ConfirmService } from './confirm.service';
     BootstrapModalModule
   ],
   declarations: [
-    
   ],
   providers: [
     ConfirmService

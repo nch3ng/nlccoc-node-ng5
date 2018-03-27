@@ -1,4 +1,5 @@
 import * as mongoose from 'mongoose';
+import * as logger from '../helpers/logger';
 import dotenv = require('dotenv');
 import Config from '../config';
 
@@ -9,7 +10,7 @@ class DataAccess {
 
   static gracefulShutdown (msg, callback): void {
     mongoose.connection.close(function() {
-      console.log('Mongoose disconnected through ' + msg);
+      logger.debug('Mongoose disconnected through ' + msg);
       callback();
     });
   }
@@ -18,7 +19,7 @@ class DataAccess {
     // use q promises
     global.Promise = require('q').Promise;
     mongoose.Promise = global.Promise;
-    // console.log(Config.config);
+    // logger.debug(Config.config);
     const MONGODB_CONNECTION: string = Config.config.DBConnectionUrl;
 
     if (this.mongooseInstance) { return this.mongooseInstance; }
@@ -27,16 +28,16 @@ class DataAccess {
 
     // CONNECTION EVENTS
     mongoose.connection.on('connected', function() {
-      console.log('Mongoose connected to ' + MONGODB_CONNECTION);
+      logger.debug('Mongoose connected to ' + MONGODB_CONNECTION);
     });
     mongoose.connection.on('error', function(err) {
-      console.log('Mongoose connection error: ' + err);
+      logger.debug('Mongoose connection error: ' + err);
     });
     mongoose.connection.on('disconnected', function() {
-      console.log('Mongoose disconnected');
+      logger.debug('Mongoose disconnected');
     });
     // this.mongooseConnection.once('open', () => {
-    //   console.log('Connected to mongodb');
+    //   logger.debug('Connected to mongodb');
     // })
     // For nodemon restarts
     process.once('SIGUSR2', () => {

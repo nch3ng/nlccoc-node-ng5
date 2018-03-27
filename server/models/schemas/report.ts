@@ -10,6 +10,12 @@ export const reportSchema = new mongoose.Schema({
     default: ''
   },
   month: {
+    type: Number,
+    default: new Date().getMonth()
+  },
+  year: {
+    type: Number,
+    default: new Date().getFullYear()
   },
   uploadedAt: {
     type: Number,

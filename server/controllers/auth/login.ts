@@ -8,11 +8,11 @@ import Role from '../../models/role';
 export function login(req, res) {
   const reqUser = req.body;
 
-  console.log(reqUser);
+  // logger.debug(reqUser);
   const promise = User.findOne({'email' : reqUser.email}).populate('role').exec();
   promise.then(
     (user) => {
-      {
+      if (!user) {
         const res_content = {
           success: false,
           message: 'User does not exists'
@@ -47,6 +47,7 @@ export function login(req, res) {
         email: user.email,
         name: user.name,
         isVerified: user.isVerified,
+        role: user.role
       }, config.secret, {
         expiresIn : 60 * 60 * config.expiry
       });
@@ -70,7 +71,7 @@ export function login(req, res) {
 }
 
 export function fbLogin(req, res) {
-  // console.log(req.body);
+  // logger.debug(req.body);
   const user = new User();
   let token;
   user.email = req.body.email;
@@ -88,7 +89,7 @@ export function fbLogin(req, res) {
       user.isVerified = true;
       token = user.generateJwt();
       user.save(function(err) {
-        // console.log(token);
+        // logger.debug(token);
         res.status(200);
         res.json({
           'user': user,
@@ -100,9 +101,9 @@ export function fbLogin(req, res) {
       return;
     } else {
       // The user exists
-      // console.log('user exists');
+      // logger.debug('user exists');
       token = result_user.generateJwt();
-      // console.log(result_user);
+      // logger.debug(result_user);
       res.status(200).json({
         'user': result_user,
         'success': true,
@@ -112,7 +113,7 @@ export function fbLogin(req, res) {
       return;
     }
   }).catch( (err) => {
-    // console.log('error:', err);
+    // logger.debug('error:', err);
     res.status(200).send(
       {
         success: false,

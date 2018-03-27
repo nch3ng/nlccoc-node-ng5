@@ -1,6 +1,9 @@
+import { TimeagoPipe } from './../../pipes/timeago.pipe';
 import { NgModule } from '@angular/core';
 import { LayoutComponent } from './layout/layout.component';
-import { AsideLeftMinimizeDefaultEnabledComponent } from '../pages/aside-left-minimize-default-enabled/aside-left-minimize-default-enabled.component';
+import {
+  AsideLeftMinimizeDefaultEnabledComponent
+} from '../pages/aside-left-minimize-default-enabled/aside-left-minimize-default-enabled.component';
 import { HeaderNavComponent } from './header-nav/header-nav.component';
 import { DefaultComponent } from '../pages/default/default.component';
 import { AsideNavComponent } from './aside-nav/aside-nav.component';
@@ -12,6 +15,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HrefPreventDefaultDirective } from '../../_directives/href-prevent-default.directive';
 import { UnwrapTagDirective } from '../../_directives/unwrap-tag.directive';
+import { MomentModule } from 'angular2-moment';
 
 @NgModule({
   declarations: [
@@ -25,7 +29,8 @@ import { UnwrapTagDirective } from '../../_directives/unwrap-tag.directive';
     ScrollTopComponent,
     TooltipsComponent,
     HrefPreventDefaultDirective,
-    UnwrapTagDirective
+    UnwrapTagDirective,
+    TimeagoPipe
   ],
   exports: [
     LayoutComponent,
@@ -42,6 +47,7 @@ import { UnwrapTagDirective } from '../../_directives/unwrap-tag.directive';
   imports: [
     CommonModule,
     RouterModule,
+    MomentModule
   ]
 })
 export class LayoutModule {

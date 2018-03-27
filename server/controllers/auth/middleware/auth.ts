@@ -16,6 +16,7 @@ export const auth = {
         } else {
           // all good, continue
           req.decoded = decoded;
+          // logger.debug(decoded);
           next();
         }
       });

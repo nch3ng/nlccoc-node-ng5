@@ -8,7 +8,7 @@ import { Report } from '../_models/report';
 export class ReportService {
   constructor(
     private authService: AuthenticationService,
-    private httpClient: HttpClient){}
+    private httpClient: HttpClient) {}
 
   create(report: Report): Observable<Report> {
     return this.httpClient.post<Report>('/api/reports', report, this.authService.jwtHttpClient());
@@ -19,14 +19,14 @@ export class ReportService {
   }
 
   getById(id: any): Observable<Report> {
-    return this.httpClient.get<Report>('/api/reports/'+id, this.authService.jwtHttpClient())
+    return this.httpClient.get<Report>('/api/reports/' + id, this.authService.jwtHttpClient());
   }
 
   update(report: Report) {
-    return this.httpClient.put<Report>('/api/reports/'+report['_id'], report, this.authService.jwtHttpClient())
+    return this.httpClient.put<Report>('/api/reports/' + report['_id'], report, this.authService.jwtHttpClient());
   }
 
   delete(id: any) {
-    return this.httpClient.delete('/api/reports/'+id, this.authService.jwtHttpClient())
+    return this.httpClient.delete('/api/reports/' + id, this.authService.jwtHttpClient());
   }
 }

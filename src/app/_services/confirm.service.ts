@@ -1,6 +1,12 @@
-import { Injectable } from "@angular/core";
-import { Modal as NgxModal, TwoButtonPreset, TwoButtonPresetBuilder, bootstrap4Mode, OneButtonPresetBuilder, OneButtonPreset} from "ngx-modialog/plugins/bootstrap";
-import { DialogRef } from "ngx-modialog";
+import { Injectable } from '@angular/core';
+import {
+  Modal as NgxModal,
+  TwoButtonPreset,
+  TwoButtonPresetBuilder,
+  bootstrap4Mode,
+  OneButtonPresetBuilder,
+  OneButtonPreset} from 'ngx-modialog/plugins/bootstrap';
+import { DialogRef } from 'ngx-modialog';
 
 @Injectable()
 export class ConfirmService {
@@ -19,33 +25,37 @@ export class ConfirmService {
     okBtn: 'Yes',
     okBtnClass: '',
     cancelBtn: 'No',
-    cancelBtnClass:'btn btn-danger'
+    cancelBtnClass: 'btn btn-danger'
   };
 
   constructor(
-    private ngxModal: NgxModal){
+    private ngxModal: NgxModal) {
     bootstrap4Mode();
 
   }
 
-  open(): Promise<Boolean>{
-    let fluent: TwoButtonPresetBuilder = <any>this.ngxModal['confirm']();
+  open(...args: any[]): Promise<Boolean> {
+    const fluent: TwoButtonPresetBuilder = <any>this.ngxModal['confirm']();
+    let strContent = 'Do you want to proceed?';
+    if (args.length > 0) {
+      console.log(args[0]);
+      strContent = args[0];
+    }
 
     for (let key in this.preset) {
-      let value = this.preset[key];
+      const value = this.preset[key];
       if (value === null || value === '') continue;
       fluent[key](value);
     }
     const dialogRef: DialogRef<TwoButtonPreset> = fluent.showClose(true)
-        .body(`Do you want to proceed?`)
+        .body(strContent)
         .open();
 
 
     return new Promise(
       (resolve, reject) => {
         dialogRef.result
-        .then( (result) => 
-          { 
+        .then( (result) => {
             // console.log(`The result is: ${result}`);
             resolve(true);
           })
@@ -53,11 +63,11 @@ export class ConfirmService {
           reject(false);
         });
       }
-    )
+    );
   }
 
   alert(msg) {
-    let fluent: OneButtonPresetBuilder = <any>this.ngxModal['alert']();
+    const fluent: OneButtonPresetBuilder = <any>this.ngxModal['alert']();
 
     // for (let key in this.preset) {
     //   let value = this.preset[key];

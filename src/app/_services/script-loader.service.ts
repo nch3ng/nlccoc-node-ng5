@@ -47,7 +47,7 @@ export class ScriptLoaderService {
       }
     });
 
-    let promises: any[] = [];
+    const promises: any[] = [];
     scripts.forEach(
       (script) => promises.push(this.loadScript(tag, script, loadOnce)));
 

@@ -6,7 +6,7 @@ import { User } from '../../../../../auth/_models';
 import { UserService } from '../../../../../auth/_services';
 import { NgForm } from '@angular/forms';
 
-import * as $ from "jquery";
+import * as $ from 'jquery';
 import { ToastrService } from 'ngx-toastr';
 
 import { Overlay as NgxOverlay, DialogRef } from 'ngx-modialog';
@@ -14,16 +14,15 @@ import { Modal as NgxModal, bootstrap4Mode, TwoButtonPreset, TwoButtonPresetBuil
 import { ConfirmService } from '../../../../../_services/confirm.service';
 
 @Component({
-  selector: "app-header-profile",
-  templateUrl: "./header-profile.component.html", 
-  styles:[
-  ],
+  selector: 'app-header-profile',
+  templateUrl: './header-profile.component.html',
+  styles: [],
   encapsulation: ViewEncapsulation.None,
 })
 export class HeaderProfileComponent implements OnInit, AfterViewInit {
 
   user: User = new User();
-  saving: boolean = false;
+  saving: false;
 
   // private preset: TwoButtonPreset = <any>{
   //   size: 'lg',
@@ -43,16 +42,16 @@ export class HeaderProfileComponent implements OnInit, AfterViewInit {
   // };
 
   constructor(
-    private userService: UserService, 
+    private userService: UserService,
     private toastrService: ToastrService,
     private confirmService: ConfirmService
     // private ngxModal: NgxModal
   ) {
-    let id = this.userService.currentUser()['_id'];
+    const id = this.userService.currentUser()['_id'];
 
     this.userService.getById(id).subscribe(
-      (user:User) => {
-        this.user = user
+      (user: User) => {
+        this.user = user;
       },
       (error) => {}
     );
@@ -65,23 +64,21 @@ export class HeaderProfileComponent implements OnInit, AfterViewInit {
     this.confirmService.open().then(
       (value) => {
         this.userService.update(this.user).subscribe(
-          (user:User) => {
+          (user: User) => {
             this.user = user;
-            this.toastrService.success("You successfully updated your profile", "Updated profile");
+            this.toastrService.success('You successfully updated your profile', 'Updated profile');
           },
           (error) => {
-            this.toastrService.error("Updated profile", "Updated profile failed please try again later");
+            this.toastrService.error('Updated profile', 'Updated profile failed please try again later');
           }
-        )
+        );
       }
     ).catch( () => {
-      console.log("rejected");
-    })
-  
-    
+      console.log('rejected');
+    });
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
 
   }
 

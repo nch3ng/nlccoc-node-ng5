@@ -1,5 +1,5 @@
 import { Role } from './role';
-import { Profile } from "./profile";
+import { Profile } from './profile';
 
 export class User {
   id: number;
@@ -11,11 +11,15 @@ export class User {
   token: string;
   isVerified: boolean;
   role: Role;
+  isNLCCSelected: boolean;
+  isWaitingForApproval: boolean;
 
-  constructor(){
+  constructor() {
     this.email = 'johndoe@gmail.com';
     this.firstName = 'John';
     this.lastName = 'Doe';
     this.profile = new Profile();
+    this.isNLCCSelected = false;
+    this.isWaitingForApproval = false;
   }
 }

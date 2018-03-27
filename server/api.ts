@@ -14,11 +14,12 @@ import { sendVerificationEmail } from './controllers/auth/auth';
 import Token from './models/token';
 import filesCtrl from './controllers/files/files.controller';
 import { reports as reportsCtrl, reports } from './controllers/files/reports.controller';
+import { message as messageCtrl } from './controllers/messages/message.controller';
 
 const router = express.Router();
 
 router.use(function timeLog (req, res, next) {
-  console.log('Time: ', Date.now());
+  logger.debug('Time: ', Date.now());
   next();
 });
 router.use(busboy());
@@ -38,26 +39,26 @@ router.get('/check-state', auth.verifyToken, (req, res) => {
 router.post('/sendVerificationEmail', auth.verifyToken_unverified, sendVerificationEmail);
 
 router.post('/confirmation/:token', function (req, res) {
-  console.log(req.params);
+  logger.debug(req.params);
 
   Token.findOne({'token' : req.params.token}, (err, token, done) => {
     if (err) {
       return done(err);
     }
     if (!token) {
-      // console.log('token does not exist');
+      logger.debug('token does not exist');
       res.status(200);
       res.json({
         'success': false,
         'message': 'The link is wrong'
       });
     } else {
-      console.log('token exists');
-      console.log(req.query.uid);
+      logger.debug('token exists');
+      logger.silly(req.query.uid);
       const obj = JSON.stringify(token);
 
       if (req.query.uid === token._userId.toString()) {
-        // console.log('Successfully validated');
+        // logger.debug('Successfully validated');
         User.findOne({'_id' : token._userId.toString()}, (error, user, done_cb) => {
           if (user.isVerified) {
             res.status(200).json({
@@ -82,7 +83,7 @@ router.post('/confirmation/:token', function (req, res) {
 
         // token.remove();
       } else {
-        console.log('Validation fail');
+        logger.silly('Validation fail');
       }
     }
   });
@@ -93,5 +94,6 @@ router.use('/users', auth.verifyToken, usersCtrl.users);
 router.use('/orders', auth.verifyToken, ordersCtrl);
 router.use('/order', auth.verifyToken, orderCtrl);
 router.use('/reports', reportsCtrl);
+router.use('/messages', messageCtrl);
 
 export = router;

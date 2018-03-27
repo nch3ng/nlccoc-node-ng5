@@ -1,5 +1,6 @@
 import { Avatar } from './../../interfaces/avatar';
 import * as mongoose from 'mongoose';
+import * as logger from '../../helpers/logger';
 import * as crypto from 'crypto';
 import * as jwt from 'jsonwebtoken';
 import Config from '../../config';
@@ -113,10 +114,15 @@ export const userSchema = new mongoose.Schema({
   },
   role: {
     type: mongoose.Schema.Types.ObjectId, ref: 'Role'
+  },
+  isNLCCSelected: {
+    type: Boolean,
+    default: false
+  },
+  isWaitingForApproval: {
+    type: Boolean,
+    default: false
   }
-  // role: {
-  //   type: mongoose.Schema.Types.ObjectId, ref: 'Role'
-  // },
 });
 
 userSchema.methods.isPasswordSet = function () {
@@ -142,31 +148,34 @@ userSchema.methods.generateJwt = function() {
     email: this.email,
     name: this.firstName + ' ' + this.lastName,
     isVerified: this.isVerified,
+    role: this.role['_id'],
     exp: Math.floor(expiry.getTime() / 1000),
-  }, config.secret); // DO NOT KEEP YOUR SECRET IN THE CODE!
-};
-
-userSchema.methods.findAll = () => {
-  return this.find({}, '_id email firstName lastName role profile');
+  }, config.secret);
 };
 
 userSchema.pre('save', function(next) {
   const user = this;
-  Role.findOne({ name: 'normal'}, (err, role, done) => {
-    if (err) {
-      return done(err);
-    }
-    console.log('presave');
-    // console.log(role);
-    const roleId = role['_id'];
-    user.role = new mongoose.Types.ObjectId(roleId);
-    // console.log(user.role);
+
+  if (!user.role) {
+    Role.findOne({ name: 'normal'}, (err, role, done) => {
+      if (err) {
+        return done(err);
+      }
+      // logger.debug('presave');
+      // logger.debug(role);
+      const roleId = role['_id'];
+      user.role = new mongoose.Types.ObjectId(roleId);
+      // logger.debug(user.role);
+      next();
+    });
+  } else {
+    logger.debug('role is set');
     next();
-  });
+  }
   // this.role = new mongoose.Types.ObjectId('5962a5f37bde228394da6f72')//this _id ref your model
 });
 
 userSchema.post('save', function (doc) {
-  console.log('this fired after a document was saved');
+  // logger.debug('this fired after a document was saved');
 });
 

@@ -4,7 +4,8 @@ import Role from '../models/role';
 import * as mongoose from 'mongoose';
 import DataAccess from '../models/dataAccess';
 import Config from '../config';
-console.log('Seeding....');
+import * as logger from '../helpers/logger';
+logger.debug('Seeding....');
 
 class Seed {
   _config;
@@ -15,16 +16,16 @@ class Seed {
 
     this._config = Config.config;
 
-    console.log(this._config);
+    logger.debug(this._config);
 
     mongoose.connection.on('connected', () => {
-      console.log('Mongoose connected to ' + this._config.DBConnectionUrl);
+      logger.debug('Mongoose connected to ' + this._config.DBConnectionUrl);
     });
     mongoose.connection.on('error', function(err) {
-      console.log('Mongoose connection error: ' + err);
+      logger.debug('Mongoose connection error: ' + err);
     });
     mongoose.connection.on('disconnected', function() {
-      console.log('Mongoose disconnected');
+      logger.debug('Mongoose disconnected');
     });
     // For app termination
     process.on('SIGINT', () => {
@@ -42,7 +43,7 @@ class Seed {
     ];
     mongoose.connect(this._config.DBConnectionUrl, { useMongoClient: true }, (err) => {
       this.conn = mongoose.connection;
-      console.log(this._config.DBConnectionUrl);
+      logger.debug(this._config.DBConnectionUrl);
     }).then(
       () => {
         this.generateRole();
@@ -56,7 +57,7 @@ class Seed {
 
   gracefulShutdown (msg, callback): void {
     mongoose.connection.close(function() {
-      console.log('Mongoose disconnected through ' + msg);
+      logger.debug('Mongoose disconnected through ' + msg);
       callback();
     });
   }
@@ -65,11 +66,11 @@ class Seed {
     mongoose.connection.db.listCollections( { name: 'roles' } )
       .next( (err, collinfo) => {
         if (collinfo) {
-          console.log('Collection: roles already exists');
+          logger.debug('Collection: roles already exists');
           mongoose.connection.close();
         } else {
           for (const role of this.roles) {
-            console.log(role);
+            logger.debug(role);
             Role.create(role);
           }
         }

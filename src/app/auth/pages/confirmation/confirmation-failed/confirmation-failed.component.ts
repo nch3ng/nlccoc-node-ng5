@@ -17,7 +17,7 @@ export class ConfirmationFailedComponent implements OnInit {
     console.log(this.msg);
   }
 
-  sendVerificationEmail(){
+  sendVerificationEmail() {
     this.userService.sendVerificationEmail().subscribe(
       (data) => {
         console.log(data);

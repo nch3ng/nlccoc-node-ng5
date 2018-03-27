@@ -21,7 +21,8 @@
       "post-setup": "npm install --unsafe-perm",
       "pre-deploy-local" : "echo 'This is a local executed command'",
       "pre-deploy" : "npm run build:server;npm run build:web;",
-      "post-deploy" : "sudo cp /root/.env ./;sudo pm2 startOrRestart ecosystem.json --env production; rm -rf /var/www/nlccoc/old; node node_modules/.bin/ts-node server/seeds/generate_role.ts",
+      "post-deploy" : "sudo cp /root/.env ./;sudo pm2 startOrRestart ecosystem.json --env production; rm -rf /var/www/nlccoc/old",
+      "post-seed": "node node_modules/.bin/ts-node server/seeds/generate_role.ts",
       "env"  : {
         "NODE_ENV": "production"
       }

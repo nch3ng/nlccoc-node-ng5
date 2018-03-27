@@ -11,21 +11,21 @@ import { UserService } from '../../_services/user.service';
 export class UnverifiedComponent implements OnInit {
 
   constructor(
-    private route: ActivatedRoute, 
-    private authService: AuthenticationService, 
+    private route: ActivatedRoute,
+    private authService: AuthenticationService,
     private router: Router,
     private userService: UserService) { }
 
   ngOnInit() {
-    //console.log("Get the unverified page of " + this.route.snapshot.paramMap.get('userId'));
+    // console.log("Get the unverified page of " + this.route.snapshot.paramMap.get('userId'));
   }
 
   goToLogin() {
     this.authService.logout();
-    this.router.navigate(["/index"]);
+    this.router.navigate(['/index']);
   }
 
-  sendVerificationEmail(){
+  sendVerificationEmail() {
     this.userService.sendVerificationEmail().subscribe(
       (data) => {
         console.log(data);

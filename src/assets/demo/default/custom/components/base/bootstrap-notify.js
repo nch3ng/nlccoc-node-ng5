@@ -6,13 +6,11 @@ var BootstrapNotifyDemo = function () {
 
     // basic demo
     var demo = function () {
-        console.log("demo");
         // init bootstrap switch
         $('[data-switch=true]').bootstrapSwitch();
 
         // handle the demo
         $('#m_notify_btn').click(function() {
-            console.log("click");
             var content = {};
 
             content.message = 'New order has been placed';

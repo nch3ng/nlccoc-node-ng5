@@ -227,11 +227,14 @@
               <th data-field="Email" class="m-datatable__cell">
                 <span style="width: 110px;">Email</span>
               </th>
-              <th data-field="Gender" class="m-datatable__cell">
+              <!-- <th data-field="Gender" class="m-datatable__cell">
                 <span style="width: 110px;">Gender</span>
-              </th>
+              </th> -->
               <th data-field="Role" class="m-datatable__cell">
                 <span style="width: 110px;">Role</span>
+							</th>
+							<th data-field="Action" class="m-datatable__cell">
+                <span style="width: 110px;">Actions</span>
               </th>
             </tr>
           </thead>
@@ -257,13 +260,17 @@
               <td data-field="Email" class="m-datatable__cell">
                 <span style="width: 110px;">{{user.email}}</span>
               </td>
-              <td data-field="Gender" class="m-datatable__cell">
+              <!-- <td data-field="Gender" class="m-datatable__cell">
                 <span style="width: 110px;">N/A</span>
-              </td>
+              </td> -->
               <td data-field="Role" class="m-datatable__cell">
                 <span style="width: 110px;">
-                  <span class="m-badge m-badge--brand m-badge--wide" [ngClass]="['m-badge--'+user.role]">{{user.role}}</span>
+                  <span class="m-badge m-badge--brand m-badge--wide" [ngClass]="['m-badge--'+user.role.name]">{{user.role.name}}</span>
                 </span>
+							</td>
+							<td data-field="Action" class="m-datatable__cell">
+								<span style="width: 50px;" style="cursor: pointer;" (click)="onApprove(user)">Approve</span>
+								<span style="width: 60px;" style="cursor: pointer;" (click)="onDelete(user)">Delete</span>
               </td>
               <!-- <td data-field="Role" class="m-datatable__cell">
                 <span style="width: 110px;">

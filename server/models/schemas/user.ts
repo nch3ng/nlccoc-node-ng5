@@ -148,7 +148,7 @@ userSchema.methods.generateJwt = function() {
     email: this.email,
     name: this.firstName + ' ' + this.lastName,
     isVerified: this.isVerified,
-    role: this.role['_id'],
+    role: this.role.name,
     exp: Math.floor(expiry.getTime() / 1000),
   }, config.secret);
 };

@@ -11,7 +11,7 @@ import { ResponseMessage } from '../../models/reponse-message';
 export const reports = express.Router();
 
 // Get all
-reports.get('/', (req, res) => {
+reports.get('/', auth.verifyToken_role(['admin', 'nlccoc']), (req, res) => {
   const promise = Report.find({}).populate('uploadedBy').exec();
   promise.then(
     (result_reports) => {
@@ -26,7 +26,7 @@ reports.get('/', (req, res) => {
 });
 
 // Create one
-reports.post('/', auth.verifyToken, (req, res) => {
+reports.post('/', auth.verifyToken_role(['admin']), (req, res) => {
   const report = new Report(req.body);
 
   report.save(
@@ -40,7 +40,7 @@ reports.post('/', auth.verifyToken, (req, res) => {
 });
 
 // Delete one
-reports.delete('/:reportId', auth.verifyToken, (req, res) => {
+reports.delete('/:reportId', auth.verifyToken_role(['admin']), (req, res) => {
   console.log(req.params.reportId);
   Report.remove({ _id: req.params.reportId},
     (err) => {
@@ -53,7 +53,7 @@ reports.delete('/:reportId', auth.verifyToken, (req, res) => {
 
 
 // Get one by ID
-reports.get('/:reportId', auth.verifyToken, (req, res) => {
+reports.get('/:reportId', auth.verifyToken_role(['admin', 'nlccoc']), (req, res) => {
   const promise = Report.findOne({ _id: req.params.reportId}).populate('uploadedBy').exec();
 
   promise.then(
@@ -68,7 +68,7 @@ reports.get('/:reportId', auth.verifyToken, (req, res) => {
   );
 });
 
-reports.put('/:reportId', auth.verifyToken, (req, res) => {
+reports.put('/:reportId', auth.verifyToken_role(['admin']), (req, res) => {
   const report = new Report(req.body);
   const promise = Report.findOneAndUpdate({_id: report['_id']}, report, {new: true}).exec();
   promise.then(

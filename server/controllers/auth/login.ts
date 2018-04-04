@@ -47,7 +47,7 @@ export function login(req, res) {
         email: user.email,
         name: user.name,
         isVerified: user.isVerified,
-        role: user.role
+        role: user.role.name
       }, config.secret, {
         expiresIn : 60 * 60 * config.expiry
       });

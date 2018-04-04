@@ -33,7 +33,10 @@ export class IndexComponent implements OnInit, AfterViewInit {
     this._script.loadScripts('app-index',
       ['assets/app/js/dashboard.js']);
 
-    if (!this._userService.currentUser().isNLCCSelected && this._userService.currentUser().role.name !== 'admin') {
+    if (!this._userService.currentUser().isNLCCSelected &&
+        this._userService.currentUser().role.name !== 'admin' &&
+        this._userService.currentUser().role.name !== 'nlccoc' &&
+        this._userService.currentUser().isWaitingForApproval) {
       setTimeout( () => {
         this._confirmService.open('Are you a member of New Life Christian Center?').then(
           () => {

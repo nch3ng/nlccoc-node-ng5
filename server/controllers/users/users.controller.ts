@@ -4,13 +4,14 @@ import User from '../../models/user';
 import Role from '../../models/role';
 import { errorHandler } from '../../helpers/error';
 import * as mongoose from 'mongoose';
+import { auth } from '../auth/middleware/auth';
 
 const users_router = express.Router();
 const user_router = express.Router();
 // define the home page route
 
 // Get all users
-users_router.get('/', function (req, res) {
+users_router.get('/', auth.verifyToken_role(['admin', 'nlccoc' ]), (req, res) => {
 
   const promise = User.find({}, '_id email firstName lastName role profile isVerified role').populate('role').exec();
   promise.then(
@@ -23,7 +24,7 @@ users_router.get('/', function (req, res) {
 });
 
 // Get users waiting for approval for nlccoc
-users_router.get('/waitingForApproval', (req, res) => {
+users_router.get('/waitingForApproval', auth.verifyToken_role(['admin']), (req, res) => {
   const promise = User.find({ isWaitingForApproval: true}).populate('role').exec();
   promise.then(
     (result_users) => {
@@ -75,7 +76,7 @@ user_router.post('/:userId/submitNLCCOC', (req, res) => {
   );
 });
 
-user_router.put('/:userId/setRole', function(req, res) {
+user_router.put('/:userId/setRole', auth.verifyToken_role(['admin']), function(req, res) {
   // logger.debug(req.body);
 
   const promise = Role.findOne({ name: req.body['name']}).exec();
@@ -131,7 +132,7 @@ user_router.put('/:userId/setRole', function(req, res) {
   return;
 });
 
-user_router.delete('/:userId', (req, res) => {
+user_router.delete('/:userId', auth.verifyToken_role(['admin']), (req, res) => {
   const promise = User.findOneAndRemove({ _id: req.params.userId}).exec();
 
   promise.then(

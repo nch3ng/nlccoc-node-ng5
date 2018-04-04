@@ -22,11 +22,19 @@ export class HeaderNavComponent implements OnInit, AfterViewInit, OnDestroy {
   dot: boolean;
   newMessageCount: number;
   blink;
+  isAdmin: boolean;
   constructor(
     private _userService: UserService,
     private _messageService: MessageService,
     private _confirmService: ConfirmService,
     private _toastrService: ToastrService) {
+
+      this.isAdmin = false;
+      this.user = this._userService.currentUser();
+
+      if (this.user.role.name === 'admin') {
+        this.isAdmin = true;
+      }
   }
   ngOnInit() {
     this.newMessage = false;

@@ -4,10 +4,11 @@ import * as fs from 'fs';
 import AWS = require('aws-sdk');
 import { Stream } from 'stream';
 import * as logger from '../../helpers/logger';
+import { auth } from '../auth/middleware/auth';
 
 const filesCtrl = express.Router();
 
-filesCtrl.post('/upload', function (req, res) {
+filesCtrl.post('/upload', auth.verifyToken_role(['admin']), function (req, res) {
   let fstream;
   req.pipe(req.busboy);
   const s3 = new AWS.S3();

@@ -29,6 +29,7 @@ export const auth = {
   verifyToken_role (roles) {
     return function(req, res, next) {
       const token = req.body.token || req.query.token || req.headers['x-access-token'];
+      console.log(token);
       if (token) {
         jwt.verify(token, Config.config.secret, (err, decoded) => {
           if (err) {
@@ -43,6 +44,8 @@ export const auth = {
             next();
           }
         });
+      } else {
+        return res.status(401).json({ success: false, message: 'Failed to authenticate token.' });
       }
     };
   },

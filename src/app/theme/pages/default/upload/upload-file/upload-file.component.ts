@@ -1,6 +1,7 @@
+import { AuthenticationService } from './../../../../../auth/_services/authentication.service';
 import { PagesService } from './../../../../../_services/pages.service';
 import { ToastrService } from 'ngx-toastr';
-import { HttpClient, HttpEventType } from '@angular/common/http';
+import { HttpClient, HttpEventType, HttpHeaders } from '@angular/common/http';
 import { ConfirmService } from './../../../../../_services/confirm.service';
 import { Component, OnInit, ViewEncapsulation, EventEmitter, OnDestroy, Output, AfterViewInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
@@ -25,7 +26,8 @@ export class UploadFileComponent implements OnInit, OnDestroy, AfterViewInit {
     private confirmService: ConfirmService,
     private http: HttpClient,
     private toastrService: ToastrService,
-    private pageService: PagesService) {
+    private pageService: PagesService,
+    private _authService: AuthenticationService) {
       this.isActive = false;
       this.selectedFilename = 'or drag and drop files here';
       this.selectedFile = null;
@@ -78,7 +80,7 @@ export class UploadFileComponent implements OnInit, OnDestroy, AfterViewInit {
 
     fd.append('image', this.selectedFile, this.selectedFilename);
     this.uploadSub = this.http.post('/api/files/upload', fd, {
-      reportProgress: true, observe: 'events'
+      reportProgress: true, observe: 'events', headers: this._authService.jwtHttpClientHeader()
     }).subscribe(
       (event) => {
         switch (event.type) {
@@ -87,6 +89,9 @@ export class UploadFileComponent implements OnInit, OnDestroy, AfterViewInit {
             break;
           case HttpEventType.Response:
             this.toastrService.success('You successfuly uploaded file: [' + this.selectedFilename + ']', 'Upload File');
+            break;
+          default:
+            console.log(event.type);
             break;
         }
       },

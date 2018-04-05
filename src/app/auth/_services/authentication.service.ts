@@ -129,4 +129,13 @@ export class AuthenticationService {
     }
   }
 
+  jwtHttpClientHeader(): HttpHeaders {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    let headers;
+    if (currentUser && currentUser.token) {
+      headers = new HttpHeaders({ 'x-access-token': currentUser.token });
+      return headers;
+    }
+  }
+
 }

@@ -22,10 +22,10 @@ filesCtrl.post('/upload', auth.verifyToken_role(['admin']), function (req, res) 
       file.pipe(fstream);
 
       file.on('data', function(data) {
-        // logger.debug('File [' + fieldname + '] got ' + data.length + ' bytes');
+        logger.debug('File [' + fieldname + '] got ' + data.length + ' bytes');
       });
       file.on('end', function() {
-        // logger.debug('File [' + fieldname + '] Finished');
+        logger.debug('File [' + fieldname + '] Finished');
       });
       fstream.on('close', function () {
         logger.debug('Files saved');

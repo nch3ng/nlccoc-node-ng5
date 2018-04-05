@@ -1,3 +1,4 @@
+import { AuthenticationService } from './../../../../../auth/_services/authentication.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from './../../../../../auth/_services/user.service';
 import { ReportService } from './../../../../../_services/report.service';
@@ -55,7 +56,8 @@ export class UploadFinancialReportComponent implements OnInit, OnDestroy, AfterV
     private userService: UserService,
     private route: ActivatedRoute,
     private router: Router,
-    private _messageService: MessageService) {
+    private _messageService: MessageService,
+    private _authService: AuthenticationService) {
       this.isActive = false;
       this.selectedFilename = 'or drag and drop files here';
       this.selectedFile = null;
@@ -134,7 +136,7 @@ export class UploadFinancialReportComponent implements OnInit, OnDestroy, AfterV
 
     fd.append('image', this.selectedFile, this.selectedFilename);
     this.uploadSub = this.http.post('/api/files/upload', fd, {
-      reportProgress: true, observe: 'events'
+      reportProgress: true, observe: 'events', headers: this._authService.jwtHttpClientHeader()
     }).subscribe(
       (event) => {
         switch (event.type) {

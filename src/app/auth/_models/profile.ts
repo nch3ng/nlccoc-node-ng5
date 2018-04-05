@@ -11,17 +11,17 @@ export class Profile {
   locale: string;
   fbLink: string;
   linkedInLink: string;
-  twitterLink:string;
+  twitterLink: string;
   instalLink: string;
   address: Address;
   organization: string;
   occupation: string;
   cell: string;
 
-  constructor(){
+  constructor() {
     this.fbAvatar = new Avatar();
     this.address = new Address();
-    this.occupation = "";
-    this.organization = "";
+    this.occupation = '';
+    this.organization = '';
   }
 }

@@ -142,15 +142,21 @@ userSchema.methods.validPassword = function(password) {
 userSchema.methods.generateJwt = function() {
   const expiry = new Date();
   expiry.setDate(expiry.getDate() + 1); // Expired in 1 day
+  let role_name = 'normal';
 
-  return jwt.sign({
+  if (this.role) {
+    role_name = this.role.name;
+  }
+
+  const token = jwt.sign({
     _id: this._id,
     email: this.email,
     name: this.firstName + ' ' + this.lastName,
     isVerified: this.isVerified,
-    role: this.role.name,
+    role: role_name,
     exp: Math.floor(expiry.getTime() / 1000),
   }, config.secret);
+  return token;
 };
 
 userSchema.pre('save', function(next) {

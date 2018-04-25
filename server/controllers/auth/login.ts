@@ -72,6 +72,7 @@ export function login(req, res) {
 
 export function fbLogin(req, res) {
   // logger.debug(req.body);
+  console.log('fbLogin');
   const user = new User();
   let token;
   user.email = req.body.email;
@@ -83,12 +84,11 @@ export function fbLogin(req, res) {
   promise.then((result_user) => {
 
     const config = Config.config;
-
     if (!result_user) {
       // The user does not exist
       user.isVerified = true;
       token = user.generateJwt();
-      user.save(function(err) {
+      return user.save(function(err) {
         // logger.debug(token);
         res.status(200);
         res.json({
@@ -98,7 +98,6 @@ export function fbLogin(req, res) {
           'token' : token
         });
       });
-      return;
     } else {
       // The user exists
       // logger.debug('user exists');
@@ -112,13 +111,11 @@ export function fbLogin(req, res) {
       });
       return;
     }
-  }).catch( (err) => {
+  }).catch( (error) => {
     // logger.debug('error:', err);
-    res.status(200).send(
-      {
-        success: false,
-        message: 'Something went wrong...'
-      }
-    );
+    res.status(200).json({
+      'success': false,
+      'message': 'Oops! Something went wrong.'
+    });
   });
 }

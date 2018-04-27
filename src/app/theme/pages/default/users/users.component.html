@@ -269,8 +269,10 @@
                 </span>
 							</td>
 							<td data-field="Action" class="m-datatable__cell">
-								<span style="width: 50px;" style="cursor: pointer;" (click)="onApprove(user)">Approve</span>
-								<span style="width: 60px;" style="cursor: pointer;" (click)="onDelete(user)">Delete</span>
+								<span style="width: 110px;">
+									<span *ngIf="user.role.name === 'normal'" style="width: 50px;" style="cursor: pointer;" (click)="onApprove(user)">Approve</span>  
+									<span style="width: 60px;" style="cursor: pointer;" (click)="onDelete(user)">Delete</span>
+								</span>
               </td>
               <!-- <td data-field="Role" class="m-datatable__cell">
                 <span style="width: 110px;">

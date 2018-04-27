@@ -73,7 +73,7 @@ export class AuthComponent implements OnInit {
 
     this._script.loadScripts('body', [
       'assets/vendors/base/vendors.bundle.js',
-      'assets/demo/default/base/scripts.bundle.js'], true).then(() => {
+      'assets/layouts/base/scripts.bundle.js'], true).then(() => {
         Helpers.setLoading(false);
         LoginCustom.init();
       });

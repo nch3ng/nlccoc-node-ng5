@@ -44,6 +44,7 @@
 		"aws-sdk": "^2.212.1",
 		"body-parser": "^1.18.2",
 		"bootstrap": "^4.0.0",
+		"chart.js": "^2.7.2",
 		"classlist.js": "^1.1.20150312",
 		"connect-busboy": "0.0.2",
 		"cookie-parser": "^1.4.3",

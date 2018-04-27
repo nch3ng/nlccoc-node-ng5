@@ -1,4 +1,3 @@
-import * as $ from 'jquery';
 
 export var mLayout = function() {
     var horMenu;

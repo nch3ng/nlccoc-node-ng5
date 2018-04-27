@@ -9,6 +9,8 @@ import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/co
 import { Helpers } from '../../../../helpers';
 import { ScriptLoaderService } from '../../../../_services/script-loader.service';
 
+import { Chart } from 'chart.js';
+import { mUtil } from '../../../../../assets/app/js/framework/base/util';
 
 @Component({
   selector: 'app-index',
@@ -16,6 +18,7 @@ import { ScriptLoaderService } from '../../../../_services/script-loader.service
 })
 export class IndexComponent implements OnInit, AfterViewInit {
 
+  salesChart = [];
 
   constructor(
     private _script: ScriptLoaderService,
@@ -83,6 +86,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
       }
     );
 
+    mUtil.init({});
     // this._messageService.sendAlert('SendAlert API test').subscribe(
     //   () => {
     //     this._toastrService.success('Test', 'Test');

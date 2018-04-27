@@ -3,12 +3,16 @@ import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { Helpers } from '../helpers';
 import { ScriptLoaderService } from '../_services/script-loader.service';
 
+import { mUtil } from '../../assets/app/js/framework/base/util';
+// import { mLayout } from '../../assets/app/js/framework/base/layout';
+// import { mApp } from '../../assets/app/js/framework/base/app';
+
 declare let mApp: any;
-declare let mUtil: any;
+// declare let mUtil: any;
 declare let mLayout: any;
 @Component({
-  selector: ".m-grid.m-grid--hor.m-grid--root.m-page",
-  templateUrl: "./theme.component.html",
+  selector: '.m-grid.m-grid--hor.m-grid--root.m-page',
+  templateUrl: './theme.component.html',
   encapsulation: ViewEncapsulation.None,
 })
 export class ThemeComponent implements OnInit {
@@ -18,7 +22,7 @@ export class ThemeComponent implements OnInit {
 
   }
   ngOnInit() {
-    this._script.loadScripts('body', ['assets/vendors/base/vendors.bundle.js', 'assets/demo/default/base/scripts.bundle.js'], true)
+    this._script.loadScripts('body', ['assets/vendors/base/vendors.bundle.js', 'assets/layouts/base/scripts.bundle.js'], true)
       .then(result => {
         Helpers.setLoading(false);
         // optional js to be loaded once

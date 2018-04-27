@@ -19,7 +19,7 @@ export class HeaderActionsComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit() {
     this._script.loadScripts('app-header-actions',
-      ['assets/demo/default/custom/header/actions.js']);
+      ['assets/layouts/custom/header/actions.js']);
 
   }
 

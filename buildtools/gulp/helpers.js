@@ -142,7 +142,7 @@ module.exports = {
             var outputPath = path.replace(matched[0], output.replace('**', demo)).replace(outputFile, '');
             var f = filter(outputPath, {restore: true});
             // exclude unrelated demo assets
-            if (outputPath.indexOf('/assets/demo/') !== -1 && outputPath.indexOf('/assets/demo/' + demo) === -1) {
+            if (outputPath.indexOf('/assets/layouts/') !== -1 && outputPath.indexOf('/assets/layouts/' + demo) === -1) {
               piping = piping.pipe(function() {
                 return f;
               });

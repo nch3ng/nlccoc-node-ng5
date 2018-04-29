@@ -225,13 +225,13 @@
                 <span style="width: 100px;">Last Name</span>
               </th>
               <th data-field="Email" class="m-datatable__cell">
-                <span style="width: 110px;">Email</span>
+                <span style="width: 140px;">Email</span>
               </th>
               <!-- <th data-field="Gender" class="m-datatable__cell">
                 <span style="width: 110px;">Gender</span>
               </th> -->
               <th data-field="Role" class="m-datatable__cell">
-                <span style="width: 110px;">Role</span>
+                <span style="width: 80px;">Role</span>
 							</th>
 							<th data-field="Action" class="m-datatable__cell">
                 <span style="width: 110px;">Actions</span>
@@ -258,20 +258,32 @@
                 <span style="width: 100px;">{{user.lastName}}</span>
               </td>
               <td data-field="Email" class="m-datatable__cell">
-                <span style="width: 110px;">{{user.email}}</span>
+                <span style="overflow: visible; width: 140px;">{{user.email}}</span>
               </td>
               <!-- <td data-field="Gender" class="m-datatable__cell">
                 <span style="width: 110px;">N/A</span>
               </td> -->
               <td data-field="Role" class="m-datatable__cell">
-                <span style="width: 110px;">
+                <span style="width: 80px;">
                   <span class="m-badge m-badge--brand m-badge--wide" [ngClass]="['m-badge--'+user.role.name]">{{user.role.name}}</span>
                 </span>
 							</td>
 							<td data-field="Action" class="m-datatable__cell">
-								<span style="width: 110px;">
-									<span *ngIf="user.role.name === 'normal'" style="width: 50px;" style="cursor: pointer;" (click)="onApprove(user)">Approve</span>  
-									<span style="width: 60px;" style="cursor: pointer;" (click)="onDelete(user)">Delete</span>
+								<span style="overflow: visible; width: 110px;">
+									<div class="dropdown">							
+										<a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">
+											<i class="la la-ellipsis-h"></i>
+										</a>
+										<div class="dropdown-menu dropdown-menu-right">
+											<a class="dropdown-item" href="#"><i class="la la-edit"></i> Edit Details</a>
+											<a *ngIf="user.role.name === 'normal'" class="dropdown-item" style="cursor: pointer;" (click)="onApprove(user)"><i class="la la-check"></i> Approve </a>
+											<a *ngIf="user.role.name !== 'admin'" class="dropdown-item" style="cursor: pointer;" (click)="onDelete(user)"><i class="la	la-close"></i> Delete</a>	
+											<!-- <a class="dropdown-item" href="#"><i class="la la-leaf"></i> Update Status</a>
+											<a class="dropdown-item" href="#"><i class="la la-print"></i> Generate Report</a>	 -->
+										</div>
+									</div>
+									<!-- <span *ngIf="user.role.name === 'normal'" style="width: 50px;" style="cursor: pointer;" (click)="onApprove(user)">Approve</span>   -->
+									<!-- <span style="width: 60px;" style="cursor: pointer;" (click)="onDelete(user)">Delete</span> -->
 								</span>
               </td>
               <!-- <td data-field="Role" class="m-datatable__cell">

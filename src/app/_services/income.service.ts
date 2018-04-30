@@ -1,3 +1,4 @@
+import { IncomeType } from './../_models/income';
 import { AuthenticationService } from './../auth/_services/authentication.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -11,5 +12,9 @@ export class IncomeService {
     private _authService: AuthenticationService) {}
   create(income: Income) {
     return this.httpClient.post('/api/income', income, this._authService.jwtHttpClient());
+  }
+
+  types() {
+    return this.httpClient.get<IncomeType []>('/api/income/types', this._authService.jwtHttpClient());
   }
 }

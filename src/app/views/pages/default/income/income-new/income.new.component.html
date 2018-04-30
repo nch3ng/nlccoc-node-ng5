@@ -75,7 +75,7 @@
                   <ng-select  class="upload-report"
                               [items]="zones"
                               bindLabel="name"
-                              bindValue="id"
+                              bindValue="_id"
                               placeholder="Select Zone"
                               [(ngModel)]="inc.selectedZone"
                               name="{{ 'inc.zone' + index }}">
@@ -89,7 +89,7 @@
                   <ng-select  class="upload-report"
                               [items]="types"
                               bindLabel="name"
-                              bindValue="id"
+                              bindValue="_id"
                               placeholder="Select Type"
                               [(ngModel)]="inc.selectedType"
                               name="{{ 'inc.type' + index }}">

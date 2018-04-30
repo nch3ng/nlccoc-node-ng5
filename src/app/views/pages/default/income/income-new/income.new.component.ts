@@ -1,4 +1,7 @@
-import { Income } from './../../../../../_models/income';
+import { ActivatedRoute, Data } from '@angular/router';
+import { OnInit } from '@angular/core';
+import { ZoneService } from './../../../../../_services/zone.service';
+import { Income, Zone, IncomeType } from './../../../../../_models/income';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmService } from './../../../../../_services/confirm.service';
 import { Component } from '@angular/core';
@@ -10,23 +13,11 @@ import { IncomeService } from '../../../../../_services/income.service';
   styleUrls: ['./income.new.component.scss']
 })
 
-export class IncomeNewComponent {
+export class IncomeNewComponent implements OnInit {
   model;
-  zones = [
-    { id: '5ae55bea734d1d13318331ad', name: 'Irvine' },
-    { id: '5ae55c4f734d1d13318331b4', name: 'La Verne' },
-    { id: '5ae55c63734d1d13318331b5', name: 'Temple City' }
-  ];
-  selectedZone: any = this.zones[0].id;
+  zones: Zone [] = [];
 
-  types = [
-    { id: '5ae6465a734d1d1331837219', name: 'General Offering' },
-    { id: '5ae6466b734d1d1331837220', name: 'Rental Income' },
-    { id: '5ae6468a734d1d133183722b', name: 'Building Fund' },
-    { id: '5ae6469a734d1d1331837234', name: 'Others'}
-  ];
-
-  selectedType: any = this.types[0].id;
+  types: IncomeType [] = [];
 
   amount: Number = 0;
 
@@ -35,20 +26,38 @@ export class IncomeNewComponent {
   constructor(
     private _confirmService: ConfirmService,
     private _incomeService: IncomeService,
-    private _toastrService: ToastrService ) {
+    private _toastrService: ToastrService,
+    private _zoneService: ZoneService,
+    private route: ActivatedRoute ) {
+    this.selectToday();
+  }
+
+  ngOnInit() {
     this.incomes[0] = {};
     this.incomes[0].amount = 0;
-    this.incomes[0].selectedZone = this.zones[0].id;
-    this.incomes[0].selectedType = this.types[0].id;
+    this.route.data.subscribe(
+      (data: Data) => {
+        console.log(data);
+        if (data['zones']) {
+          this.zones = data['zones'];
+          this.incomes[0].selectedZone = this.zones[0]._id;
+          console.log(this.zones);
+        }
 
-    this.selectToday();
+        if (data['types']) {
+          this.types = data['types'];
+          this.incomes[0].selectedType = this.types[0]._id;
+          console.log(this.types);
+        }
+      }
+    );
   }
 
   addAnItem() {
     const inc: any = {};
     inc.amount = 0;
-    inc.selectedZone = this.zones[0].id;
-    inc.selectedType = this.types[0].id;
+    inc.selectedZone = this.zones[0]._id;
+    inc.selectedType = this.types[0]._id;
     this.incomes.push(inc);
   }
 
@@ -81,8 +90,8 @@ export class IncomeNewComponent {
     this.incomes = [];
     this.incomes[0] = {};
     this.incomes[0].amount = 0;
-    this.incomes[0].selectedZone = this.zones[0].id;
-    this.incomes[0].selectedType = this.types[0].id;
+    this.incomes[0].selectedZone = this.zones[0]._id;
+    this.incomes[0].selectedType = this.types[0]._id;
   }
 
   selectToday() {

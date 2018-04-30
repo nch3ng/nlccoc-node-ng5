@@ -1,3 +1,6 @@
+import { IncomeTypeResolver } from './_resolvers/income.type.resolver';
+import { ZoneResolver } from './_resolvers/zone.resolver';
+import { ZoneService } from './_services/zone.service';
 import { MessageService } from './_services/message.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
@@ -19,6 +22,7 @@ import { AuthModule } from './auth/auth.module';
 import { UnverifiedComponent } from './auth/pages/unverified/unverified.component';
 import { ConfirmService } from './_services/confirm.service';
 import { PagesService } from './_services/pages.service';
+import { IncomeService } from './_services/income.service';
 
 @NgModule({
   declarations: [
@@ -45,7 +49,9 @@ import { PagesService } from './_services/pages.service';
     ToastrService,
     PagesService,
     MessageService,
-    { provide: LOCALE_ID, useValue: 'zh-TW' }],
+    { provide: LOCALE_ID, useValue: 'zh-TW' },
+    ZoneResolver,
+    ZoneService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,3 +1,6 @@
+import { IncomeTypeResolver } from './../../../../_resolvers/income.type.resolver';
+import { ZoneResolver } from './../../../../_resolvers/zone.resolver';
+import { ZoneService } from './../../../../_services/zone.service';
 import { IncomeService } from './../../../../_services/income.service';
 import { IncomeNewComponent } from './income-new/income.new.component';
 import { IncomeComponent } from './income.component';
@@ -22,7 +25,8 @@ const routes: Routes = [
       },
       {
         path: 'new',
-        component: IncomeNewComponent
+        component: IncomeNewComponent,
+        resolve: { zones: ZoneResolver, types: IncomeTypeResolver}
       }
     ]
   }
@@ -42,7 +46,9 @@ const routes: Routes = [
   ], declarations: [
     IncomeComponent,
     IncomeNewComponent
-  ], providers: [IncomeService]
+  ], providers: [
+    IncomeService,
+    IncomeTypeResolver]
 })
 export class IncomeModule {
 }

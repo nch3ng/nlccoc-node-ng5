@@ -21,11 +21,9 @@ export class MessageService {
         }
 
         if ( !msg.to ) {
-          // logger.debug('no recipent or sender');
           reject('no recipent');
         } else {
           logger.debug('[in send]: send to ' + msg.to.email);
-          // logger.debug('[in send]: from ' + msg.from);
           const msgObj = new Inbox(msg);
           msgObj.save( function (err) {
             logger.debug(err);

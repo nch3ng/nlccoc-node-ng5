@@ -13,28 +13,28 @@ import { NgSelectModule } from '@ng-select/ng-select';
 
 const routes: Routes = [
   {
-    "path": "",
-    "component": DefaultComponent,
-    "children": [
+    'path': '',
+    'component': DefaultComponent,
+    'children': [
       {
-        "path": "",
-        "component":  FinancialReportComponent
+        'path': '',
+        'component':  FinancialReportComponent
       },
       {
-        "path": "financial-report/create",
-        "component": UploadFinancialReportComponent
+        'path': 'financial-report/create',
+        'component': UploadFinancialReportComponent
       },
       {
-        "path": "financial-report/edit/:id",
-        "component": UploadFinancialReportComponent
+        'path': 'financial-report/edit/:id',
+        'component': UploadFinancialReportComponent
       }
     ]
   }
 ];
 @NgModule({
   imports: [
-    CommonModule, 
-    RouterModule.forChild(routes), 
+    CommonModule,
+    RouterModule.forChild(routes),
     LayoutModule,
     FormsModule,
     ReactiveFormsModule,

@@ -167,18 +167,15 @@ userSchema.pre('save', function(next) {
       if (err) {
         return done(err);
       }
-      // logger.debug('presave');
-      // logger.debug(role);
+
       const roleId = role['_id'];
       user.role = new mongoose.Types.ObjectId(roleId);
-      // logger.debug(user.role);
       next();
     });
   } else {
     logger.debug('role is set');
     next();
   }
-  // this.role = new mongoose.Types.ObjectId('5962a5f37bde228394da6f72')//this _id ref your model
 });
 
 userSchema.post('save', function (doc) {

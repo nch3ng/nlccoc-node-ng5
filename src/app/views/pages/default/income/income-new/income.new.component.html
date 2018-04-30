@@ -1,0 +1,144 @@
+<!-- BEGIN: Subheader -->
+<div class="m-subheader" appunwraptag="">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h3 class="m-subheader__title">
+        Income
+      </h3>
+    </div>
+  </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+  <div class="row">
+    <div class="col-xl-12">
+      <!--begin:: Widgets/Best Sellers-->
+      <div class="m-portlet m-portlet--full-height">
+        <div class="m-portlet__head">
+          <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+              <h3 class="m-portlet__head-text">
+                Add an Income
+              </h3>
+            </div>
+          </div>
+        </div>
+        <div class="m-portlet__body">
+          <!--begin::Content-->
+          <form (ngSubmit)="onSubmit();">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>
+                    日期
+                  </label>
+                  <div class="input-group">
+                    <input class="form-control" placeholder="yyyy-mm-dd"
+                      name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                        <i class="la la-calendar"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group m-form__group">
+                  <label>牧區</label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group m-form__group">
+                  <label>類別</label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group m-form__group">
+                  <label>金額</label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group m-form__group">
+                  <label>&nbsp;</label>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngFor="let inc of incomes; let index = index;">
+              <div class="col-md-12">
+              </div>
+              <div class="col-md-3">
+                <div class="form-group m-form__group">
+                  
+                  <ng-select  class="upload-report"
+                              [items]="zones"
+                              bindLabel="name"
+                              bindValue="id"
+                              placeholder="Select Zone"
+                              [(ngModel)]="inc.selectedZone"
+                              name="{{ 'inc.zone' + index }}">
+                  </ng-select>
+                  <!-- {{ selectedZone }} -->
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group m-form__group">
+                
+                  <ng-select  class="upload-report"
+                              [items]="types"
+                              bindLabel="name"
+                              bindValue="id"
+                              placeholder="Select Type"
+                              [(ngModel)]="inc.selectedType"
+                              name="{{ 'inc.type' + index }}">
+                  </ng-select>
+                  <!-- {{ selectedZone }} -->
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group m-form__group">
+                  <div class="m-input-icon">
+                    <input class="form-control m-input" 
+                      [(ngModel)]="inc.amount"
+                      name="{{ 'inc.amount' + index }}"
+                      placeholder="金額" type="number">
+                    <!-- <span class="m-input-icon__icon m-input-icon__icon--left">
+                      <span>
+                        <i class="la la-map-marker"></i>
+                      </span>
+                    </span> -->
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group m-form__group">
+                  <div class="form-control" style="border: 0px">
+                    <i class="la la-plus" (click)="addAnItem()"></i>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">&nbsp;</div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 offset-md-6">
+                <button type="button" (click)="onReset();" class="btn btn-secondary btn-upload">Reset</button>
+                <button class="btn btn-success btn-upload" multipart="">Submit</button> 
+              </div>
+            </div>
+          </form>
+          <!-- <div class="row">
+            {{ income | json }}
+          </div> -->
+          <!--end::Content-->
+        </div>
+      </div>
+      <!--end:: Widgets/Best Sellers-->
+    </div>
+  </div>
+</div>
+  

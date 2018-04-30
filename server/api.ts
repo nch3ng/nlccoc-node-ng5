@@ -15,7 +15,9 @@ import Token from './models/token';
 import filesCtrl from './controllers/files/files.controller';
 import { reports as reportsCtrl, reports } from './controllers/files/reports.controller';
 import { message as messageCtrl } from './controllers/messages/message.controller';
+import { zone as zoneCtrl } from './controllers/zone.controller';
 import rolcc from './controllers/rolcc.feeds/rolcc.feeds.controller';
+import { income as incomeCtrl } from './controllers/report/income.controller';
 
 const router = express.Router();
 
@@ -97,5 +99,8 @@ router.use('/order', auth.verifyToken, orderCtrl);
 router.use('/reports', reportsCtrl);
 router.use('/messages', messageCtrl);
 router.use('/rolcc', rolcc);
+
+router.use('/income', incomeCtrl);
+router.use('/zones', zoneCtrl);
 
 export = router;

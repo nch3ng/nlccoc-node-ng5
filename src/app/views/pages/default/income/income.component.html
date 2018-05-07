@@ -78,7 +78,98 @@
           <!--begin::Content-->
           <div class="tab-content">
             <div class="tab-pane active" id="m_widget5_tab1_content" aria-expanded="true">
-              <ngx-datatable
+                <div class="m_datatable m_datatable m-datatable m-datatable--default m-datatable--loaded" id="ajax_data">
+                    <table class="m-datatable__table" style="display: block; min-height: 300px; overflow-x: auto;">
+                      <thead class="m-datatable__head">
+                        <tr class="m-datatable__row">
+                          <th data-field="incomeId" class="m-datatable__cell--center m-datatable__cell m-datatable__cell--check">
+                            <span style="width: 50px;">
+                              <label class="m-checkbox m-checkbox--single m-checkbox--all m-checkbox--solid m-checkbox--brand">
+                                <input type="checkbox">
+                                <span></span>
+                              </label>
+                            </span>
+                          </th>
+                          <th data-field="zone" class="m-datatable__cell">
+                            <span style="width: 110px;">Zone</span>
+                          </th>
+                          <th data-field="type" class="m-datatable__cell">
+                            <span style="width: 150px;">Type</span>
+                          </th>
+                          <th data-field="amount" class="m-datatable__cell">
+                            <span style="width: 100px;">Amount</span>
+                          </th>
+                          <th data-field="date" class="m-datatable__cell">
+                            <span style="width: 140px;">Date</span>
+                          </th>
+                          <!-- <th data-field="Gender" class="m-datatable__cell">
+                            <span style="width: 110px;">Gender</span>
+                          </th> 
+                          <th data-field="Role" class="m-datatable__cell">
+                            <span style="width: 80px;">Role</span>
+                          </th>-->
+                          <th data-field="Action" class="m-datatable__cell">
+                            <span style="width: 110px;">Actions</span>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody class="m-datatable__body" style="">
+                        <tr data-row="0" class="m-datatable__row" style="left: 0px;" *ngFor="let income of incomes">
+                          <td data-field="incomeId" class="m-datatable__cell--center m-datatable__cell m-datatable__cell--check">
+                            <span style="width: 50px;">
+                              <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                <input type="checkbox" value="1">
+                                <span></span>
+                              </label>
+                            </span>
+                          </td>
+                          <td data-field="zone" class="m-datatable__cell">
+                            <span style="width: 110px;">{{income.zone.name}}</span>
+                          </td>
+                          <td data-field="type" class="m-datatable__cell">
+                            <span style="width: 150px;">
+                                <span class="m-badge m-badge--brand m-badge--wide" [ngClass]="['m-badge--'+ (income.type.name|slugify)]">
+                                  {{income.type.name}}
+                                </span>
+                            </span>
+                          </td>
+                          <td data-field="amount" class="m-datatable__cell">
+                            <span style="width: 100px;">{{income.amount}}</span>
+                          </td>
+                          <td data-field="date" class="m-datatable__cell">
+                            <span style="overflow: visible; width: 140px;">{{income.date | amDateFormat: 'YYYY-MM-DD'}}</span>
+                          </td>
+                          <!-- <td data-field="Gender" class="m-datatable__cell">
+                            <span style="width: 110px;">N/A</span>
+                          </td> -->
+                          <!-- <td data-field="Role" class="m-datatable__cell">
+                            <span style="width: 80px;">
+                              <span class="m-badge m-badge--brand m-badge--wide" [ngClass]="['m-badge--'+user.role.name]">{{user.role.name}}</span>
+                            </span>
+                          </td>-->
+                          <td data-field="Action" class="m-datatable__cell">
+                            <span style="overflow: visible; width: 110px;">
+                              <div class="dropdown">							
+                                <a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">
+                                  <i class="la la-ellipsis-h"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                  <a class="dropdown-item" href="#"><i class="la la-edit"></i> Edit Details</a>
+                                  <a *ngIf="true" class="dropdown-item" style="cursor: pointer;"><i class="la	la-close"></i> Delete</a>	
+                                </div>
+                              </div>
+                            </span>
+                          </td>
+                          <!-- <td data-field="Role" class="m-datatable__cell">
+                            <span style="width: 110px;">
+                              <span class="m-badge m-badge--brand m-badge--wide">Pending</span>
+                            </span>
+                          </td> -->
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+              <!-- <ngx-datatable
                 class="nlccoc striped"
                 [rows]="rows"
                 [loadingIndicator]="loadingIndicator"
@@ -100,7 +191,7 @@
                 <ngx-datatable-column name="Name"></ngx-datatable-column>
                 <ngx-datatable-column name="Gender"></ngx-datatable-column>
                 <ngx-datatable-column name="Company"></ngx-datatable-column>
-              </ngx-datatable>
+              </ngx-datatable> -->
             </div>
             <div class="tab-pane" id="m_widget5_tab2_content" aria-expanded="false">
               <!--begin::m-widget5-->

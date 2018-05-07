@@ -1,3 +1,6 @@
+import { NgPipesModule } from 'ngx-pipes';
+import { MomentModule } from 'ngx-moment';
+import { IncomeResolver } from './income.resolver';
 import { IncomeTypeResolver } from './../../../../_resolvers/income.type.resolver';
 import { ZoneResolver } from './../../../../_resolvers/zone.resolver';
 import { ZoneService } from './../../../../_services/zone.service';
@@ -22,7 +25,8 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: IncomeComponent
+        component: IncomeComponent,
+        resolve: { incomes: IncomeResolver}
       },
       {
         path: 'new',
@@ -42,7 +46,9 @@ const routes: Routes = [
     NgSelectModule,
     SweetAlert2Module,
     NgbModule.forRoot(),
-    NgxDatatableModule
+    NgxDatatableModule,
+    MomentModule,
+    NgPipesModule
   ], exports: [
     RouterModule
   ], declarations: [
@@ -50,7 +56,9 @@ const routes: Routes = [
     IncomeNewComponent
   ], providers: [
     IncomeService,
-    IncomeTypeResolver]
+    IncomeTypeResolver,
+    IncomeResolver
+  ]
 })
 export class IncomeModule {
 }

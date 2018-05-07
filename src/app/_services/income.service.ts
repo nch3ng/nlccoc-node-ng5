@@ -17,4 +17,8 @@ export class IncomeService {
   types() {
     return this.httpClient.get<IncomeType []>('/api/income/types', this._authService.jwtHttpClient());
   }
+
+  all() {
+    return this.httpClient.get<Income []>('/api/income');
+  }
 }

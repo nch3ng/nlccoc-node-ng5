@@ -61,6 +61,8 @@
 		"ng2-toastr": "^4.1.2",
 		"ngx-facebook": "^2.4.0",
 		"ngx-modialog": "^5.0.0",
+		"ngx-moment": "^2.0.0",
+		"ngx-pipes": "^2.1.2",
 		"ngx-toastr": "^8.3.0",
 		"nodemailer": "^4.6.3",
 		"nodemon": "^1.17.2",

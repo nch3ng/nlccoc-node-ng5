@@ -27,13 +27,18 @@
   margin: 10% auto;
 }
 
-.m-badge.m-badge--admin {
-  background-color: #34bfa3;
+.m-badge.m-badge--admin, .m-badge--general-offering {
+  background-color: #34bfa3 !important;
   color: #fff;
 }
 
-.m-badge.m-badge--nlccoc {
-  background-color: #716aca;
+.m-badge.m-badge--nlccoc, .m-badge--rental-income {
+  background-color: #716aca !important;
+  color: #fff;
+}
+
+.m-badge--building-fund {
+  background-color: #b88820 !important;
   color: #fff;
 }
 

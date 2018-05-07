@@ -13,6 +13,7 @@ import { ModalModule, Overlay, OverlayRenderer, DOMOverlayRenderer } from 'ngx-m
 import { BootstrapModalModule } from 'ngx-modialog/plugins/bootstrap';
 import { NlccocServicesModule } from './_services/nlccoc.services.module';
 import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
+import { NgPipesModule, SlugifyPipe } from 'ngx-pipes';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';

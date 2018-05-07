@@ -4,7 +4,7 @@ import { ConfirmationFailedComponent } from './auth/pages/confirmation/confirmat
 import { ConfirmationSuccessComponent } from './auth/pages/confirmation/confirmation-success/confirmation-success.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LogoutComponent } from "./auth/logout/logout.component";
+import { LogoutComponent } from './auth/logout/logout.component';
 import { AuthGuard } from './auth/_guards';
 
 const routes: Routes = [
@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'logout', component: LogoutComponent },
   { path: 'confirmation-success', component: ConfirmationSuccessComponent },
   { path: 'confirmation-failed', component: ConfirmationFailedComponent },
-  { path: 'confirmation/:cid', component: ConfirmationComponent }, 
+  { path: 'confirmation/:cid', component: ConfirmationComponent },
   { path: ':userId/unverified', component: UnverifiedComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: 'index', pathMatch: 'full' },
 ];

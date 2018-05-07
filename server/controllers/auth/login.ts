@@ -80,9 +80,20 @@ export function fbLogin(req, res) {
   user.lastName = req.body.lastName;
   user.profile = req.body.profile;
 
-  const promise = User.findOne({'email' : req.body.email}).populate('role').exec();
+  const promise = User.findOneAndUpdate(
+    {
+      'email' : req.body.email
+    },
+    {
+      '$set': {
+          'profile': req.body.profile
+      }
+    },
+    {
+      returnNewDocument: true
+    }
+  ).populate('role').exec();
   promise.then((result_user) => {
-
     const config = Config.config;
     if (!result_user) {
       // The user does not exist
@@ -101,7 +112,19 @@ export function fbLogin(req, res) {
     } else {
       // The user exists
       // logger.debug('user exists');
+      // console.log(result_user);
       token = result_user.generateJwt();
+
+
+      if (result_user.profile && result_user.profile.fbAvatar && result_user.profile.fbAvatar.large) {
+        if (req.body.profile && req.body.profile.fbAvatar && req.body.profile.fbAvatar.large) {
+          if (result_user.profile.fbAvatar.large.path !== req.body.profile.fbAvatar.large.path) {
+            result_user.profile.fbAvatar.large.path = req.body.profile.fbAvatar.large.path;
+          }
+        }
+      }
+
+      // console.log(req.body);
       // logger.debug(result_user);
       res.status(200).json({
         'user': result_user,

@@ -9,6 +9,7 @@ import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 import { LayoutModule } from './../../../layouts/layout.module';
 import { DefaultComponent } from './../default.component';
 import { NgModule } from '@angular/core';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -40,7 +41,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     NgSelectModule,
     SweetAlert2Module,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    NgxDatatableModule
   ], exports: [
     RouterModule
   ], declarations: [

@@ -3,6 +3,7 @@ import * as mongoose from 'mongoose';
 import Income from '../../models/income';
 import { errorHandler } from '../../helpers/error';
 import IncomeType from '../../models/income.type';
+import Zone from '../../models/zone';
 
 const income_router = express.Router();
 
@@ -49,9 +50,50 @@ income_router.get('/types', (req, res) => {
   ).catch(err => errorHandler(err, res));
 });
 
-income_router.get('/:zoneId', (req, res) => {
-  console.log('Get income ' + req.params.zoneId);
-  res.status(200).json({});
+income_router.get('/:zoneName', (req, res) => {
+  console.log('Get income ' + req.params.zoneName);
+
+  const zonePromise = Zone.findOne({alias: req.params.zoneName}).exec();
+  zonePromise.then((zone) => {
+
+    if (zone) {
+      const promise = Income.find({zone: zone}).populate('zone type').exec();
+      promise.then((incomes) => {
+        res.status(200).json(incomes);
+      }).catch((err) => {
+        console.log(err);
+        errorHandler(err, res);
+      });
+    } else {
+      res.status(200).json({});
+    }
+  }).catch((err) => {
+    console.log(err);
+    errorHandler(err, res);
+  });
+});
+
+income_router.get('/:zoneName/:type', (req, res) => {
+  const zonePromise = Zone.findOne({alias: req.params.zoneName}).exec();
+  zonePromise.then((zone) => {
+    console.log(zone);
+    const typePromise = IncomeType.findOne({alias: req.params.type}).exec();
+    typePromise.then((type) => {
+      console.log(type);
+      const promise = Income.find({zone: zone, type: type}).populate('zone type').exec();
+      promise.then((incomes) => {
+        res.status(200).json(incomes);
+      }).catch((err) => {
+        console.log(err);
+        errorHandler(err, res);
+      });
+    }).catch((err) => {
+      errorHandler(err, res);
+    });
+  }).catch((err) => {
+    errorHandler(err, res);
+  });
+
 });
 
 income_router.get('/', (req, res) => {

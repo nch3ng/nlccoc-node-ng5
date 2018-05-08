@@ -41,7 +41,7 @@ class Seed {
       { name: 'media', remark: 'Member of multimedia team.' },
       { name: 'pastor', remark: 'Member of pastoral team.' }
     ];
-    mongoose.connect(this._config.DBConnectionUrl, { useMongoClient: true }, (err) => {
+    mongoose.connect(this._config.DBConnectionUrl, (err) => {
       this.conn = mongoose.connection;
       logger.debug(this._config.DBConnectionUrl);
     }).then(

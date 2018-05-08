@@ -57,9 +57,7 @@ class DataAccess {
         process.exit(0);
       });
     });
-    this.mongooseInstance = mongoose.connect(MONGODB_CONNECTION, {
-      useMongoClient: true
-    });
+    this.mongooseInstance = mongoose.connect(MONGODB_CONNECTION);
     return this.mongooseInstance;
   }
 }

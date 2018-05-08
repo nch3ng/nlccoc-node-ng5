@@ -6,9 +6,9 @@ import IncomeType from '../../models/income.type';
 import Zone from '../../models/zone';
 
 const income_router = express.Router();
-
+const daysOftheMonth = [0, 31, 30, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 // income_router.post('/', auth.verifyToken_role(['admin']), (req, res) => {
-  income_router.post('/', (req, res) => {
+income_router.post('/', (req, res) => {
   console.log('Post income');
   console.log(req.body);
 
@@ -88,6 +88,47 @@ income_router.get('/:zoneName/:type', (req, res) => {
         errorHandler(err, res);
       });
     }).catch((err) => {
+      errorHandler(err, res);
+    });
+  }).catch((err) => {
+    errorHandler(err, res);
+  });
+
+});
+
+income_router.get('/:zoneName/month/:month', (req, res) => {
+  console.log('Get month: ' + req.params.month);
+  const month = req.params.month;
+  const year = (new Date()).getFullYear();
+  const zonePromise = Zone.findOne({alias: req.params.zoneName}).exec();
+  zonePromise.then((zone) => {
+    console.log(zone);
+    const promise = Income.find({zone: zone, date: { $gte: new Date(year, month - 1, 1), $lt: new Date(year, month - 1, daysOftheMonth[month])}}).populate('zone type').exec();
+    promise.then((incomes) => {
+      res.status(200).json(incomes);
+    }).catch((err) => {
+      console.log(err);
+      errorHandler(err, res);
+    });
+  }).catch((err) => {
+    errorHandler(err, res);
+  });
+
+});
+income_router.get('/:zoneName/year/:year', (req, res) => {
+  console.log('Get year: ' + req.params.year);
+  if (req.params.year < 2016) {
+    errorHandler('No data before 2016', res);
+  }
+  const year = req.params.year;
+  const zonePromise = Zone.findOne({alias: req.params.zoneName}).exec();
+  zonePromise.then((zone) => {
+    console.log(zone);
+    const promise = Income.find({zone: zone, date: { $gte: new Date(year, 0, 1), $lt: new Date(year, 11, 31)}}).populate('zone type').exec();
+    promise.then((incomes) => {
+      res.status(200).json(incomes);
+    }).catch((err) => {
+      console.log(err);
       errorHandler(err, res);
     });
   }).catch((err) => {
